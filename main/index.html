@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="css/style.css">
+<title>Panel principal</title>
+
+</head>
+<body>
+
+  <!--ENCABEZADO DEL SISTEMA-->
+<header class="header-container">
+  <!-- Logo y título -->
+  <div class="brand">
+    <img src="../img/logo.png" alt="Logo">
+    <div class="title">
+      <b>Panel principal</b>
+      <small>¡Bienvenido, Adanies!</small>
+    </div>
+  </div>
+
+  <!-- Menú -->
+  <nav class="menu">
+    <a href="crear_usuario.html">Crear usuario</a>
+    <a href="#">Objetivo</a>
+    <a href="#">Contactos</a>
+    <a href="#">Quiénes somos</a>
+    
+  </nav>
+  
+  <!--MENU DE PERFIL-->
+  <div class="user-menu-container">
+  <button type="button" class="user-menu-btn">
+    <img src="../img/adaniesbasilio.jpg" alt="Icono usuario" class="user-icon">
+    <div class="user-info">
+      <span class="user-role">Administrador</span>
+      <span class="user-name">Adanies Basilio</span>
+    </div>
+  </button>
+
+  <div class="dropdown-menu">
+    <a href="#" class="dropdown-item">
+      <img src="../icons/EditarPerfil.png" alt="Perfil">
+      Mi perfil
+    </a>
+    <a href="#" class="dropdown-item">
+      <img src="../icons/ayuda.png" alt="Ayuda">
+      Ayuda
+    </a>
+    <a href="../src/index.html" class="dropdown-item">
+      <img src="../icons/CerrarSesion.png" alt="Cerrar sesión">
+      Cerrar sesión
+    </a>
+  </div>
+</div>
+
+</header>
+
+  <!--NOTIFICACIONES EN TIEMPO REAL-->
+<main class="wrap">
+  <!-- ====== SCROLLER DE ESTADÍSTICAS ====== -->
+  <section class="stats reveal" id="stats">
+    <div class="stats-track" id="statsTrack">
+      <article class="stat-card">
+        <img class="stat-icon" src="../icons/usuario-notification.png" alt="Usuario">   <!-- reemplaza -->
+        <div class="stat-title">Usuario</div>
+        <div class="stat-value"></div> <!-- valor vacío -->
+      </article>
+
+      <article class="stat-card">
+        <img class="stat-icon" src="../icons/notificaciones-notification.png" alt="Notificaciones"> <!-- reemplaza -->
+        <div class="stat-title">Notificaciones</div>
+        <div class="stat-value"></div>
+      </article>
+
+      <article class="stat-card">
+        <img class="stat-icon" src="../icons/reactivos-notification.png" alt="Reactivos"> <!-- reemplaza -->
+        <div class="stat-title">Reactivos</div>
+        <div class="stat-value"></div>
+      </article>
+
+      <article class="stat-card">
+        <img class="stat-icon" src="../icons/planta-notification.png" alt="Plantas"> <!-- reemplaza -->
+        <div class="stat-title">Plantas</div>
+        <div class="stat-value"></div>
+      </article>
+
+      <article class="stat-card">
+        <img class="stat-icon" src="../icons/contaminacion-notification.png" alt="Contaminaciones"> <!-- reemplaza -->
+        <div class="stat-title">Contaminaciones</div>
+        <div class="stat-value"></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ====== SECCIÓN: INTERACTUAR ====== -->
+  <div class="section-title reveal">
+    <h2>Es hora de interactuar con Invitrosoft</h2>
+    <span class="emoji">😁</span>
+  </div>
+
+  <a href="reactivos.html" class="card-link">
+    <section class="grid reveal">
+      <article class="card">
+        <div class="card-head">
+          <img src="../icons/reactivo.png" alt="">
+          <h3>Reactivos</h3>
+        </div>
+        <p>Gestiona los reactivos y lleva su control.</p>
+      </article>
+    </a>
+
+    <a href="protocolo.html" class="card-link">
+      <article class="card">
+        <div class="card-head">
+          <img src="../icons/formulaciones.png" alt="">
+          <h3>Formulaciones</h3>
+        </div>
+        <p>Administra formulaciones y composiciones.</p>
+      </article>
+    </a>
+    <a href="protocolo.html" class="card-link">
+      <article class="card">
+        <div class="card-head">
+          <img src="../icons/protocolo.png" alt="">
+          <h3>Protocolos</h3>
+        </div>
+        <p>Gestiona el control y desinfecciones de explantes.</p>
+      </article>
+    </a>
+
+    <a href="categoria.html" class="card-link">
+      <article class="card">
+        <div class="card-head">
+          <img src="../icons/categorias.png" alt="">
+          <h3>Categorías</h3>
+        </div>
+        <p>Controla categorías o separación de elementos.</p>
+      </article>
+    </a>
+
+    <a href="parametros.html" class="card-link">
+      <article class="card">
+        <div class="card-head">
+          <img src="../icons/parametros.png" alt="">
+          <h3>Parámetros</h3>
+        </div>
+        <p>Gestiona parámetros de usuarios para su control.</p>
+      </article>
+    </a>
+
+    <a href="historial.html" class="card-link">
+      <article class="card">
+        <div class="card-head">
+          <img src="../icons/historial.png" alt="">
+          <h3>Historial</h3>
+        </div>
+        <p>Administra las acciones de tus usuarios.</p>
+      </article>
+    </a>
+  </section>
+</main>
+
+<footer>
+  <p>Invitrosoft — © 2025. Todos los derechos reservados.</p>
+  <a href=""><p>Terminos y condiciones</p></a>
+  <a href=""><p>Licencias</p></a>
+</footer>
+
+<script src="js/script.js">  </script>
+</body>
+</html>

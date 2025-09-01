@@ -1,0 +1,40 @@
+-- Base de datos: invitrosoft
+
+-- -----------------------------
+-- Tabla: categorias
+-- -----------------------------
+CREATE TABLE categorias (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  nombre varchar(100) NOT NULL,
+  descripcion text DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Tabla: parametros
+-- -----------------------------
+CREATE TABLE parametros (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  tipo varchar(50) NOT NULL,
+  nombre varchar(100) NOT NULL,
+  descripcion text DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Tabla: reactivos
+-- -----------------------------
+CREATE TABLE reactivos (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  nombre_comun varchar(255) NOT NULL,
+  formula_quimica varchar(100) DEFAULT NULL,
+  categoria_id int(11) DEFAULT NULL,
+  unidad_medida varchar(50) DEFAULT NULL,
+  cantidad_total decimal(10,2) DEFAULT 0.00,
+  fecha_vencimiento date DEFAULT NULL,
+  fecha_creacion timestamp NOT NULL DEFAULT current_timestamp(),
+  fecha_actualizacion timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (id),
+  KEY categoria_id (categoria_id),
+  CONSTRAINT reactivos_ibfk_1 FOREIGN KEY (categoria_id) REFERENCES categorias (id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

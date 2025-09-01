@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+
+    <!-- Lado Izquierdo -->
+    <div class="intro">
+        <h1>Sistema de Gestión</h1>
+        <div class="menu">
+            <img class="ico-index" src="../icons/plantaINDEX.png" alt="">
+                <div class="menu-text">
+                    <p><strong>Todo tu proceso, paso a paso</strong></p>
+                    <p>Lleva el control de cada etapa de la micropropagación sin complicaciones.</p>
+                </div>
+            </div>
+        <div class="menu">
+            <img class="ico-index" src="../icons/inventarioINDEX.png" alt="">
+                <div class="menu-text">
+                    <p><strong>Ten tus materiales bajo control</strong></p>
+                    <p>Organiza lo que usas, cuánto usas y evita que algo se venza o se te olvide.</p>
+                </div>
+            </div>
+        <div class="menu">
+            <img class="ico-index" src="../icons/alertaINDEX.png" alt="">
+                <div class="menu-text">
+                    <p><strong>Controla las contaminaciones</strong></p>
+                    <p>Gestiona y maneja las contaminaciones para la toma de deciciones</p>
+                </div>
+            </div>
+    </div>
+
+    <!-- Lado Derecho -->
+    <!-- Lado Derecho -->
+    <div class="login-box">
+        <div class="login-content">
+        <!-- Logo -->
+        <img class="logo" src="../img/logo.png" alt="Logo del sistema">
+
+        <h2>Iniciar Sesión</h2>
+        <p class="subtitle">Accede a tu cuenta para continuar</p>
+
+        <form id="loginForm" autocomplete="off">
+            <div class="input-group">
+                <img class="input-icon" src="../img/sobre.png" alt="icono email">
+                <input type="email" name="email" placeholder="Example@gmail.com" required>
+            </div>
+            <div class="input-group">
+                <img class="input-icon" src="../img/llave.png" alt="icono contraseña">
+                <input type="password" name="contraseña" placeholder="*******" required>
+            </div>
+            <button type="submit" class="btn">Iniciar Sesión</button>
+            <div id="loginError" style="color:#f44336; margin-top:10px; font-size:14px;"></div>
+            <div class="register-link">
+                ¿No tienes una cuenta? <a href="cuenta.html">Crear cuenta</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.getElementById('loginForm').onsubmit = async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value.trim();
+    const contraseña = form.contraseña.value;
+    const errorDiv = document.getElementById('loginError');
+    errorDiv.textContent = '';
+    try {
+        const res = await fetch('login.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, contraseña })
+        });
+        const result = await res.json();
+        if (res.ok && result.success) {
+            window.location.href = '../main/index.html';
+        } else {
+            errorDiv.textContent = result.error || 'Credenciales incorrectas';
+        }
+    } catch (err) {
+        errorDiv.textContent = 'Error de conexión con el servidor';
+    }
+};
+</script>
+</div>
+</body>
+</html>

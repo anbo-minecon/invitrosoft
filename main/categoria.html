@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Categoría de reactivos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .header {
+            background-color: #e8f5e8;
+            padding: 15px 30px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .header-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .header-title {
+            color: #2e7d32;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .header-subtitle {
+            color: #666;
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        .header-right {
+            color: #4CAF50;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .container {
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 300px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: white;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-btn:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .new-category-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;         
+            gap: 8px;
+        }
+
+        .new-category-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .table-container {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .table-header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .table-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th {
+            background-color: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+        }
+        
+        .table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .category-tag {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+            display: inline-block;
+        }
+        
+        .solido { background-color: #666; }
+        .liquido { background-color: #2196F3; }
+        .gaseoso { background-color: #4CAF50; }
+        
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        .edit-btn {
+            background-color: #FFC107;
+            color: white;
+        }
+        
+        .view-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .action-btn:hover {
+            opacity: 0.8;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 10px;
+            width: 500px;
+            max-width: 90vw;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .btn-secondary {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #45a049;
+        }
+        
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .error {
+            color: #f44336;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <div class="header-icon">🧪</div>
+            <div>
+                <h1 class="header-title">Categoría de reactivos</h1>
+                <p class="header-subtitle">Gestiona las categorías de reactivos</p>
+            </div>
+        </div>
+        <div class="header-right">↗</div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Controls -->
+        <div class="controls">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Buscar categoría......" id="searchInput">
+            </div>
+            <button class="filter-btn" onclick="toggleFilter()">
+                <span>🔽</span>
+                Filtrar
+            </button>
+            <div style="margin-left:auto;display:flex;">
+                <button class="new-category-btn" onclick="openModal()">
+                    <span>+</span>
+                    Nueva categoría
+                </button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <h2 class="table-title">Categorías registradas (<span id="categoryCount">0</span>)</h2>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Categorías</th>
+                        <th>Descripción</th>
+                        <th>Cantidad/reactivo</th>
+                        <th>ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody id="categoriesTable">
+                    <!-- Las categorías se cargarán aquí dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="categoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Nueva categoría</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="categoryForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label" for="categoryName">Nombre</label>
+                        <input type="text" class="form-input" id="categoryName" placeholder="Ej: solido" required>
+                        <div class="error" id="nameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="categoryDescription">Descripción</label>
+                        <textarea class="form-textarea" id="categoryDescription" placeholder="Descripción de la categoría"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal()">
+                        <span>✖</span>
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn-primary" id="saveBtn">
+                        <span>💾</span>
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/categorias.js"></script>
+</body>
+</html>

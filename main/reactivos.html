@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de reactivos</title>
+    <link rel="stylesheet" href="css/reactivos.css">
+
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <div class="header-icon">🧪</div>
+            <div>
+                <h1 class="header-title">Gestión de reactivos</h1>
+                <p class="header-subtitle">Gestiona los reactivos y lleva su control</p>
+            </div>
+        </div>
+        <div class="header-right"><a href="index.html"><img src="../icons/CerrarSesion.png" alt=""></a></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Controls -->
+        <div class="controls">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Buscar reactivo....." id="searchInput">
+            </div>
+            <button class="filter-btn" onclick="toggleFilter()">
+                <span>🔽</span>
+                Filtrar
+            </button>
+            <button class="new-reactive-btn" onclick="openModal()">
+                <span>+</span>
+                Nuevo Reactivo
+            </button>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <h2 class="table-title">Reactivos registrados (<span id="reactiveCount">0</span>)</h2>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>REACTIVO</th>
+                        <th>CATEGORÍA</th>
+                        <th>CANTIDAD</th>
+                        <th>VENCIMIENTO</th>
+                        <th>ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody id="reactivesTable">
+                    <!-- Los reactivos se cargarán aquí dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="reactiveModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Nuevo Reactivo</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="reactiveForm">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="commonName">Nombre común</label>
+                            <input type="text" class="form-input" id="commonName" placeholder="Ej: Ácido Sulfúrico" required>
+                            <div class="error" id="nameError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="chemicalFormula">Fórmula química</label>
+                            <input type="text" class="form-input" id="chemicalFormula" placeholder="Ej: H₂SO₄">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="category">Categoría</label>
+                            <select class="form-select" id="category" required>
+                                <option value="">Seleccionar categoría</option>
+                            </select>
+                            <div class="error" id="categoryError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="unitMeasure">Unidad de medida</label>
+                            <input type="text" class="form-input" id="unitMeasure" placeholder="Ej: ml, g, kg">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="totalQuantity">Cantidad total</label>
+                            <input type="number" class="form-input" id="totalQuantity" placeholder="0.00" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="expiryDate">Fecha de vencimiento</label>
+                            <input type="date" class="form-input" id="expiryDate">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal()">
+                        <span>✖</span>
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn-primary" id="saveBtn">
+                        <span>💾</span>
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let reactives = [];
+        let categories = [];
+        let editingId = null;
+
+        // Configuración de la API
+        const REACTIVE_API = 'db/reactivos.php';
+        const CATEGORY_API = 'db/categorias.php';
+
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCategories();
+            loadReactives();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Búsqueda en tiempo real
+            document.getElementById('searchInput').addEventListener('input', function() {
+                filterReactives(this.value);
+            });
+
+            // Formulario de reactivo
+            document.getElementById('reactiveForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveReactive();
+            });
+
+            // Cerrar modal al hacer clic fuera
+            document.getElementById('reactiveModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+        }
+
+        // Cargar categorías para el select
+        async function loadCategories() {
+            try {
+                const response = await fetch(CATEGORY_API);
+                if (!response.ok) throw new Error('Error al cargar categorías');
+                
+                categories = await response.json();
+                populateCategorySelect();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Poblar el select de categorías
+        function populateCategorySelect() {
+            const select = document.getElementById('category');
+            select.innerHTML = '<option value="">Seleccionar categoría</option>';
+            
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.nombre;
+                select.appendChild(option);
+            });
+        }
+
+        // Cargar reactivos desde la API
+        async function loadReactives() {
+            try {
+                const response = await fetch(REACTIVE_API);
+                if (!response.ok) throw new Error('Error al cargar reactivos');
+                
+                reactives = await response.json();
+                renderReactives(reactives);
+                updateReactiveCount();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al cargar los reactivos');
+            }
+        }
+
+        // Renderizar reactivos en la tabla
+        function renderReactives(data) {
+            const tbody = document.getElementById('reactivesTable');
+            tbody.innerHTML = '';
+
+            data.forEach(reactive => {
+                const row = document.createElement('tr');
+                
+                // Calcular porcentaje y días para vencimiento
+                const quantity = parseFloat(reactive.cantidad_total) || 0;
+                const maxQuantity = 2000; // Valor máximo para la barra
+                const percentage = Math.min((quantity / maxQuantity) * 100, 100);
+                
+                const expiryDays = calculateDaysToExpiry(reactive.fecha_vencimiento);
+                const expiryDisplay = formatExpiryDate(reactive.fecha_vencimiento);
+
+                row.innerHTML = `
+                    <td>${String(reactive.id).padStart(3, '0')}</td>
+                    <td>
+                        <div class="reactive-name">${reactive.nombre_comun}</div>
+                        <div class="chemical-formula">${formatChemicalFormula(reactive.formula_quimica)}</div>
+                    </td>
+                    <td>
+                        ${reactive.categoria_nombre ? 
+                            `<span class="category-tag ${reactive.categoria_nombre.toLowerCase()}">${reactive.categoria_nombre}</span>` 
+                            : ''}
+                    </td>
+                    <td>
+                        <div class="quantity-container">
+                            <div class="quantity-text">${quantity} / ${maxQuantity} ${reactive.unidad_medida || 'g'}</div>
+                            <div class="quantity-bar-container">
+                                <div class="quantity-bar" style="width: ${percentage}%"></div>
+                            </div>
+                            <div class="quantity-status">Normal</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="expiry-container">
+                            <div class="expiry-days">⏰ ${expiryDays} días</div>
+                            <div class="expiry-date">${expiryDisplay}</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <button class="action-btn edit-btn" onclick="editReactive(${reactive.id})" title="Editar">
+                                ✏️
+                            </button>
+                            <button class="action-btn delete-btn" onclick="deleteReactive(${reactive.id})" title="Eliminar">
+                                🗑️
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Convertir números en fórmulas químicas a subíndices
+        function formatChemicalFormula(formula) {
+            if (!formula) return '';
+            
+            // Reemplazar números con subíndices HTML
+            return formula.replace(/(\d+)/g, '<sub>$1</sub>');
+        }
+        function calculateDaysToExpiry(expiryDate) {
+            if (!expiryDate) return 0;
+            
+            const today = new Date();
+            const expiry = new Date(expiryDate);
+            const diffTime = expiry - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            return Math.max(0, diffDays);
+        }
+
+        // Formatear fecha de vencimiento
+        function formatExpiryDate(dateString) {
+            if (!dateString) return '';
+            
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit', 
+                year: 'numeric'
+            });
+        }
+
+        // Filtrar reactivos
+        function filterReactives(searchTerm) {
+            const filtered = reactives.filter(reactive => 
+                reactive.nombre_comun.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                (reactive.formula_quimica && reactive.formula_quimica.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                (reactive.categoria_nombre && reactive.categoria_nombre.toLowerCase().includes(searchTerm.toLowerCase()))
+            );
+            renderReactives(filtered);
+        }
+
+        // Actualizar contador
+        function updateReactiveCount() {
+            document.getElementById('reactiveCount').textContent = String(reactives.length).padStart(2, '0');
+        }
+
+        // Abrir modal
+        function openModal(isEdit = false, reactiveData = null) {
+            const modal = document.getElementById('reactiveModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const form = document.getElementById('reactiveForm');
+
+            if (isEdit && reactiveData) {
+                modalTitle.textContent = 'Editar Reactivo';
+                document.getElementById('commonName').value = reactiveData.nombre_comun;
+                document.getElementById('chemicalFormula').value = reactiveData.formula_quimica || '';
+                document.getElementById('category').value = reactiveData.categoria_id || '';
+                document.getElementById('unitMeasure').value = reactiveData.unidad_medida || '';
+                document.getElementById('totalQuantity').value = reactiveData.cantidad_total || '';
+                document.getElementById('expiryDate').value = reactiveData.fecha_vencimiento || '';
+                editingId = reactiveData.id;
+            } else {
+                modalTitle.textContent = 'Nuevo Reactivo';
+                form.reset();
+                editingId = null;
+            }
+
+            clearErrors();
+            modal.style.display = 'block';
+        }
+
+        // Cerrar modal
+        function closeModal() {
+            document.getElementById('reactiveModal').style.display = 'none';
+            document.getElementById('reactiveForm').reset();
+            editingId = null;
+            clearErrors();
+        }
+
+        // Limpiar errores
+        function clearErrors() {
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('categoryError').textContent = '';
+        }
+
+        // Guardar reactivo
+        async function saveReactive() {
+            const form = document.getElementById('reactiveForm');
+            const saveBtn = document.getElementById('saveBtn');
+
+            clearErrors();
+
+            // Validación
+            const commonName = document.getElementById('commonName').value.trim();
+            if (!commonName) {
+                document.getElementById('nameError').textContent = 'El nombre común es obligatorio';
+                return;
+            }
+
+            const reactiveData = {
+                nombre_comun: commonName,
+                formula_quimica: document.getElementById('chemicalFormula').value.trim(),
+                categoria_id: document.getElementById('category').value || null,
+                unidad_medida: document.getElementById('unitMeasure').value.trim(),
+                cantidad_total: parseFloat(document.getElementById('totalQuantity').value) || 0,
+                fecha_vencimiento: document.getElementById('expiryDate').value || null
+            };
+
+            try {
+                saveBtn.disabled = true;
+                saveBtn.innerHTML = '<span>⏳</span> Guardando...';
+
+                let response;
+                if (editingId) {
+                    // Actualizar
+                    response = await fetch(`${REACTIVE_API}?id=${editingId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(reactiveData)
+                    });
+                } else {
+                    // Crear
+                    response = await fetch(REACTIVE_API, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(reactiveData)
+                    });
+                }
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Error al guardar el reactivo');
+                }
+
+                await loadReactives();
+                closeModal();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('nameError').textContent = error.message;
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = '<span>💾</span> Guardar';
+            }
+        }
+
+        // Editar reactivo
+        function editReactive(id) {
+            const reactive = reactives.find(r => r.id == id);
+            if (reactive) {
+                openModal(true, reactive);
+            }
+        }
+
+        // Eliminar reactivo
+        async function deleteReactive(id) {
+            const reactive = reactives.find(r => r.id == id);
+            if (!reactive) return;
+
+            if (!confirm(`¿Estás seguro de que deseas eliminar el reactivo "${reactive.nombre_comun}"?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${REACTIVE_API}?id=${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Error al eliminar el reactivo');
+                }
+
+                await loadReactives();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al eliminar el reactivo: ' + error.message);
+            }
+        }
+
+        // Función placeholder para filtro
+        function toggleFilter() {
+            alert('Función de filtro en desarrollo');
+        }
+    </script>
+</body>
+</html>

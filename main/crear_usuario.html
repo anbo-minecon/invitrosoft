@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear usuario</title>
+    <link rel="stylesheet" href="css/parametros.css">
+    <link rel="stylesheet" href="css/crear_usuario.css">
+</head>
+<body>
+    <header class="header-container">
+        <div class="brand">
+            <img src="../img/logo.png" alt="Logo">
+            <div>
+                <b>Creación de usuarios</b>
+                <small>Crea tus usuarios para le gestión de plantas</small>
+            </div>
+        </div>
+        <button id="btnVolverHeader" onclick="window.location.href='dasboarb.html'" class="btn-volver-panel header-volver" title="Volver al panel principal">
+            <a href="index.html"><img src="../icons/CerrarSesion.png" alt="Volver al panel"></a>
+        </button>
+    </header>
+    <main>
+        <section class="user-type-panel" id="user-type-panel">
+            <h2 class="user-type-title">Crear cuenta</h2>
+            <div class="user-type-options">
+                <button class="user-type-btn admin" data-type="admin">
+                    <span class="icon">👤</span>
+                    <div>
+                        <b>Administrador</b><br>
+                        <span class="desc">Acceso total a la plataforma</span>
+                    </div>
+                </button>
+                <button class="user-type-btn" data-type="aprendiz">
+                    <span class="icon">🎓</span>
+                    <div>
+                        <b>Aprendiz</b><br>
+                        <span class="desc">Solo acceso a la gestión de fases de micropropagación</span>
+                    </div>
+                </button>
+                <button class="user-type-btn pasante" data-type="pasante">
+                    <span class="icon">💼</span>
+                    <div>
+                        <b>Pasante</b><br>
+                        <span class="desc">Solo acceso a la gestión de fases de micropropagación</span>
+                    </div>
+                </button>
+            </div>
+        </section>
+    <section id="user-form-panel" style="display:none;"></section>
+    </main>
+    <script src="js/crear_usuario.js"></script>
+</body>
+</html>

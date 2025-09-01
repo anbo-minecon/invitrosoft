@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parámetros</title>
+    <link rel="stylesheet" href="css/parametros.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header-container">
+    <div class="brand">
+        <img src="../img/logo.png" alt="Logo">
+        <div>
+            <b>Parámetros</b>
+            <small>Gestiona los parámetros para su control</small>
+        </div>
+    </div>
+    <a href="index.html" class="btn-volver">
+        <img src="parametros/icons/cerrar.png" alt="Volver al Dashboard">
+    </a>
+</header>
+
+<!-- PANEL DE PARÁMETROS -->
+<section class="panel-parametros">
+    <h3>Parámetros</h3>
+    <div class="parametros-buttons">
+        <button class="param-btn active" data-section="genero"><img src="parametros/icons/genero.png" alt=""> Género</button>
+        <button class="param-btn" data-section="estado"><img src="parametros/icons/estado.png" alt=""> Estado</button>
+        <button class="param-btn" data-section="origen"><img src="parametros/icons/origen.png" alt=""> Origen</button>
+        <button class="param-btn" data-section="umedida"><img src="parametros/icons/umedida.png" alt=""> U- medida</button>
+        <button class="param-btn" data-section="estadoRaices"><img src="parametros/icons/raices.png" alt=""> Estados de raíces</button>
+    </div>
+</section>
+
+<!-- FILTRO -->
+<section class="filtro-panel">
+    <div class="filtro-input">
+        <img src="parametros/icons/search.png" alt="">
+        <input type="text" id="busqueda" placeholder="Buscar...">
+    </div>
+    <button class="btn-filtrar"><img src="parametros/icons/filter.png" alt=""> Filtrar</button>
+    <button class="btn-nuevo" id="btn-nuevo"><img src="parametros/icons/add.png" alt=""> Nuevo Género</button>
+</section>
+
+<!-- CONTENIDO -->
+<section id="contenido" class="contenido-panel"></section>
+
+<script src="js/parametros.js"></script>
+</body>
+</html>

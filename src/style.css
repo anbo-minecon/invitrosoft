@@ -1,0 +1,169 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Lado Izquierdo */
+.intro {
+  background: #007832;
+  color: #fff;
+  width: 50%;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.intro h1 {
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 40px;
+}
+
+.menu {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+.ico-index {
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.menu img {
+  margin-top: 4px; /* para centrar mejor con el bloque de texto */
+}
+
+.menu-text {
+  display: flex;
+  flex-direction: column; /* Pone el negrita arriba y el texto normal abajo */
+}
+
+.menu p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.logo {
+  width: 100px; /* tamaño del logo */
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Lado Derecho */
+.login-box {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-content {
+  max-width: 350px;
+  width: 100%;
+  text-align: center;
+}
+
+.login-content h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 14px;
+  margin-bottom: 25px;
+  color: #555;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+.input-group input:focus {
+  border-color: #007832;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #4CAF50; /* Color de fondo (puedes poner el que uses en tu login) */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%; /* Para que ocupe el ancho completo como un botón */
+  box-sizing: border-box;
+}
+
+.btn:hover {
+  background-color: #007832; /* Color más oscuro al pasar el ratón */
+  transform: scale(1.02); /* Ligero efecto de aumento */
+}
+
+.btn:active {
+  transform: scale(0.98); /* Efecto de clic */
+}
+
+
+.register-link {
+  margin-top: 15px;
+  font-size: 13px;
+}
+
+.register-link a {
+  color: #007832;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column-reverse; /* Cambia el orden */
+  }
+
+  /* Ahora el login-box queda arriba y ocupa todo el ancho */
+  .login-box, 
+  .intro {
+    width: 100%;
+    padding: 30px;
+  }
+}
+
