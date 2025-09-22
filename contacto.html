@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Invitrosoft</title>
+    <style>
+
+        :root{
+            --green-dark:#055d29;
+            --green:#007832;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --muted:#e9f6ee;
+            --ink:#1f2d1f;
+            --radius:8px;
+            --white: #ffffff;
+            --gray-light: #f8f9fa;
+            --gray-medium: #6c757d;
+            --shadow: 0 4px 24px rgba(0, 120, 50, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--ink);
+            min-height: auto;
+        }
+
+        /* Hero Section */
+        .contact-hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(0, 120, 50, 0.363), rgba(0, 120, 50, 0.363)), 
+                        url('img/fondo3.jpeg') no-repeat center/cover;
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll; /* Cambiado de fixed para mejor rendimiento en iframe */
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        .contact-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 70%, rgba(233, 246, 238, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 30%, rgba(233, 246, 238, 0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .contact-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-button {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
+            background: white;
+            color: var(--green);
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            background: #f8f9fa;
+        }
+
+        .hero-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Main Contact Section */
+        .contact-main {
+            background: var(--gray-light);
+            padding: 4rem 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .contact-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 3rem;
+            align-items: flex-start;
+        }
+
+        /* Contact Info Card */
+        .contact-info-card {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            min-width: 320px;
+            max-width: 380px;
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideInLeft 0.8s ease-out 0.2s both;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 35px rgba(0, 120, 50, 0.12);
+        }
+
+        .contact-info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--green), var(--green-dark));
+        }
+
+        .contact-info-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--ink);
+        }
+
+        .contact-info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem 0;
+        }
+
+        .contact-info-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+            margin-bottom: 1.8rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 120, 50, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .contact-info-list li:hover {
+            padding-left: 0.5rem;
+            background: rgba(0, 120, 50, 0.02);
+        }
+
+        .contact-info-list li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .contact-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--muted);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .contact-info-list li:hover .contact-icon {
+            background: var(--green);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .contact-details strong {
+            color: var(--ink);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .contact-details p {
+            margin: 0.2rem 0;
+            color: var(--gray-medium);
+        }
+
+        .contact-info-note {
+            font-size: 0.9rem;
+            color: var(--gray-medium);
+            font-style: italic;
+        }
+
+        .contact-social {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--muted);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--green);
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--green);
+            color: white;
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            flex: 2;
+            min-width: 400px;
+            max-width: 700px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateX(30px);
+            animation: slideInRight 0.8s ease-out 0.4s both;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 35px rgba(0, 120, 50, 0.12);
+        }
+
+        .contact-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--green), var(--green-dark));
+        }
+
+        .contact-form-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--ink);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--ink);
+            transition: color 0.3s ease;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            border: 2px solid #e9ecef;
+            border-radius: var(--radius);
+            padding: 0.9rem 1.2rem;
+            font-size: 1rem;
+            font-family: inherit;
+            background: #fafbfc;
+            color: var(--ink);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--green);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(0, 120, 50, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group input:hover,
+        .form-group select:hover,
+        .form-group textarea:hover {
+            border-color: var(--green);
+            background: white;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-checkbox {
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(0, 120, 50, 0.02);
+            border-radius: var(--radius);
+            border: 1px solid rgba(0, 120, 50, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .form-checkbox:hover {
+            background: rgba(0, 120, 50, 0.04);
+        }
+
+        .form-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--green);
+            margin-top: 0.1rem;
+        }
+
+        .form-checkbox label {
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: var(--ink);
+            line-height: 1.4;
+        }
+
+        .form-checkbox a {
+            color: var(--green);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .form-checkbox a:hover {
+            color: var(--green-dark);
+            text-decoration: underline;
+        }
+
+        .contact-btn {
+            background: var(--green);
+            color: white;
+            font-weight: 600;
+            border-radius: var(--radius);
+            padding: 1.2rem 2rem;
+            font-size: 1.1rem;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .contact-btn:hover {
+            background: var(--green-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 120, 50, 0.3);
+        }
+
+        .contact-btn:hover::before {
+            left: 100%;
+        }
+
+        .contact-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        /* Loading Animation for Button */
+        .contact-btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .contact-btn.loading::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: var(--radius);
+            border: 1px solid #c3e6cb;
+            margin-top: 1rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .success-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        /* Footer Styles */
+        .footer {
+            background: var(--muted);
+            border-top: 1px solid var(--muted);
+            padding: 3rem 0 1rem;
+            flex-shrink: 0;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .footer-logo {
+            width: 50px;
+            height: 50px;
+            background: var(--green);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .footer-info h3 {
+            color: var(--green);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-description {
+            color: var(--ink);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .footer-contact {
+            list-style: none;
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.8rem;
+            color: var(--ink);
+        }
+
+        .footer-section h4 {
+            color: var(--ink);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--ink);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover,
+        .footer-links a.active {
+            color: var(--green);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--muted);
+            padding-top: 1.5rem;
+            text-align: center;
+            color: var(--ink);
+        }
+
+        .footer-bottom a {
+            color: var(--green);
+            text-decoration: none;
+        }
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .contact-container {
+                flex-direction: column;
+                gap: 2rem;
+                padding: 0 1rem;
+                align-items: center;
+            }
+            
+            .contact-info-card,
+            .contact-form {
+                max-width: 100%;
+                min-width: 0;
+                transform: none;
+                animation: fadeInUp 0.8s ease-out both;
+            }
+
+            .contact-title {
+                font-size: 2.5rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero-button {
+                padding: 0.9rem 2rem;
+                font-size: 1rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        
+
+        @media (max-width: 480px) {
+            .header-content {
+                padding: 1rem;
+            }
+
+            .contact-title {
+                font-size: 2rem;
+            }
+
+            .contact-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .contact-info-card,
+            .contact-form {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="contact-hero">
+        <div class="header-content">
+            <h1 class="contact-title">Contáctanos</h1>
+            <p class="contact-subtitle">
+                ¿Tienes preguntas sobre Invitrosoft? Nuestro equipo de expertos está aquí para ayudarte. Contáctanos y descubre cómo podemos transformar tu laboratorio.
+            </p>
+            <button class="hero-button" onclick="scrollToContact()">
+                <img src="img/phone-icon.svg" alt="Teléfono" style="width: 20px; height: 20px;">
+                Hablar con un Experto
+            </button>
+        </div>
+    </section>
+
+    <section class="contact-main" id="contact-section">
+        <div class="contact-container">
+            <!-- Información de Contacto -->
+            <div class="contact-info-card">
+                <h2 class="contact-info-title">Información de Contacto</h2>
+                <ul class="contact-info-list">
+                    <li>
+                        <span class="contact-icon">
+                            <img src="img/email-icon.svg" alt="Email" style="width: 22px; height: 22px;">
+                        </span>
+                        <div class="contact-details">
+                            <strong>Email</strong>
+                            <p>contacto@invitrosoft.com</p>
+                            <p class="contact-info-note">Respuesta en 24 horas</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="contact-icon">
+                            <img src="img/phone-icon.svg" alt="Teléfono" style="width: 22px; height: 22px;">
+                        </span>
+                        <div class="contact-details">
+                            <strong>Teléfono</strong>
+                            <p>+52 (55) 1234-5678</p>
+                            <p class="contact-info-note">Lun - Vie, 9:00 - 18:00</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="contact-icon">
+                            <img src="img/location-icon.svg" alt="Ubicación" style="width: 22px; height: 22px;">
+                        </span>
+                        <div class="contact-details">
+                            <strong>Oficina</strong>
+                            <p>Ciudad de México, México</p>
+                            <p class="contact-info-note">Visitas con cita previa</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="contact-icon">
+                            <img src="img/support-icon.svg" alt="Soporte" style="width: 22px; height: 22px;">
+                        </span>
+                        <div class="contact-details">
+                            <strong>Soporte</strong>
+                            <p>24/7 Disponible</p>
+                            <p class="contact-info-note">Chat en vivo y tickets</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="contact-social">
+                    <span>Síguenos</span>
+                    <a href="#" class="social-link">
+                        <img src="img/linkedin-icon.svg" alt="LinkedIn" style="width: 20px; height: 20px;">
+                    </a>
+                    <a href="#" class="social-link">
+                        <img src="img/twitter-icon.svg" alt="Twitter" style="width: 20px; height: 20px;">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <form class="contact-form" onsubmit="handleFormSubmit(event)">
+                <h2 class="contact-form-title">Envíanos un mensaje</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre">Nombre completo *</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="empresa">Empresa/Institución</label>
+                        <input type="text" id="empresa" name="empresa" placeholder="Nombre de tu organización">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono" placeholder="+52 (55) 1234-5678">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="asunto">Asunto *</label>
+                    <select id="asunto" name="asunto" required>
+                        <option value="">Selecciona un asunto</option>
+                        <option value="demo">Solicitar demostración</option>
+                        <option value="precios">Información de precios</option>
+                        <option value="soporte">Soporte técnico</option>
+                        <option value="alianzas">Alianzas estratégicas</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="mensaje">Mensaje *</label>
+                    <textarea id="mensaje" style="resize: none;" name="mensaje" rows="4" placeholder="Cuéntanos más sobre tu laboratorio y cómo podemos ayudarte..." required></textarea>
+                </div>
+                <div class="form-group form-checkbox">
+                    <input type="checkbox" id="privacidad" name="privacidad" required>
+                    <label for="privacidad">
+                        Acepto la <a href="#" target="_blank">política de privacidad</a> y el tratamiento de mis datos personales.
+                    </label>
+                </div>
+                <button type="submit" class="contact-btn">
+                    <img src="img/send-icon.svg" alt="Enviar" style="width: 20px; height: 20px;">
+                    Enviar mensaje
+                </button>
+                <div id="success-message" class="success-message">
+                    ¡Mensaje enviado correctamente! Te responderemos pronto.
+                </div>
+            </form>
+        </div>
+    </section>
+
+   <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">I</div>
+                    <div class="footer-info">
+                        <h3>Invitrosoft</h3>
+                        <p class="footer-description">
+                            Plataforma moderna para la gestión integral de laboratorios de 
+                            micropropagación. Optimiza tus procesos con tecnología de vanguardia.
+                        </p>
+                        <ul class="footer-contact">
+                            <li>📧 contacto@invitrosoft.com</li>
+                            <li>📞 +1 (555) 123-4567</li>
+                            <li>📍 Ciudad de México, México</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="loadContent('inicio')" id="footer-inicio" class="active">Inicio</a></li>
+                        <li><a href="#" onclick="loadContent('proposito')" id="footer-proposito">Propósito</a></li>
+                        <li><a href="#" onclick="loadContent('panel')" id="footer-panel">Panel de Control</a></li>
+                        <li><a href="#" onclick="loadContent('parametros')" id="footer-parametros">Parámetros</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Soporte</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="loadContent('contacto')" id="footer-contacto">Contacto</a></li>
+                        <li><a href="#" onclick="loadContent('acerca')" id="footer-acerca">Acerca de</a></li>
+                        <li><a href="#">Documentación</a></li>
+                        <li><a href="#">Soporte Técnico</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                © 2025 Invitrosoft. Todos los derechos reservados. | 
+                <a href="#">Términos y condiciones</a> | 
+                <a href="#">Política de Privacidad</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll to contact section
+        function scrollToContact() {
+            document.getElementById('contact-section').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Handle form submission
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const button = event.target.querySelector('.contact-btn');
+            const successMessage = document.getElementById('success-message');
+            const form = event.target;
+            
+            // Add loading state
+            button.classList.add('loading');
+            button.innerHTML = '<img src="img/loading-icon.svg" alt="Cargando" style="width: 20px; height: 20px;"> Enviando mensaje...';
+            
+            // Simulate form submission
+            setTimeout(() => {
+                // Remove loading state
+                button.classList.remove('loading');
+                button.innerHTML = '<img src="img/check-icon.svg" alt="Enviado" style="width: 20px; height: 20px;"> Mensaje enviado';
+                
+                // Show success message
+                successMessage.classList.add('show');
+                
+                // Reset form after showing success
+                setTimeout(() => {
+                    form.reset();
+                    button.innerHTML = '<img src="img/send-icon.svg" alt="Enviar" style="width: 20px; height: 20px;"> Enviar mensaje';
+                    successMessage.classList.remove('show');
+                }, 3000);
+                
+            }, 2000);
+        }
+
+        // Add focus animations to form inputs
+        document.addEventListener('DOMContentLoaded', function() {
+            const formInputs = document.querySelectorAll('.form-group input, .form-group select, .form-group textarea');
+            
+            formInputs.forEach(input => {
+                const formGroup = input.closest('.form-group');
+                const label = formGroup.querySelector('label');
+                
+                input.addEventListener('focus', () => {
+                    label.style.color = 'var(--green)';
+                    label.style.transform = 'translateY(-2px)';
+                });
+                
+                input.addEventListener('blur', () => {
+                    label.style.color = 'var(--ink)';
+                    label.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // Add intersection observer for enhanced animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe animated elements
+            document.querySelectorAll('.contact-info-card, .contact-form').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

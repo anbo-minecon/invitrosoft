@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - Invitrosoft</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root{
+            --green:#007832;
+            --green-dark:#055d29;
+            --muted:#e9f6ee;
+            --ink:#1f2d1f;
+            --radius:8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* IMPORTANTE: Configuración para iframe sin scroll */
+        html, body {
+            height: auto;
+            overflow: visible;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--ink);
+            min-height: auto;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(0, 120, 50, 0.363), rgba(0, 120, 50, 0.363)), 
+                        url('img/micro.jpeg') no-repeat center/cover;
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll; /* Cambiado de fixed para mejor rendimiento en iframe */
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--muted);
+            margin-bottom: 3rem;
+            line-height: 1.7;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .btn-primary {
+            background: var(--muted);
+            color: var(--green);
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: #ffffff;
+        }
+
+        .btn-secondary {
+            background: rgba(233, 246, 238, 0.2);
+            color: var(--muted);
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(233, 246, 238, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(233, 246, 238, 0.1);
+            border-color: var(--muted);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Image Container */
+        .hero-image {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 500px;
+            animation: fadeInRight 1s ease-out 0.8s both;
+        }
+
+        .hero-3d-container {
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-3d-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Placeholder mejorado */
+        .image-placeholder {
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(233, 246, 238, 0.15), rgba(233, 246, 238, 0.05));
+            border: 2px dashed rgba(233, 246, 238, 0.4);
+            border-radius: var(--radius);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--muted);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .image-placeholder:hover {
+            background: linear-gradient(135deg, rgba(233, 246, 238, 0.2), rgba(233, 246, 238, 0.1));
+            border-color: rgba(233, 246, 238, 0.6);
+        }
+
+        .placeholder-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .placeholder-text {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* Animaciones */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-15px) rotate(1deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(0deg);
+            }
+            75% {
+                transform: translateY(-15px) rotate(-1deg);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Background Animation */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(233, 246, 238, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(233, 246, 238, 0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Features Section */
+        .features-preview {
+            padding: 4rem 0;
+            background: var(--muted);
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .features-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--ink);
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 5px 15px rgba(0, 120, 50, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .feature-card.animate {
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 120, 50, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--muted);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            color: var(--ink);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .feature-description {
+            color: var(--ink);
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        .why-choose-section {
+            padding: 4rem 2rem;
+            border-radius: var(--radius);
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .content-side {
+            padding-right: 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--ink);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--ink);
+            opacity: 0.7;
+            margin-bottom: 2.5rem;
+            line-height: 1.5;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 2.5rem;
+            padding: 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item.animate {
+            animation: slideInLeft 0.6s ease-out both;
+        }
+
+        .feature-icon-bg {
+            width: 20px;
+            height: 20px;
+            background: var(--green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-icon-img {
+            width: 12px;
+            height: 12px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .feature-text {
+            color: var(--ink);
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .cta-button {
+            background: var(--green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 120, 50, 0.3);
+        }
+
+        .cta-arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover .cta-arrow {
+            transform: translateX(3px);
+        }
+
+        .dashboard-side {
+            position: relative;
+        }
+
+        .dashboard-preview {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 120, 50, 0.1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .dashboard-preview.animate {
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--muted);
+        }
+
+        .dashboard-title {
+            font-size: 1rem;
+            color: var(--ink);
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        .dashboard-status {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .metrics-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-item {
+            text-align: left;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .metric-value.green {
+            color: var(--green);
+        }
+
+        .metric-value.blue {
+            color: #2563eb;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--ink);
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        .efficiency-section {
+            margin-top: 1.5rem;
+        }
+
+        .efficiency-label {
+            font-size: 0.9rem;
+            color: var(--ink);
+            opacity: 0.7;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+
+        .efficiency-bar-container {
+            background: var(--muted);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .efficiency-bar {
+            background: var(--green);
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            position: relative;
+            transition: width 2s ease-out;
+        }
+
+        .efficiency-bar.animate {
+            width: 94%;
+        }
+
+        .efficiency-percentage {
+            position: absolute;
+            right: 0;
+            top: -25px;
+            font-size: 0.9rem;
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        /* Background decoration */
+        .dashboard-preview::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            border-radius: 50%;
+            opacity: 0.05;
+        }
+
+        .dashboard-preview::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 60px;
+            height: 60px;
+            background: var(--green);
+            border-radius: 50%;
+            opacity: 0.03;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 1rem;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .why-choose-section {
+                padding: 2rem 1rem;
+            }
+
+            .section-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .content-side {
+                padding-right: 0;
+                text-align: center;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .metrics-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .dashboard-preview {
+                padding: 1rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Invitrosoft</h1>
+                <h2 class="hero-subtitle">Gestión Moderna de Laboratorios</h2>
+                <p class="hero-description">
+                    Revoluciona la gestión de tu laboratorio de micropropagación con nuestra 
+                    plataforma integral. Optimiza procesos, monitorea cultivos en tiempo real 
+                    y aumenta la eficiencia de tu producción con tecnología de vanguardia.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="comenzarAhora()">Comenzar Ahora</button>
+                    <a href="#" class="btn-secondary" onclick="verDemo()">Ver Demo</a>
+                </div>
+            </div>
+           <div class="hero-image">
+                <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+                    <div class="sena">
+                        <model-viewer id="modelo3d" src="img/base.glb" class="foto-introduccion" alt="Modelo 3D" auto-rotate camera-controls style="width: 300px; height: 300px;"></model-viewer>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', () => {
+                                const modelViewer = document.getElementById('modelo3d');
+                                modelViewer.addEventListener('load', () => {
+                                    // Cambia el color del primer material encontrado a verde #007832
+                                    const material = modelViewer.model && modelViewer.model.materials[0];
+                                    if (material) {
+                                        material.pbrMetallicRoughness.setBaseColorFactor([0/255, 120/255, 50/255, 1]); // #007832
+                                    }
+                                });
+                            });
+                        </script>
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Preview -->
+    <section class="features-preview">
+        <div class="features-container">
+            <h2 class="features-title">Características Principales</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔬</div>
+                    <h3 class="feature-title">Monitoreo en Tiempo Real</h3>
+                    <p class="feature-description">
+                        Supervisa todos tus cultivos y procesos de laboratorio en tiempo real 
+                        con alertas automáticas y reportes detallados.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Análisis Avanzado</h3>
+                    <p class="feature-description">
+                        Obtén insights valiosos con nuestras herramientas de análisis y 
+                        visualización de datos para optimizar tu producción.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Automatización Inteligente</h3>
+                    <p class="feature-description">
+                        Automatiza tareas repetitivas y procesos complejos para aumentar 
+                        la eficiencia y reducir errores humanos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-choose-section">
+        <div class="section-container">
+            <div class="content-side">
+                <h2 class="section-title">¿Por qué elegir Invitrosoft?</h2>
+                <p class="section-subtitle">
+                    Más que un software, es tu socio estratégico para la excelencia en micropropagación.
+                </p>
+                <ul class="features-list">
+                    <li class="feature-item">
+                        <span class="feature-icon-bg">
+                            <span class="feature-icon-img">✓</span>
+                        </span>
+                        <span class="feature-text">Reducción del 40% en tiempo de gestión</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon-bg">
+                            <span class="feature-icon-img">✓</span>
+                        </span>
+                        <span class="feature-text">Trazabilidad completa de procesos</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon-bg">
+                            <span class="feature-icon-img">✓</span>
+                        </span>
+                        <span class="feature-text">Cumplimiento normativo automatizado</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon-bg">
+                            <span class="feature-icon-img">✓</span>
+                        </span>
+                        <span class="feature-text">Integración con equipos de laboratorio</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon-bg">
+                            <span class="feature-icon-img">✓</span>
+                        </span>
+                        <span class="feature-text">Backup automático en la nube</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon-bg">
+                            <span class="feature-icon-img">✓</span>
+                        </span>
+                        <span class="feature-text">Soporte técnico especializado 24/7</span>
+                    </li>
+                </ul>
+                <button class="cta-button" onclick="ingresarAhora()">
+                    Ingresar ahora
+                    <span class="cta-arrow">→</span>
+                </button>
+            </div>
+            <div class="dashboard-side">
+                <div class="dashboard-preview">
+                    <div class="dashboard-header">
+                        <span class="dashboard-title">Dashboard Overview</span>
+                        <div class="dashboard-status"></div>
+                    </div>
+                    <div class="metrics-container">
+                        <div class="metric-item">
+                            <div class="metric-value green">156</div>
+                            <div class="metric-label">Reactivos activos</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value blue">23</div>
+                            <div class="metric-label">Protocolos</div>
+                        </div>
+                    </div>
+                    <div class="efficiency-section">
+                        <div class="efficiency-label">Eficiencia del laboratorio</div>
+                        <div class="efficiency-bar-container">
+                            <div class="efficiency-bar">
+                                <div class="efficiency-percentage">94%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">I</div>
+                    <div class="footer-info">
+                        <h3>Invitrosoft</h3>
+                        <p class="footer-description">
+                            Plataforma moderna para la gestión integral de laboratorios de 
+                            micropropagación. Optimiza tus procesos con tecnología de vanguardia.
+                        </p>
+                        <ul class="footer-contact">
+                            <li>📧 contacto@invitrosoft.com</li>
+                            <li>📞 +1 (555) 123-4567</li>
+                            <li>📍 Ciudad de México, México</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="loadContent('inicio')" id="footer-inicio" class="active">Inicio</a></li>
+                        <li><a href="#" onclick="loadContent('proposito')" id="footer-proposito">Propósito</a></li>
+                        <li><a href="#" onclick="loadContent('panel')" id="footer-panel">Panel de Control</a></li>
+                        <li><a href="#" onclick="loadContent('parametros')" id="footer-parametros">Parámetros</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Soporte</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="loadContent('contacto')" id="footer-contacto">Contacto</a></li>
+                        <li><a href="#" onclick="loadContent('acerca')" id="footer-acerca">Acerca de</a></li>
+                        <li><a href="#">Documentación</a></li>
+                        <li><a href="#">Soporte Técnico</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                © 2025 Invitrosoft. Todos los derechos reservados. | 
+                <a href="#">Términos y condiciones</a> | 
+                <a href="#">Política de Privacidad</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Funciones para los botones
+        function comenzarAhora() {
+            // Aquí puedes redirigir al formulario de registro o login
+            console.log('Comenzar ahora clicked');
+            // window.parent.loadContent('registro'); // Si tienes una página de registro
+        }
+
+        function verDemo() {
+            // Aquí puedes mostrar un video demo o redirigir
+            console.log('Ver demo clicked');
+            // window.parent.loadContent('demo'); // Si tienes una página de demo
+        }
+
+        function ingresarAhora() {
+            // Aquí puedes redirigir al panel de control
+            console.log('Ingresar ahora clicked');
+            // window.parent.loadContent('panel'); // Redirige al panel de control
+        }
+
+        // Animaciones cuando los elementos entran en vista
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('feature-card')) {
+                        entry.target.classList.add('animate');
+                    } else if (entry.target.classList.contains('feature-item')) {
+                        entry.target.classList.add('animate');
+                    } else if (entry.target.classList.contains('dashboard-preview')) {
+                        entry.target.classList.add('animate');
+                        // Animar también la barra de eficiencia
+                        const efficiencyBar = entry.target.querySelector('.efficiency-bar');
+                        if (efficiencyBar) {
+                            setTimeout(() => {
+                                efficiencyBar.classList.add('animate');
+                            }, 500);
+                        }
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observar elementos cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animar cards de features
+            document.querySelectorAll('.feature-card').forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.2}s`;
+                observer.observe(card);
+            });
+
+            // Animar items de features
+            document.querySelectorAll('.feature-item').forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+                observer.observe(item);
+            });
+
+            // Animar dashboard
+            const dashboard = document.querySelector('.dashboard-preview');
+            if (dashboard) {
+                observer.observe(dashboard);
+            }
+
+            // Ajustar altura del iframe al contenido del parent
+            function resizeIframe() {
+                const height = document.documentElement.scrollHeight;
+                window.parent.postMessage({
+                    type: 'resize',
+                    height: height
+                }, '*');
+            }
+
+            // Llamar al cargar y al cambiar el tamaño
+            resizeIframe();
+            window.addEventListener('resize', resizeIframe);
+        });
+
+        // Suavizar scroll para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

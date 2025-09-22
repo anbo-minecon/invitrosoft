@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propósito - Invitrosoft</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root{
+            --green:#007832;
+            --green-dark:#055d29;
+            --muted:#e9f6ee;
+            --ink:#1f2d1f;
+            --radius:8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: auto;
+            overflow: visible;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--ink);
+            min-height: auto;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(0, 120, 50, 0.363), rgba(0, 120, 50, 0.363)), 
+                        url('img/fondo2.png') no-repeat center/cover;
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll; /* Cambiado de fixed para mejor rendimiento en iframe */
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+        }
+
+        .hero-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--green);
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--ink);
+            opacity: 0.7;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature-card {
+            background: var(--muted);
+            padding: 2.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 120, 50, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 120, 50, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--green);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 120, 50, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-icon:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 120, 50, 0.3);
+        }
+
+        .feature-icon img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            filter: brightness(0) invert(1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-icon:hover img {
+            transform: scale(1.1);
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: var(--ink);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Innovation Section */
+        .innovation-section {
+            background: var(--muted);
+            padding: 4rem 0 5rem 0;
+        }
+
+        .innovation-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--ink);
+            opacity: 0.7;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .innovation-flex {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .innovation-carousel {
+            flex: 1.1;
+            min-width: 320px;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .carousel-card {
+            position: relative;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,120,50,0.10);
+            overflow: hidden;
+            width: 100%;
+            min-height: 220px;
+            margin-bottom: 1.2rem;
+        }
+
+        .carousel-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: #fff;
+            padding: 1.2rem 1rem 1rem 1rem;
+        }
+
+        .carousel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .carousel-desc {
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .carousel-arrows {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1rem;
+            transform: translateY(-50%);
+        }
+
+        .carousel-arrow {
+            background: rgba(255,255,255,0.8);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 1.3rem;
+            color: var(--green);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,120,50,0.10);
+            transition: background 0.2s;
+        }
+
+        .carousel-arrow:hover {
+            background: var(--green);
+            color: #fff;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 0.5rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #cce9db;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .dot.active {
+            background: var(--green);
+        }
+
+        .innovation-info {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 1.2rem;
+        }
+
+        .innovation-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 0.2rem;
+        }
+
+        .innovation-desc {
+            font-size: 1rem;
+            color: var(--ink);
+            opacity: 0.8;
+            margin-bottom: 0.7rem;
+        }
+
+        .innovation-icons {
+            display: flex;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .innovation-icon-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0,120,50,0.08);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.3rem;
+            min-width: 210px;
+            transition: box-shadow 0.2s;
+        }
+
+        .innovation-icon-card:hover {
+            box-shadow: 0 8px 32px rgba(0,120,50,0.15);
+        }
+
+        .icon-bg {
+            width: 44px;
+            height: 44px;
+            background: var(--green);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,120,50,0.10);
+            flex-shrink: 0;
+        }
+
+        .icon-bg img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .icon-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 0.2rem;
+        }
+
+        .icon-desc {
+            font-size: 0.95rem;
+            color: var(--ink);
+            opacity: 0.8;
+        }
+
+        .cta-button {
+            background: var(--green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: 1.2rem;
+        }
+
+        .cta-button:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 120, 50, 0.3);
+        }
+
+        .cta-arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover .cta-arrow {
+            transform: translateX(3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .hero-description {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .innovation-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .content-left h2 {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .carousel-container {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section {
+                padding: 3rem 1rem;
+            }
+
+            .features-section {
+                padding: 3rem 1rem;
+            }
+
+            .innovation-section {
+                padding: 3rem 1rem;
+            }
+
+            .feature-card {
+                padding: 2rem;
+            }
+        }
+
+        /* Nueva sección de innovación */
+        .innovation-flex {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+        }
+
+        .innovation-carousel {
+            flex: 1;
+            position: relative;
+        }
+
+        .carousel-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .carousel-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .carousel-card:hover .carousel-overlay {
+            opacity: 1;
+        }
+
+        .carousel-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .carousel-desc {
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .carousel-arrows {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-arrow {
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--green);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .carousel-arrow:hover {
+            background: white;
+        }
+
+        .carousel-dots {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            margin: 0 0.2rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .dot.active {
+            background: white;
+        }
+
+        .innovation-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .innovation-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .innovation-desc {
+            font-size: 1.1rem;
+            color: var(--ink);
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .innovation-icons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .innovation-icon-card {
+            background: var(--muted);
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .innovation-icon-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 120, 50, 0.15);
+        }
+
+        .icon-bg {
+            width: 60px;
+            height: 60px;
+            background: var(--green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icon-bg img {
+            width: 70%;
+            height: 70%;
+            object-fit: cover;
+            filter: brightness(0) invert(1);
+        }
+
+        .icon-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        .icon-desc {
+            color: var(--ink);
+            opacity: 0.8;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Ajustes en los botones CTA */
+        .cta-button {
+            background: var(--green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            max-width: 250px;
+            margin: 0 auto;
+        }
+
+        .cta-button:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 120, 50, 0.3);
+        }
+
+        /* Animaciones adicionales */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Aplicar animaciones */
+        .hero-section {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .features-section {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .innovation-section {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .cta-section {
+            animation: slideIn 1s ease-out;
+        }
+
+        /* Nueva sección de misión y visión */
+        .mission-vision-section {
+            background: #fff;
+            padding: 3rem 0 4rem 0;
+        }
+
+        .mission-vision-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+
+        .mission-block, .vision-block {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .mv-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        .mv-desc {
+            font-size: 1rem;
+            color: var(--ink);
+            opacity: 0.85;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .mv-impact-card {
+            background: #e9f6ee;
+            border-radius: 10px;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            max-width: 340px;
+        }
+
+        .mv-impact-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--green-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .mv-impact-values {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .mv-impact-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--green);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .mv-impact-value.green {
+            color: var(--green);
+        }
+
+        .mv-impact-label {
+            font-size: 0.95rem;
+            color: var(--ink);
+            opacity: 0.8;
+            display: block;
+        }
+
+        .mv-commitment-card {
+            background: #eaf4ff;
+            border-radius: 10px;
+            padding: 1.2rem 1.5rem;
+            max-width: 340px;
+        }
+
+        .mv-commitment-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2274e0;
+            margin-bottom: 0.5rem;
+        }
+
+        .mv-commitment-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mv-commitment-list li {
+            font-size: 0.97rem;
+            margin-bottom: 0.5rem;
+            padding-left: 0;
+        }
+
+        .blue-link {
+            color: #2274e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: text-decoration 0.2s;
+        }
+
+        .blue-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .mission-vision-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .mv-impact-card, .mv-commitment-card {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <h1 class="hero-title">Nuestro Propósito</h1>
+            <p class="hero-description">
+                Revolucionar la gestión de laboratorios de micropropagación mediante tecnología 
+                innovadora que optimiza procesos, garantiza la calidad y facilita la investigación 
+                científica.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="explorarCaracteristicas()">Explorar características</button>
+                <a href="#" class="btn-secondary" onclick="verPublicaciones()">Ver publicaciones</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-container">
+            <h2 class="section-title">Funcionalidades Principales</h2>
+            <p class="section-subtitle">
+                Cada característica está diseñada para resolver los desafíos específicos de los 
+                laboratorios de micropropagación modernos.
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=100&h=100&fit=crop" alt="Gestión de Reactivos">
+                    </div>
+                    <h3 class="feature-title">Gestión de Reactivos</h3>
+                    <p class="feature-description">
+                        Control integral de inventarios y análisis, fechas de vencimiento, 
+                        alertas automáticas y trazabilidad en todos los procesos.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="Usuarios y Roles">
+                    </div>
+                    <h3 class="feature-title">Usuarios y Roles</h3>
+                    <p class="feature-description">
+                        Control granular y control robusto con administración, auditoría de acceso y 
+                        gestión de permisos.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=100&h=100&fit=crop" alt="Protocolos y Parámetros">
+                    </div>
+                    <h3 class="feature-title">Protocolos y Parámetros</h3>
+                    <p class="feature-description">
+                        Digitalización de protocolos con parámetros configurables, validación 
+                        automática y documentación integrada.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Innovation Section -->
+    <section class="innovation-section">
+        <div class="innovation-container">
+            <h2 class="section-title">Innovación en cada proceso</h2>
+            <p class="section-subtitle">
+                Descubre cómo Invitrosoft facilita la gestión de tu laboratorio con herramientas
+                visuales, intuitivas y adaptadas a tus necesidades específicas.
+            </p>
+            <div class="innovation-flex">
+                <!-- Carrusel -->
+                <div class="innovation-carousel">
+                    <div class="carousel-card">
+                        <img src="https://images.pexels.com/photos/3735746/pexels-photo-3735746.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Trazabilidad y Reportes" class="carousel-img">
+                        <div class="carousel-overlay">
+                            <h3 class="carousel-title">Trazabilidad y Reportes</h3>
+                            <p class="carousel-desc">Obtén reportes claros y lleva el seguimiento completo de cada proceso en tu laboratorio.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-card" style="display:none;">
+                        <img src="https://images.pexels.com/photos/3735747/pexels-photo-3735747.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Gestión de Reactivos" class="carousel-img">
+                        <div class="carousel-overlay">
+                            <h3 class="carousel-title">Gestión de Reactivos</h3>
+                            <p class="carousel-desc">Controla inventarios y fechas de vencimiento con alertas automáticas.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-card" style="display:none;">
+                        <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Protocolos Digitales" class="carousel-img">
+                        <div class="carousel-overlay">
+                            <h3 class="carousel-title">Protocolos Digitales</h3>
+                            <p class="carousel-desc">Digitaliza y valida automáticamente tus protocolos de laboratorio.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-card" style="display:none;">
+                        <img src="falta-imagen###############################" alt="Análisis Inteligente" class="carousel-img">
+                        <div class="carousel-overlay">
+                            <h3 class="carousel-title">Análisis Inteligente</h3>
+                            <p class="carousel-desc">Obtén insights y reportes avanzados para la toma de decisiones.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-arrows">
+                        <button class="carousel-arrow left" onclick="prevSlide()">&lt;</button>
+                        <button class="carousel-arrow right" onclick="nextSlide()">&gt;</button>
+                    </div>
+                    <div class="carousel-dots">
+                        <span class="dot active" onclick="showSlide(0)"></span>
+                        <span class="dot" onclick="showSlide(1)"></span>
+                        <span class="dot" onclick="showSlide(2)"></span>
+                        <span class="dot" onclick="showSlide(3)"></span>
+                    </div>
+                </div>
+                <!-- Texto y tarjetas -->
+                <div class="innovation-info">
+                    <h3 class="innovation-title">Tecnología que impulsa la ciencia</h3>
+                    <p class="innovation-desc">
+                        Invitrosoft combina la experiencia en micropropagación con las últimas tecnologías de gestión para crear una plataforma que no solo administra, sino que potencia la investigación y el desarrollo.
+                    </p>
+                    <div class="innovation-icons">
+                        <div class="innovation-icon-card">
+                            <div class="icon-bg">
+                                <img src="ruta-a-tu-icono-analitica.png" alt="Análisis Avanzado">
+                            </div>
+                            <div>
+                                <div class="icon-title">Análisis Avanzado</div>
+                                <div class="icon-desc">Seguimiento inteligente y reportes para gestionar procesos.</div>
+                            </div>
+                        </div>
+                        <div class="innovation-icon-card">
+                            <div class="icon-bg">
+                                <img src="ruta-a-tu-icono-documentacion.png" alt="Documentación Digital">
+                            </div>
+                            <div>
+                                <div class="icon-title">Documentación Digital</div>
+                                <div class="icon-desc">Protocolos de trabajo digitalizados y control de cambios automático.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="cta-button">
+                        Solicitar demostración <span class="cta-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission and Vision Section -->
+    <section class="mission-vision-section">
+        <div class="mission-vision-container">
+            <div class="mission-block">
+                <h3 class="mv-title">Nuestra Misión</h3>
+                <p class="mv-desc">
+                    Democratizar el acceso a tecnología de gestión avanzada para laboratorios de micropropagación, permitiendo que investigadores y técnicos se enfoquen en lo que mejor saben hacer: generar conocimiento científico de calidad.
+                </p>
+                <div class="mv-impact-card">
+                    <div class="mv-impact-title">Impacto Medible</div>
+                    <div class="mv-impact-values">
+                        <div>
+                            <span class="mv-impact-value green">40%</span>
+                            <span class="mv-impact-label">Reducción tiempo de gestión</span>
+                        </div>
+                        <div>
+                            <span class="mv-impact-value green">99.9%</span>
+                            <span class="mv-impact-label">Precisión en inventarios</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="vision-block">
+                <h3 class="mv-title">Nuestra Visión</h3>
+                <p class="mv-desc">
+                    Ser la plataforma líder mundial en gestión de laboratorios de micropropagación, impulsando la investigación científica a través de la innovación tecnológica y contribuyendo al avance de la biotecnología vegetal.
+                </p>
+                <div class="mv-commitment-card">
+                    <div class="mv-commitment-title">Compromiso Global</div>
+                    <ul class="mv-commitment-list">
+                        <li><a href="#" class="blue-link">Sostenibilidad ambiental</a></li>
+                        <li><a href="#" class="blue-link">Accesibilidad tecnológica</a></li>
+                        <li><a href="#" class="blue-link">Innovación continua</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">I</div>
+                    <div class="footer-info">
+                        <h3>Invitrosoft</h3>
+                        <p class="footer-description">
+                            Plataforma moderna para la gestión integral de laboratorios de 
+                            micropropagación. Optimiza tus procesos con tecnología de vanguardia.
+                        </p>
+                        <ul class="footer-contact">
+                            <li>📧 contacto@invitrosoft.com</li>
+                            <li>📞 +1 (555) 123-4567</li>
+                            <li>📍 Ciudad de México, México</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="loadContent('inicio')" id="footer-inicio" class="active">Inicio</a></li>
+                        <li><a href="#" onclick="loadContent('proposito')" id="footer-proposito">Propósito</a></li>
+                        <li><a href="#" onclick="loadContent('panel')" id="footer-panel">Panel de Control</a></li>
+                        <li><a href="#" onclick="loadContent('parametros')" id="footer-parametros">Parámetros</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Soporte</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="loadContent('contacto')" id="footer-contacto">Contacto</a></li>
+                        <li><a href="#" onclick="loadContent('acerca')" id="footer-acerca">Acerca de</a></li>
+                        <li><a href="#">Documentación</a></li>
+                        <li><a href="#">Soporte Técnico</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                © 2025 Invitrosoft. Todos los derechos reservados. | 
+                <a href="#">Términos y condiciones</a> | 
+                <a href="#">Política de Privacidad</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Funciones para los botones
+        function explorarCaracteristicas() {
+            console.log('Explorar características clicked');
+            // Aquí puedes redirigir a una página de características
+        }
+
+        function verPublicaciones() {
+            console.log('Ver publicaciones clicked');
+            // Aquí puedes redirigir a publicaciones o investigaciones
+        }
+
+        function solicitarDemostracion() {
+            console.log('Solicitar demostración clicked');
+            // Aquí puedes abrir un modal o redirigir al formulario de contacto
+        }
+
+        // Comunicar altura al iframe padre
+        function notifyParentOfHeight() {
+            const height = document.documentElement.scrollHeight;
+            window.parent.postMessage({
+                type: 'resize',
+                height: height
+            }, '*');
+        }
+
+        // Llamar al cargar y al cambiar el tamaño
+        window.addEventListener('load', notifyParentOfHeight);
+        window.addEventListener('resize', notifyParentOfHeight);
+
+        // Observer para detectar cambios en el contenido
+        const resizeObserver = new ResizeObserver(notifyParentOfHeight);
+        resizeObserver.observe(document.documentElement);
+
+        // Carrusel funcional simple
+        let currentSlide = 0;
+        const cards = document.querySelectorAll('.carousel-card');
+        const dots = document.querySelectorAll('.carousel-dots .dot');
+
+        function showSlide(n) {
+            cards.forEach((card, i) => {
+                card.style.display = (i === n) ? 'block' : 'none';
+                dots[i].classList.toggle('active', i === n);
+            });
+            currentSlide = n;
+        }
+
+        function prevSlide() {
+            let n = currentSlide - 1;
+            if (n < 0) n = cards.length - 1;
+            showSlide(n);
+        }
+
+        function nextSlide() {
+            let n = currentSlide + 1;
+            if (n >= cards.length) n = 0;
+            showSlide(n);
+        }
+
+        // Inicializa el carrusel
+        showSlide(0);
+
+        // Carrusel automático cada 4 segundos
+        setInterval(() => {
+            nextSlide();
+        }, 4000);
+    </script>
+</body>
+</html>
