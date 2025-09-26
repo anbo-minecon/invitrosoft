@@ -21,16 +21,28 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            color: var(--ink);
             background: var(--white);
             overflow-x: hidden;
         }
 
         /* Sección Nuestra Historia */
         .historia-section {
-            background: var(--white);
+            background: linear-gradient(135deg, rgba(0, 120, 50, 0.378), rgba(0, 120, 50, 0.363)), 
+                        url('img/fondo4.png') no-repeat center/cover;
             padding: 5rem 0;
             position: relative;
+            color: var(--white);
+        }
+
+        .historia-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
         }
 
         .historia-container {
@@ -52,7 +64,6 @@
         .historia-title {
             font-size: 2.5rem;
             font-weight: 700;
-            color: var(--ink);
             margin-bottom: 2rem;
             line-height: 1.2;
         }
@@ -60,7 +71,6 @@
         .historia-text {
             font-size: 1rem;
             line-height: 1.7;
-            color: var(--gray-medium);
             margin-bottom: 1.5rem;
         }
 

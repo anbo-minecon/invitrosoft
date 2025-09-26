@@ -1,8 +1,13 @@
 <?php
-// Archivo de conexión reutilizable
-$conn = new mysqli("localhost", "root", "", "invitrosoft");
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "invitrosoft";
+
+$conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_errno) {
     http_response_code(500);
-    die("Error de conexión a la base de datos");
+    echo json_encode(["error" => "Error de conexión a la base de datos"]);
+    exit;
 }
 ?>

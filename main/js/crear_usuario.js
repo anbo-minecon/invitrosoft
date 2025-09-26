@@ -2,11 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const userTypePanel = document.getElementById('user-type-panel');
     const userFormPanel = document.getElementById('user-form-panel');
     const btnVolverHeader = document.getElementById('btnVolverHeader');
-
-
     let generos = [];
 
-    // Cargar géneros desde la base de datos (parámetros)
     async function cargarGeneros() {
         const res = await fetch('db/parametros.php?accion=listar&tipo=genero');
         generos = await res.json();
@@ -19,21 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
             mostrarFormulario(tipo);
         });
     });
-    
-        // Permite recargar géneros en tiempo real desde el select
-        async function recargarGenerosEnSelect() {
-            const select = document.getElementById('genero');
-            if (!select) return;
-            await cargarGeneros();
-            // Guardar valor seleccionado
-            const valorPrevio = select.value;
-            select.innerHTML = '<option value="">Seleccione</option>' +
-                generos.map(g => `<option value="${g.id_parametro}">${g.nombre}</option>`).join('');
-            // Restaurar selección si existe
-            if (generos.some(g => g.id_parametro == valorPrevio)) {
-                select.value = valorPrevio;
-            }
-        }
 
     function mostrarFormulario(tipo) {
         userTypePanel.style.display = 'none';
@@ -65,12 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h2>Registro de ${tipo.charAt(0).toUpperCase() + tipo.slice(1)}</h2>
                 <div class="form-group">
                     <label for="genero">Género</label>
-                    <div style="display:flex; align-items:center; gap:8px; width:100%;">
-                        <select id="genero" name="genero" required style="flex:1; min-width:0;">
-                            <option value="">Seleccione</option>
-                            ${generos.map(g => `<option value="${g.id_parametro}">${g.nombre}</option>`).join('')}
-                        </select>                        
-                    </div>
+                    <select id="genero" name="genero" required>
+                        <option value="">Seleccione</option>
+                        ${generos.map(g => `<option value="${g.id_parametro}">${g.nombre}</option>`).join('')}
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="identidad">Número de identidad</label>
@@ -102,19 +82,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button type="submit" class="btn-primary">Registrar</button>
                 </div>
             </form>
+            <div id="notificacion" style="margin-top:15px;text-align:center;"></div>
         `;
-        
+        document.getElementById('userForm').addEventListener('submit', enviarFormulario);
     }
+
     async function enviarFormulario(e) {
         e.preventDefault();
         const form = e.target;
         const data = Object.fromEntries(new FormData(form));
-        // Validación de contraseñas
+        const notificacion = document.getElementById('notificacion');
         if (data.password !== data.password2) {
-            alert('Las contraseñas no coinciden');
+            notificacion.innerHTML = '<span style="color:#e74c3c;">Las contraseñas no coinciden</span>';
             return;
         }
-        // Determinar tipo
         let tipo = 'admin';
         if (data.ficha_formacion) tipo = 'aprendiz';
         else if (data.tiempo_uso) tipo = 'pasante';
@@ -127,17 +108,16 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const result = await res.json();
             if (res.ok && result.success) {
-                alert('Usuario registrado correctamente');
-                location.reload();
+                notificacion.innerHTML = '<span style="color:#2ecc71;">Usuario registrado correctamente</span>';
+                setTimeout(() => location.reload(), 1500);
             } else {
-                alert(result.error || 'Error al registrar');
+                notificacion.innerHTML = `<span style="color:#e74c3c;">${result.error || 'Error al registrar'}</span>`;
             }
         } catch (err) {
-            alert('Error de conexión');
+            notificacion.innerHTML = '<span style="color:#e74c3c;">Error de conexión</span>';
         }
     }
 
-    // Mostrar el botón de volver solo en la selección de tipo de usuario
     if(btnVolverHeader) btnVolverHeader.style.display = 'flex';
 });
 

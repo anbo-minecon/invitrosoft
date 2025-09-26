@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Formulaciones</title>
+    <link rel="stylesheet" href="css/formul.css">
+    <style>
+        :root {
+            /* Si necesitas colores extra, agrégalos aquí */
+            --danger: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --info: #3498db;
+        }
+        /* Header hamburguesa adaptado */
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: url('../img/logo.svg') no-repeat center/contain;
+            border-radius: 50%;
+        }
+        .logo-text-subgroup {
+            display: flex;
+            flex-direction: column;
+        }
+        .logo-text {
+            font-weight: bold;
+            font-size: 1.3em;
+            color: var(--green);
+        }
+        .logo-subtitle {
+            font-size: 0.95em;
+            color: var(--muted);
+        }
+        .nav-menu {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+        }
+        .nav-item a {
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .nav-item a.active,
+        .nav-item a:hover {
+            background: var(--muted);
+            color: var(--green);
+        }
+        .access-btn {
+            background: var(--green);
+            color: #fff;
+            border-radius: 6px;
+            padding: 8px 18px;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+        .menu-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            display: none;
+        }
+        .menu-icon {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .menu-icon span {
+            display: block;
+            width: 28px;
+            height: 4px;
+            background: var(--green);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        /* Mobile menu */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.18);
+            z-index: 9998;
+        }
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--muted);
+            z-index: 9999;
+            flex-direction: column;
+            padding: 32px 18px;
+        }
+        .mobile-menu.open,
+        .mobile-menu-overlay.open {
+            display: block;
+        }
+        .mobile-menu-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .mobile-menu-title {
+            font-weight: bold;
+            color: var(--green);
+            font-size: 1.2em;
+        }
+        .mobile-menu-subtitle {
+            color: var(--muted);
+            font-size: 0.95em;
+        }
+        .mobile-menu-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .mobile-menu-item {
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 0;
+            border-radius: 6px;
+        }
+        .mobile-menu-item.active,
+        .mobile-menu-item:hover {
+            background: var(--green);
+            color: #fff;
+        }
+        .mobile-access-btn {
+            background: var(--green);
+            color: #fff;
+            border-radius: 6px;
+            padding: 10px 18px;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            display: block;
+            text-align: center;
+        }
+        @media (max-width: 900px) {
+            .nav-menu { display: none; }
+            .menu-toggle { display: block; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header con menú hamburguesa -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon" ></div>
+                <span class="logo-text-subgroup">
+                    <span class="logo-text">Formulaciones</span>
+                    <span class="logo-subtitle">Gestiona tus formulaciones de manera eficiente</span>
+                </span>
+            </a>
+            <ul class="nav-menu">
+                <div class="user-menu-container mobile-user-menu">
+                    <button type="button" class="user-menu-btn" id="mobile-user-btn">
+                        <img src="../img/adaniesbasilio.jpg" alt="Icono usuario" class="user-icon">
+                        <div class="user-info">
+                            <span class="user-role">Administrador</span>
+                            <span class="user-name">Adanies Basilio</span>
+                        </div>
+                    </button>
+                    <div class="dropdown-menu" id="mobile-dropdown-menu">
+                        <a href="#" class="dropdown-item">
+                            <img src="../icons/EditarPerfil.png" alt="Perfil">
+                            Mi perfil
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <img src="../icons/ayuda.png" alt="Ayuda">
+                            Ayuda
+                        </a>
+                        <a href="../src/index.html" class="dropdown-item">
+                            <img src="../icons/CerrarSesion.png" alt="Cerrar sesión">
+                            Cerrar sesión
+                        </a>
+                    </div>
+                </div>
+            </ul>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">
+                <span class="menu-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+        </div>
+    </header>
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+    <nav class="mobile-menu" id="mobile-menu">
+        <div class="user-menu-container mobile-user-menu">
+            <button type="button" class="user-menu-btn" id="mobile-user-btn">
+                <img src="../img/adaniesbasilio.jpg" alt="Icono usuario" class="user-icon">
+                <div class="user-info">
+                    <span class="user-role">Administrador</span>
+                    <span class="user-name">Adanies Basilio</span>
+                </div>
+            </button>
+            <div class="dropdown-menu" id="mobile-dropdown-menu">
+                <a href="#" class="dropdown-item">
+                    <img src="../icons/EditarPerfil.png" alt="Perfil">
+                    Mi perfil
+                </a>
+                <a href="#" class="dropdown-item">
+                    <img src="../icons/ayuda.png" alt="Ayuda">
+                    Ayuda
+                </a>
+                <a href="../src/index.html" class="dropdown-item">
+                    <img src="../icons/CerrarSesion.png" alt="Cerrar sesión">
+                    Cerrar sesión
+                </a>
+            </div>
+        </div>
+        <div class="mobile-menu-header">
+            <div class="logo-total">
+                <div class="logo-icon"></div>
+                <div>
+                    <div class="mobile-menu-title">Formulaciones</div>
+                    <div class="mobile-menu-subtitle">Gestión eficiente de formulaciones</div>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-menu-content">
+            <a href="#" class="mobile-menu-item active" onclick="loadContent('inicio')" id="mobile-inicio">Panel Principal</a>
+            <a href="#" class="mobile-menu-item" onclick="loadContent('proposito')" id="mobile-proposito">Reactivos</a>
+            <a href="#" class="mobile-menu-item" onclick="loadContent('acerca')" id="mobile-acerca">Formulaciones</a>
+            <a href="#" class="mobile-menu-item" onclick="loadContent('contacto')" id="mobile-contacto">Protocolos</a>
+            <a href="#" class="mobile-menu-item" onclick="loadContent('categorias')" id="mobile-categorias">Categorías</a>
+            <a href="#" class="mobile-menu-item" onclick="loadContent('parametros')" id="mobile-parametros">Parámetros</a>
+            <a href="#" class="mobile-menu-item" onclick="loadContent('historial')" id="mobile-historial">Historial</a>
+        </div>
+        <div class="mobile-menu-footer">
+            <a href="index.html" class="mobile-access-btn">Salir</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="categories">
+            <h3>Categorías de Formulaciones</h3>
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="soluciones-madre">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12,2A1,1 0 0,1 13,3V4.5L15,4.5C15.5,4.5 16,5 16,5.5C16,6 15.5,6.5 15,6.5L13,6.5V8L19,8C20.11,8 21,8.9 21,10V19C21,20.11 20.11,21 19,21H5C3.89,21 3,20.11 3,19V10C3,8.9 3.89,8 5,8L11,8V6.5L9,6.5C8.5,6.5 8,6 8,5.5C8,5 8.5,4.5 9,4.5L11,4.5V3A1,1 0 0,1 12,2Z"/>
+                    </svg>
+                    Soluciones Madre
+                </div>
+                <div class="category-tab" data-category="medios-cultivo">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7,2V4H8V18A4,4 0 0,0 12,22A4,4 0 0,0 16,18V4H17V2H7M11,16C10.4,16 10,15.6 10,15C10,14.4 10.4,14 11,14C11.6,14 12,14.4 12,15C12,15.6 11.6,16 11,16M13,12C12.4,12 12,11.6 12,11C12,10.4 12.4,10 13,10C13.6,10 14,10.4 14,11C14,11.6 13.6,12 13,12M14,7H10V4H14V7Z"/>
+                    </svg>
+                    Medios de Cultivos
+                </div>
+                <div class="category-tab" data-category="soluciones-desinfectantes">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12,1L21,5V11C21,16.55 17.16,21.74 12,23C6.84,21.74 3,16.55 3,11V5L12,1M12,3.18L5,6.3V11.22C5,15.54 8.82,19.86 12,20.81C15.18,19.86 19,15.54 19,11.22V6.3L12,3.18M15.09,8L16.5,9.41L10.91,15L7.5,11.59L8.91,10.18L10.91,12.18L15.09,8Z"/>
+                    </svg>
+                    Soluciones Desinfectantes
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="search-box">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/>
+                </svg>
+                <input type="text" id="searchInput" placeholder="Buscar formulación...">
+            </div>
+            <button class="add-btn" onclick="openModal()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
+                </svg>
+                Nueva Formulación
+            </button>
+        </div>
+
+        <div class="cards-grid" id="formulationsGrid">
+            <!-- Las formulaciones se cargarán aquí dinámicamente -->
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="formulationModal">
+        <!-- El contenido del modal se genera dinámicamente -->
+    </div>
+
+    <div id="banner-notificacion"></div>
+
+
+    <script>
+        // Función que maneja cualquier botón de menú de usuario
+        function setupUserMenu(btnId, menuId) {
+            const btn = document.getElementById(btnId);
+            const menu = document.getElementById(menuId);
+
+            if (!btn || !menu) return;
+
+            // Mostrar / ocultar al hacer clic
+            btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('show');
+            });
+
+            // Cerrar si haces clic fuera
+            document.addEventListener('click', (e) => {
+            if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+            });
+        }
+
+        // Aplica tanto para escritorio como para móvil
+        setupUserMenu('mobile-user-btn', 'mobile-dropdown-menu');
+        setupUserMenu('desktop-user-btn', 'desktop-dropdown-menu');
+    </script>
+
+    <script>
+        let currentCategory = 'soluciones-madre';
+        let availableReactivos = [];
+        fetch('db/reactivos_listar.php')
+            .then(res => res.json())
+            .then(data => { availableReactivos = data; });
+        let editingId = null;
+
+        // Cambiar categoría
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentCategory = tab.dataset.category;
+                renderCards();
+            });
+        });
+
+        // Buscar
+        document.getElementById('searchInput').addEventListener('input', renderCards);
+
+        // Renderizar cards desde la base de datos
+        async function renderCards() {
+            const grid = document.getElementById('formulationsGrid');
+            grid.innerHTML = '<div class="empty-state">Cargando...</div>';
+            
+            const search = document.getElementById('searchInput').value.trim().toLowerCase();
+            const res = await fetch(`db/formulaciones.php?accion=listar&tipo=${currentCategory}`);
+            const data = await res.json();
+
+            let filtered = data;
+            if (search) {
+                filtered = data.filter(f =>
+                    f.nombre.toLowerCase().includes(search) ||
+                    String(f.id).includes(search)
+                );
+            }
+
+            if (!filtered.length) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V5H19V19M17,17H7V15H17V17M15,13H7V11H15V13M13,9H7V7H13V9Z"/>
+                        </svg>
+                        <h3>No hay formulaciones registradas</h3>
+                        <p>Comienza agregando tu primera formulación</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = '';
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'formulation-card';
+                
+                // Iconos específicos por categoría
+                let categoryIcon = '';
+                let categoryName = '';
+                let categoryDetails = '';
+
+                switch (currentCategory) {
+                    case 'soluciones-madre':
+                        categoryIcon = `<svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12,2A1,1 0 0,1 13,3V4.5L15,4.5C15.5,4.5 16,5 16,5.5C16,6 15.5,6.5 15,6.5L13,6.5V8L19,8C20.11,8 21,8.9 21,10V19C21,20.11 20.11,21 19,21H5C3.89,21 3,20.11 3,19V10C3,8.9 3.89,8 5,8L11,8V6.5L9,6.5C8.5,6.5 8,6 8,5.5C8,5 8.5,4.5 9,4.5L11,4.5V3A1,1 0 0,1 12,2Z"/>
+                        </svg>`;
+                        categoryName = 'Solución Madre';
+                        categoryDetails = `
+                            <div class="detail-item">
+                                <span class="detail-label">Solución Madre</span>
+                                <span class="detail-value">${item.solucion_madre || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Grupos</span>
+                                <span class="detail-value">${item.grupos ? item.grupos.length : 0}</span>
+                            </div>
+                        `;
+                        break;
+                    case 'medios-cultivo':
+                        categoryIcon = `<svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7,2V4H8V18A4,4 0 0,0 12,22A4,4 0 0,0 16,18V4H17V2H7M11,16C10.4,16 10,15.6 10,15C10,14.4 10.4,14 11,14C11.6,14 12,14.4 12,15C12,15.6 11.6,16 11,16M13,12C12.4,12 12,11.6 12,11C12,10.4 12.4,10 13,10C13.6,10 14,10.4 14,11C14,11.6 13.6,12 13,12M14,7H10V4H14V7Z"/>
+                        </svg>`;
+                        categoryName = 'Medio de Cultivo';
+                        categoryDetails = `
+                            <div class="detail-item">
+                                <span class="detail-label">Volumen</span>
+                                <span class="detail-value">${item.volumen || 'N/A'} L</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Grupos</span>
+                                <span class="detail-value">${item.grupos ? item.grupos.length : 0}</span>
+                            </div>
+                        `;
+                        break;
+                    case 'soluciones-desinfectantes':
+                        categoryIcon = `<svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12,1L21,5V11C21,16.55 17.16,21.74 12,23C6.84,21.74 3,16.55 3,11V5L12,1M12,3.18L5,6.3V11.22C5,15.54 8.82,19.86 12,20.81C15.18,19.86 19,15.54 19,11.22V6.3L12,3.18M15.09,8L16.5,9.41L10.91,15L7.5,11.59L8.91,10.18L10.91,12.18L15.09,8Z"/>
+                        </svg>`;
+                        categoryName = 'Solución Desinfectante';
+                        categoryDetails = `
+                            <div class="detail-item">
+                                <span class="detail-label">Desinfectante</span>
+                                <span class="detail-value">${item.desinfectante || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Concentración</span>
+                                <span class="detail-value">${item.concentracion || 'N/A'}</span>
+                            </div>
+                        `;
+                        break;
+                }
+
+                // Calcular estadísticas
+                let totalReactivos = 0;
+                let gruposCount = 0;
+                let fechaCreacion = 'N/A';
+
+                if (item.grupos && Array.isArray(item.grupos)) {
+                    gruposCount = item.grupos.length;
+                    totalReactivos = item.grupos.reduce((sum, grupo) => {
+                        return sum + (grupo.reactivos ? grupo.reactivos.length : 0);
+                    }, 0);
+                }
+
+                if (item.fecha_creacion) {
+                    const fecha = new Date(item.fecha_creacion);
+                    fechaCreacion = fecha.toLocaleDateString('es-ES');
+                }
+
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${categoryIcon}
+                        </div>
+                        <div class="card-info">
+                            <div class="formulation-title">${item.nombre}</div>
+                            <div class="formulation-subtitle">${categoryName}</div>
+                            <div class="card-id">#${String(item.id).padStart(3, '0')}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-details">
+                        ${categoryDetails}
+                    </div>
+                    
+                    <div class="card-stats">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value">${totalReactivos}</div>
+                                <div class="stat-label">Reactivos</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${gruposCount}</div>
+                                <div class="stat-label">Grupos</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${fechaCreacion}</div>
+                                <div class="stat-label">Creado</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-actions">
+                        <button class="action-btn view-btn" onclick="viewFormulation(${item.id})" title="Ver detalles">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"/>
+                            </svg>
+                        </button>
+                        <button class="action-btn edit-btn" onclick="openModal(${item.id})" title="Editar">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/>
+                            </svg>
+                        </button>
+                        <button class="action-btn" style="background: #4CAF50; color: white;" onclick="duplicateFormulation(${item.id})" title="Duplicar">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+                            </svg>
+                        </button>
+                        <button class="action-btn delete-btn" onclick="deleteFormulation(${item.id})" title="Eliminar">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+
+        // Modal para crear/editar
+        function openModal(id = null) {
+            editingId = id;
+            let nombre = '';
+            let grupos = [];
+            let solucionMadre = '';
+            let desinfectante = '';
+            let concentracion = '';
+            let volumen = '';
+            let modalTitle = 'Nueva Formulación';
+
+            if (id) {
+                fetch(`db/formulaciones.php?accion=listar&tipo=${currentCategory}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const found = data.find(f => f.id == id);
+                        if (found) {
+                            nombre = found.nombre;
+                            grupos = found.grupos || [];
+                            solucionMadre = found.solucion_madre || '';
+                            desinfectante = found.desinfectante || '';
+                            concentracion = found.concentracion || '';
+                            volumen = found.volumen || '';
+                            modalTitle = 'Editar Formulación';
+                        }
+                        showModal(nombre, grupos, modalTitle, solucionMadre, desinfectante, concentracion, volumen);
+                    });
+            } else {
+                showModal('', [], modalTitle, '', '', '', '');
+            }
+        }
+
+        function showModal(nombre = '', grupos = [], modalTitle = 'Nueva Formulación', solucionMadre = '', desinfectante = '', concentracion = '', volumen = '') {
+            const modal = document.getElementById('formulationModal');
+            let extraFields = '';
+
+            if (currentCategory === 'soluciones-madre') {
+                extraFields = `
+                    <div class="form-group">
+                        <label>Solución Madre</label>
+                        <input type="text" id="solucion_madre" value="${solucionMadre || ''}">
+                    </div>
+                `;
+            } else if (currentCategory === 'medios-cultivo') {
+                extraFields = `
+                    <div class="form-group">
+                        <label>Solución Madre</label>
+                        <input type="text" id="solucion_madre" value="${solucionMadre || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Volumen (L medio)</label>
+                        <input type="text" id="volumen" value="${volumen || ''}">
+                    </div>
+                `;
+            } else if (currentCategory === 'soluciones-desinfectantes') {
+                extraFields = `
+                    <div class="form-group">
+                        <label>Desinfectante</label>
+                        <input type="text" id="desinfectante" value="${desinfectante || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Concentración</label>
+                        <input type="text" id="concentracion" value="${concentracion || ''}" required>
+                    </div>
+                `;
+            }
+
+            let gruposBlock = '';
+            if (currentCategory !== 'soluciones-desinfectantes') {
+                gruposBlock = `
+                    <div class="form-group">
+                        <label>Grupos</label>
+                        <div id="grupos-container">
+                            ${renderGrupos(grupos)}
+                        </div>
+                        <button type="button" class="add-group-btn" onclick="addGrupo()">+ Agregar Grupo</button>
+                    </div>
+                `;
+            }
+
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modal-title">${modalTitle}</h2>
+                        <button class="close-btn" onclick="closeModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formulationForm">
+                            <div class="form-group">
+                                <label>Nombre de la formulación</label>
+                                <input type="text" id="nombre" value="${nombre || ''}" required>
+                            </div>
+                            ${extraFields}
+                            ${gruposBlock}
+                        </form>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn-cancel" onclick="closeModal()">Cancelar</button>
+                        <button type="button" class="btn-save" onclick="saveFormulation()">Guardar</button>
+                    </div>
+                </div>
+            `;
+            modal.classList.add('active');
+        }
+
+        // Funciones para manejar grupos y reactivos
+        function renderGrupos(grupos) {
+            if (!grupos || !grupos.length) grupos = [getGrupoVacio()];
+            return grupos.map((g, i) => renderGrupo(g, i)).join('');
+        }
+
+        function getGrupoVacio() {
+            return {
+                nombre_grupo: '',
+                reactivos: [getReactivoVacio()]
+            };
+        }
+
+        function getReactivoVacio() {
+            return { reactivo_id: '', cantidad: '' };
+        }
+
+        function renderGrupo(grupo, idx) {
+            return `
+                <div class="grupo-item" data-idx="${idx}">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <input type="text" class="nombre-grupo" placeholder="Nombre del grupo" value="${grupo.nombre_grupo || ''}" required style="flex:1;">
+                        <button type="button" class="remove-group-btn" onclick="removeGrupo(this)" title="Eliminar grupo">×</button>
+                    </div>
+                    <div class="reactivos-grupo">
+                        ${renderReactivosGrupo(grupo.reactivos, idx)}
+                        <button type="button" class="add-reactivo-btn" onclick="addReactivo(this)">+ Agregar Reactivo</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderReactivosGrupo(reactivos, grupoIdx) {
+            if (!reactivos || !reactivos.length) reactivos = [getReactivoVacio()];
+            return reactivos.map((r, i) => `
+                <div class="reactivo-item" data-idx="${i}">
+                    <select class="reactivo-select" style="flex:2;">
+                        <option value="">Seleccionar reactivo...</option>
+                        ${availableReactivos.map(ar => `<option value="${ar.id}" ${ar.id == r.reactivo_id ? 'selected' : ''}>${ar.nombre_comun}</option>`).join('')}
+                    </select>
+                    <input type="text" class="reactivo-cantidad" placeholder="Cantidad" value="${r.cantidad || ''}" style="flex:1;">
+                    <button type="button" class="remove-reactivo-btn" onclick="removeReactivo(this)" title="Eliminar reactivo">×</button>
+                </div>
+            `).join('');
+        }
+
+        // Funciones globales para el modal
+        window.addGrupo = function() {
+            const container = document.getElementById('grupos-container');
+            const grupos = container.querySelectorAll('.grupo-item');
+            const idx = grupos.length;
+            const div = document.createElement('div');
+            div.innerHTML = renderGrupo(getGrupoVacio(), idx);
+            container.appendChild(div.firstElementChild);
+        }
+
+        window.removeGrupo = function(btn) {
+            btn.closest('.grupo-item').remove();
+        }
+
+        window.addReactivo = function(btn) {
+            const grupoDiv = btn.closest('.grupo-item');
+            const reactivosDiv = grupoDiv.querySelector('.reactivos-grupo');
+            const div = document.createElement('div');
+            div.innerHTML = renderReactivosGrupo([getReactivoVacio()], 0);
+            reactivosDiv.insertBefore(div.firstElementChild, btn);
+        }
+
+        window.removeReactivo = function(btn) {
+            btn.closest('.reactivo-item').remove();
+        }
+
+        // Nueva función para duplicar
+        window.duplicateFormulation = function(id) {
+            fetch(`db/formulaciones.php?accion=listar&tipo=${currentCategory}`)
+                .then(res => res.json())
+                .then(data => {
+                    const found = data.find(f => f.id == id);
+                    if (found) {
+                        editingId = null; // Para crear uno nuevo
+                        showModal(
+                            found.nombre + ' (Copia)',
+                            found.grupos || [],
+                            'Duplicar Formulación',
+                            found.solucion_madre || '',
+                            found.desinfectante || '',
+                            found.concentracion || '',
+                            found.volumen || ''
+                        );
+                    }
+                });
+        }
+
+        async function saveFormulation() {
+            const nombre = document.getElementById('nombre').value.trim();
+            let solucion_madre = '';
+            let desinfectante = '';
+            let concentracion = '';
+            let volumen = '';
+            let grupos = [];
+
+            if (currentCategory === 'soluciones-madre') {
+                solucion_madre = document.getElementById('solucion_madre').value.trim();
+            }
+            if (currentCategory === 'medios-cultivo') {
+                solucion_madre = document.getElementById('solucion_madre').value.trim();
+                volumen = document.getElementById('volumen').value.trim();
+            }
+            if (currentCategory === 'soluciones-desinfectantes') {
+                desinfectante = document.getElementById('desinfectante').value.trim();
+                concentracion = document.getElementById('concentracion').value.trim();
+            }
+            if (currentCategory !== 'soluciones-desinfectantes') {
+                document.querySelectorAll('.grupo-item').forEach(grupoDiv => {
+                    const nombre_grupo = grupoDiv.querySelector('.nombre-grupo').value.trim();
+                    const reactivos = [];
+                    grupoDiv.querySelectorAll('.reactivo-item').forEach(reactivoDiv => {
+                        const reactivo_id = reactivoDiv.querySelector('.reactivo-select').value;
+                        const cantidad = reactivoDiv.querySelector('.reactivo-cantidad').value.trim();
+                        if (reactivo_id && cantidad) {
+                            reactivos.push({ reactivo_id, cantidad });
+                        }
+                    });
+                    if (nombre_grupo && reactivos.length) {
+                        grupos.push({ nombre_grupo, reactivos });
+                    }
+                });
+            }
+
+            // Validación
+            if (!nombre ||
+                (currentCategory === 'soluciones-desinfectantes' && (!desinfectante || !concentracion)) ||
+                (currentCategory !== 'soluciones-desinfectantes' && !grupos.length)
+            ) {
+                mostrarNotificacion('Por favor complete todos los campos', false);
+                return;
+            }
+
+            let body = { nombre, tipo: currentCategory };
+            if (currentCategory === 'soluciones-madre') {
+                body.solucion_madre = solucion_madre;
+            }
+            if (currentCategory === 'medios-cultivo') {
+                body.solucion_madre = solucion_madre;
+                body.volumen = volumen;
+            }
+            if (currentCategory === 'soluciones-desinfectantes') {
+                body.desinfectante = desinfectante;
+                body.concentracion = concentracion;
+            }
+            if (currentCategory !== 'soluciones-desinfectantes') body.grupos = grupos;
+
+            let url = 'db/formulaciones.php?accion=crear';
+            let method = 'POST';
+            if (editingId) {
+                url = 'db/formulaciones.php?accion=editar';
+                body.id = editingId;
+            }
+
+            const res = await fetch(url, {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            const result = await res.json();
+            mostrarNotificacion(result.msg, result.success);
+            if (result.success) {
+                closeModal();
+                renderCards();
+            }
+        }
+
+        async function deleteFormulation(id) {
+            if (!confirm('¿Está seguro de que desea eliminar esta formulación?')) return;
+            const res = await fetch('db/formulaciones.php?accion=eliminar', {
+                method: 'POST',
+                body: new URLSearchParams({id})
+            });
+            const result = await res.json();
+            mostrarNotificacion(result.msg, result.success);
+            if(result.success) renderCards();
+        }
+
+        function mostrarNotificacion(msg, ok = true) {
+            const n = document.getElementById('banner-notificacion');
+            n.innerHTML = `
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:10px;
+                    background:${ok ? '#eafaf1' : '#fdecea'};
+                    color:${ok ? '#218838' : '#c0392b'};
+                    border:1.5px solid ${ok ? '#2ecc71' : '#e74c3c'};
+                    border-radius:8px;
+                    padding:12px 24px;
+                    font-size:1.1rem;
+                    font-weight:600;
+                    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+                ">
+                    <span style="font-size:1.5em;">
+                        ${ok
+                            ? '<svg width="24" height="24" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#2ecc71"/><path d="M7 13l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+                            : '<svg width="24" height="24" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#e74c3c"/><path d="M15 9l-6 6M9 9l6 6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>'
+                        }
+                    </span>
+                    <span>${msg}</span>
+                </div>
+            `;
+            n.style.display = 'block';
+            setTimeout(() => {
+                n.style.display = 'none';
+                n.innerHTML = '';
+            }, 2500);
+        }
+
+        function viewFormulation(id) {
+            fetch(`db/formulaciones.php?accion=listar&tipo=${currentCategory}`)
+                .then(res => res.json())
+                .then(data => {
+                    const found = data.find(f => f.id == id);
+                    if (found) {
+                        let details = `Formulación: ${found.nombre}\nID: ${found.id}\n\n`;
+                        
+                        if (found.solucion_madre) details += `Solución Madre: ${found.solucion_madre}\n`;
+                        if (found.volumen) details += `Volumen: ${found.volumen} L\n`;
+                        if (found.desinfectante) details += `Desinfectante: ${found.desinfectante}\n`;
+                        if (found.concentracion) details += `Concentración: ${found.concentracion}\n`;
+                        
+                        if (found.grupos && found.grupos.length) {
+                            details += `\nGrupos (${found.grupos.length}):\n`;
+                            found.grupos.forEach((grupo, i) => {
+                                details += `\n${i+1}. ${grupo.nombre_grupo}\n`;
+                                if (grupo.reactivos && grupo.reactivos.length) {
+                                    grupo.reactivos.forEach(reactivo => {
+                                        const reactivoInfo = availableReactivos.find(r => r.id == reactivo.reactivo_id);
+                                        details += `   - ${reactivoInfo ? reactivoInfo.nombre_comun : 'Reactivo desconocido'}: ${reactivo.cantidad}\n`;
+                                    });
+                                }
+                            });
+                        }
+                        
+                        alert(details);
+                    }
+                });
+        }
+
+        // Inicializar
+        renderCards();
+
+        window.closeModal = function() {
+            document.getElementById('formulationModal').classList.remove('active');
+            document.getElementById('formulationModal').innerHTML = '';
+            editingId = null;
+        }
+
+        // Menú hamburguesa igual que index.html
+        function loadContent(section) {
+             // Mapea cada sección a su archivo HTML
+            const routes = {
+                inicio: 'index.html',
+                proposito: 'reactivos.html',
+                acerca: 'formulaciones.html',
+                contacto: 'protocolos.html',
+                categorias: 'categoria.html',
+                parametros: 'parametros.html',
+                historial: 'historial.html'
+            };
+
+            // Si existe la ruta, navega
+            if (routes[section]) {
+                window.location.href = routes[section];
+            } else {
+                alert('Ruta no encontrada');
+            }
+        }
+        function toggleMobileMenu() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            menuToggle.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+            overlay.classList.toggle('open');
+            if (mobileMenu.classList.contains('open')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+        function closeMobileMenu() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            menuToggle.classList.remove('open');
+            mobileMenu.classList.remove('open');
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            menuToggle.addEventListener('click', toggleMobileMenu);
+            overlay.addEventListener('click', closeMobileMenu);
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeMobileMenu();
+            });
+        });
+        document.querySelectorAll('.access-btn, .mobile-access-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html>

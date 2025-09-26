@@ -3,91 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar sesión</title>
+    <title>Inicio de sesion</title>
     <link rel="stylesheet" href="style.css">
 </head>
+</head>
 <body>
-<div class="container">
+    <div id="particles-js">
+        <div class="login-container">
+        <div class="logo-section">
+            <div class="logo-icon">
+                <img src="../img/logo.svg" alt="Invitrosoft Logo">
+            </div>
+            <div class="logo-text">Invitrosoft</div>
+            <div class="logo-subtitle">Gestión moderna de laboratorios</div>
+        </div>
 
-    <!-- Lado Izquierdo -->
-    <div class="intro">
-        <h1>Sistema de Gestión</h1>
-        <div class="menu">
-            <img class="ico-index" src="../icons/plantaINDEX.png" alt="">
-                <div class="menu-text">
-                    <p><strong>Todo tu proceso, paso a paso</strong></p>
-                    <p>Lleva el control de cada etapa de la micropropagación sin complicaciones.</p>
+        <div class="welcome-text">
+            <h1>¡Bienvenido de vuelta!</h1>
+            <p>Inicia sesión en tu cuenta</p>
+        </div>
+
+        <form id="loginForm" novalidate>
+            <div class="form-group">
+                <label for="email">Correo electrónico</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="form-control" 
+                        placeholder="tu@email.com"
+                        required
+                    >
+                    <span class="input-icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                    </span>
                 </div>
+                <div class="error-message">Por favor ingresa un correo válido</div>
             </div>
-        <div class="menu">
-            <img class="ico-index" src="../icons/inventarioINDEX.png" alt="">
-                <div class="menu-text">
-                    <p><strong>Ten tus materiales bajo control</strong></p>
-                    <p>Organiza lo que usas, cuánto usas y evita que algo se venza o se te olvide.</p>
+
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="form-control" 
+                        placeholder="Tu contraseña"
+                        required
+                    >
+                    <span class="input-icon password-toggle" onclick="togglePassword()">
+                        <svg id="eyeIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                        </svg>
+                    </span>
                 </div>
+                <div class="error-message">La contraseña es requerida</div>
             </div>
-        <div class="menu">
-            <img class="ico-index" src="../icons/alertaINDEX.png" alt="">
-                <div class="menu-text">
-                    <p><strong>Controla las contaminaciones</strong></p>
-                    <p>Gestiona y maneja las contaminaciones para la toma de deciciones</p>
+
+            <div class="form-options">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Recordarme</label>
                 </div>
+                <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
             </div>
-    </div>
 
-    <!-- Lado Derecho -->
-    <!-- Lado Derecho -->
-    <div class="login-box">
-        <div class="login-content">
-        <!-- Logo -->
-        <img class="logo" src="../img/logo.png" alt="Logo del sistema">
-
-        <h2>Iniciar Sesión</h2>
-        <p class="subtitle">Accede a tu cuenta para continuar</p>
-
-        <form id="loginForm" autocomplete="off">
-            <div class="input-group">
-                <img class="input-icon" src="../img/sobre.png" alt="icono email">
-                <input type="email" name="email" placeholder="Example@gmail.com" required>
-            </div>
-            <div class="input-group">
-                <img class="input-icon" src="../img/llave.png" alt="icono contraseña">
-                <input type="password" name="contraseña" placeholder="*******" required>
-            </div>
-            <button type="submit" class="btn">Iniciar Sesión</button>
-            <div id="loginError" style="color:#f44336; margin-top:10px; font-size:14px;"></div>
-            <div class="register-link">
-                ¿No tienes una cuenta? <a href="cuenta.html">Crear cuenta</a>
-            </div>
+            <button type="submit" class="login-btn">
+                Iniciar Sesión
+            </button>
         </form>
-    </div>
-</div>
 
-<script>
-document.getElementById('loginForm').onsubmit = async function(e) {
-    e.preventDefault();
-    const form = e.target;
-    const email = form.email.value.trim();
-    const contraseña = form.contraseña.value;
-    const errorDiv = document.getElementById('loginError');
-    errorDiv.textContent = '';
-    try {
-        const res = await fetch('login.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, contraseña })
-        });
-        const result = await res.json();
-        if (res.ok && result.success) {
-            window.location.href = '../main/index.html';
-        } else {
-            errorDiv.textContent = result.error || 'Credenciales incorrectas';
+        <div class="divider">
+            <span>o</span>
+        </div>
+
+        
+    </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                // SVG para ojo cerrado
+                eyeIcon.innerHTML = '<path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>';
+            } else {
+                passwordInput.type = 'password';
+                // SVG para ojo abierto
+                eyeIcon.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+            }
         }
-    } catch (err) {
-        errorDiv.textContent = 'Error de conexión con el servidor';
-    }
-};
-</script>
-</div>
+
+        // Validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validateForm() {
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            let isValid = true;
+
+            // Reset errors
+            email.classList.remove('error');
+            password.classList.remove('error');
+
+            // Validate email
+            if (!email.value || !validateEmail(email.value)) {
+                email.classList.add('error');
+                isValid = false;
+            }
+
+            // Validate password
+            if (!password.value || password.value.length < 6) {
+                password.classList.add('error');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // Form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validateForm()) {
+                // Add loading state
+                this.classList.add('loading');
+                
+                // Simulate login process
+                setTimeout(() => {
+                    alert('¡Inicio de sesión exitoso!');
+                    this.classList.remove('loading');
+                    // Redirect to dashboard or main app
+                    // window.location.href = 'dashboard.html';
+                }, 2000);
+            }
+        });
+
+        // Real-time validation
+        document.getElementById('email').addEventListener('blur', function() {
+            if (this.value && !validateEmail(this.value)) {
+                this.classList.add('error');
+            } else {
+                this.classList.remove('error');
+            }
+        });
+
+        document.getElementById('password').addEventListener('blur', function() {
+            if (this.value && this.value.length < 6) {
+                this.classList.add('error');
+            } else {
+                this.classList.remove('error');
+            }
+        });
+
+        // Remove error on input
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.classList.contains('error')) {
+                    this.classList.remove('error');
+                }
+            });
+        });
+    </script>
+    <script src="particles.js"></script>
+    <script src="particulas.js"></script>
 </body>
 </html>

@@ -9,7 +9,7 @@
 </head>
 <body>
     <!-- Header -->
-    <div class="header">
+    <header class="header">
         <div class="header-left">
             <div class="header-icon">🧪</div>
             <div>
@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="header-right"><a href="index.html"><img src="../icons/CerrarSesion.png" alt=""></a></div>
-    </div>
+    </header>
 
     <!-- Main Container -->
     <div class="container">
@@ -47,6 +47,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>IMAGEN</th>
                         <th>REACTIVO</th>
                         <th>CATEGORÍA</th>
                         <th>CANTIDAD</th>
@@ -106,6 +107,16 @@
                             <input type="date" class="form-input" id="expiryDate">
                         </div>
                     </div>
+
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label class="form-label" for="reactiveImage">Imagen</label>
+                            <input type="file" class="form-input" id="reactiveImage" accept="image/*">
+                            <div style="margin-top:8px;">
+                                <img id="imagePreview" src="" alt="Vista previa" style="max-width:120px; max-height:120px; display:none; border-radius:8px; border:1px solid #eee;">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" onclick="closeModal()">
@@ -153,6 +164,23 @@
             document.getElementById('reactiveModal').addEventListener('click', function(e) {
                 if (e.target === this) {
                     closeModal();
+                }
+            });
+
+            // Previsualización de imagen
+            document.getElementById('reactiveImage').addEventListener('change', function() {
+                const file = this.files[0];
+                const preview = document.getElementById('imagePreview');
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = e => {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = '';
+                    preview.style.display = 'none';
                 }
             });
         }
@@ -216,6 +244,9 @@
 
                 row.innerHTML = `
                     <td>${String(reactive.id).padStart(3, '0')}</td>
+                    <td>
+                        ${reactive.imagen ? `<img src="img/reactivos/${reactive.imagen}" alt="Imagen" style="max-width:40px;max-height:40px;border-radius:6px;margin-top:4px;">` : ''}
+                    </td>
                     <td>
                         <div class="reactive-name">${reactive.nombre_comun}</div>
                         <div class="chemical-formula">${formatChemicalFormula(reactive.formula_quimica)}</div>
@@ -314,10 +345,19 @@
                 document.getElementById('unitMeasure').value = reactiveData.unidad_medida || '';
                 document.getElementById('totalQuantity').value = reactiveData.cantidad_total || '';
                 document.getElementById('expiryDate').value = reactiveData.fecha_vencimiento || '';
+                if (reactiveData.imagen) {
+                    document.getElementById('imagePreview').src = 'img/reactivos/' + reactiveData.imagen;
+                    document.getElementById('imagePreview').style.display = 'block';
+                } else {
+                    document.getElementById('imagePreview').src = '';
+                    document.getElementById('imagePreview').style.display = 'none';
+                }
                 editingId = reactiveData.id;
             } else {
                 modalTitle.textContent = 'Nuevo Reactivo';
                 form.reset();
+                document.getElementById('imagePreview').src = '';
+                document.getElementById('imagePreview').style.display = 'none';
                 editingId = null;
             }
 
@@ -343,24 +383,23 @@
         async function saveReactive() {
             const form = document.getElementById('reactiveForm');
             const saveBtn = document.getElementById('saveBtn');
-
             clearErrors();
 
-            // Validación
             const commonName = document.getElementById('commonName').value.trim();
             if (!commonName) {
                 document.getElementById('nameError').textContent = 'El nombre común es obligatorio';
                 return;
             }
 
-            const reactiveData = {
-                nombre_comun: commonName,
-                formula_quimica: document.getElementById('chemicalFormula').value.trim(),
-                categoria_id: document.getElementById('category').value || null,
-                unidad_medida: document.getElementById('unitMeasure').value.trim(),
-                cantidad_total: parseFloat(document.getElementById('totalQuantity').value) || 0,
-                fecha_vencimiento: document.getElementById('expiryDate').value || null
-            };
+            const formData = new FormData();
+            formData.append('nombre_comun', commonName);
+            formData.append('formula_quimica', document.getElementById('chemicalFormula').value.trim());
+            formData.append('categoria_id', document.getElementById('category').value || '');
+            formData.append('unidad_medida', document.getElementById('unitMeasure').value.trim());
+            formData.append('cantidad_total', document.getElementById('totalQuantity').value || 0);
+            formData.append('fecha_vencimiento', document.getElementById('expiryDate').value || '');
+            const imageFile = document.getElementById('reactiveImage').files[0];
+            if (imageFile) formData.append('imagen', imageFile);
 
             try {
                 saveBtn.disabled = true;
@@ -368,22 +407,15 @@
 
                 let response;
                 if (editingId) {
-                    // Actualizar
+                    formData.append('id', editingId);
                     response = await fetch(`${REACTIVE_API}?id=${editingId}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(reactiveData)
+                        method: 'POST',
+                        body: formData
                     });
                 } else {
-                    // Crear
                     response = await fetch(REACTIVE_API, {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(reactiveData)
+                        body: formData
                     });
                 }
 
@@ -394,7 +426,6 @@
 
                 await loadReactives();
                 closeModal();
-                
             } catch (error) {
                 console.error('Error:', error);
                 document.getElementById('nameError').textContent = error.message;

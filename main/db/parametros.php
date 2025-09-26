@@ -27,7 +27,9 @@ switch ($accion) {
 function listar_parametros() {
     global $conn;
     $tipo = $_GET['tipo'] ?? '';
-    $sql = "SELECT p.id_parametro, p.nombre, p.descripcion, p.usuarios, t.nombre AS tipo FROM parametros p INNER JOIN tipo_parametro t ON p.id_tipo = t.id_tipo";
+    $sql = "SELECT p.id_parametro, p.nombre, p.descripcion, p.usuarios, t.nombre AS tipo 
+            FROM parametros p 
+            INNER JOIN tipo_parametro t ON p.id_tipo = t.id_tipo";
     if ($tipo) {
         $sql .= " WHERE t.nombre = '" . $conn->real_escape_string($tipo) . "'";
     }
