@@ -5,261 +5,160 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Formulaciones</title>
     <link rel="stylesheet" href="css/formul.css">
+    <link rel="stylesheet" href="css/header-footer.css">
     <style>
-        :root {
-            /* Si necesitas colores extra, agrégalos aquí */
-            --danger: #e74c3c;
-            --success: #27ae60;
-            --warning: #f39c12;
-            --info: #3498db;
-        }
-        /* Header hamburguesa adaptado */
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+
+/*vizualizacion*/
+        .tabla-formulacion {
             width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 0 auto 18px auto;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            font-size: 1em;
+            box-shadow: 0 2px 12px rgba(0,120,50,0.08);
         }
-        .logo {
+        .tabla-formulacion th, .tabla-formulacion td {
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .tabla-formulacion th {
+            background: var(--green, #007832);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.08em;
+        }
+        .grupo-row .grupo-nombre {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.1em;
+            border-radius: 0;
+            padding-top: 14px;
+            padding-bottom: 14px;
+        }
+        .grupo-row td {
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1em;
+            border-radius: 0;
+            padding-top: 14px;
+            padding-bottom: 14px;
+        }
+        .tabla-formulacion tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Modal flotante centrado */
+        .view-protocol-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 11001;
             display: flex;
             align-items: center;
-            gap: 10px;
-            text-decoration: none;
+            justify-content: center;
+            background: rgba(34,34,34,0.18);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
         }
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: url('../img/logo.svg') no-repeat center/contain;
+        .view-protocol-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .view-modal-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(34,34,34,0.18);
+            z-index: 1;
+        }
+        .view-modal-content {
+            position: relative;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+            max-width: 700px;
+            width: 98vw;
+            max-height: 96vh;
+            overflow-y: auto;
+            z-index: 2;
+            animation: fadeInModal 0.4s;
+            display: flex;
+            flex-direction: column;
+        }
+        @keyframes fadeInModal {
+            from { transform: translateY(40px) scale(0.98); opacity: 0; }
+            to { transform: none; opacity: 1; }
+        }
+        .view-modal-header {
+            padding: 28px 32px 10px 32px;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+        }
+        .view-modal-header h2 {
+            font-size: 2em;
+            color: var(--green, #007832);
+            margin-bottom: 2px;
+        }
+        .view-protocol-id {
+            font-size: 1em;
+            color: var(--green, #007832);
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .view-modal-close {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            background: #e74c3c;
+            color: #fff;
+            border: none;
             border-radius: 50%;
-        }
-        .logo-text-subgroup {
-            display: flex;
-            flex-direction: column;
-        }
-        .logo-text {
-            font-weight: bold;
-            font-size: 1.3em;
-            color: var(--green);
-        }
-        .logo-subtitle {
-            font-size: 0.95em;
-            color: var(--muted);
-        }
-        .nav-menu {
-            display: flex;
-            gap: 18px;
-            list-style: none;
-        }
-        .nav-item a {
-            color: var(--ink);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 6px;
-            transition: background 0.2s;
-        }
-        .nav-item a.active,
-        .nav-item a:hover {
-            background: var(--muted);
-            color: var(--green);
-        }
-        .access-btn {
-            background: var(--green);
-            color: #fff;
-            border-radius: 6px;
-            padding: 8px 18px;
-            font-weight: 600;
-            text-decoration: none;
-            border: none;
+            width: 38px;
+            height: 38px;
+            font-size: 1.7em;
             cursor: pointer;
+            transition: background 0.18s;
+            z-index: 10;
         }
-        .menu-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-            display: none;
+        .view-modal-close:hover {
+            background: #c0392b;
         }
-        .menu-icon {
+        .view-modal-body {
+            padding: 24px 32px 18px 32px;
+            background: #f7faf7;
+        }
+        .view-modal-footer {
+            padding: 18px 32px 18px 32px;
+            border-top: 1px solid #e0e0e0;
+            background: #fff;
             display: flex;
-            flex-direction: column;
-            gap: 5px;
+            justify-content: flex-end;
         }
-        .menu-icon span {
-            display: block;
-            width: 28px;
-            height: 4px;
-            background: var(--green);
-            border-radius: 2px;
-            transition: 0.3s;
-        }
-        /* Mobile menu */
-        .mobile-menu-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.18);
-            z-index: 9998;
-        }
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--muted);
-            z-index: 9999;
-            flex-direction: column;
-            padding: 32px 18px;
-        }
-        .mobile-menu.open,
-        .mobile-menu-overlay.open {
-            display: block;
-        }
-        .mobile-menu-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 18px;
-        }
-        .mobile-menu-title {
-            font-weight: bold;
-            color: var(--green);
-            font-size: 1.2em;
-        }
-        .mobile-menu-subtitle {
-            color: var(--muted);
-            font-size: 0.95em;
-        }
-        .mobile-menu-content {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 18px;
-        }
-        .mobile-menu-item {
-            color: var(--ink);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 10px 0;
-            border-radius: 6px;
-        }
-        .mobile-menu-item.active,
-        .mobile-menu-item:hover {
-            background: var(--green);
+        .btn-secondary {
+            background: var(--green, #007832);
             color: #fff;
-        }
-        .mobile-access-btn {
-            background: var(--green);
-            color: #fff;
-            border-radius: 6px;
-            padding: 10px 18px;
-            font-weight: 600;
-            text-decoration: none;
             border: none;
+            border-radius: 8px;
+            padding: 10px 28px;
+            font-size: 1em;
+            font-weight: 700;
             cursor: pointer;
-            display: block;
-            text-align: center;
+            transition: background 0.18s;
         }
-        @media (max-width: 900px) {
-            .nav-menu { display: none; }
-            .menu-toggle { display: block; }
+        .btn-secondary:hover {
+            background: #218838;
         }
-        @media (max-width: 600px) {
-            .container { padding: 16px; }
+
+        .modal{
+            z-index: 11001;
         }
     </style>
 </head>
 <body>
-    <!-- Header con menú hamburguesa -->
-    <header class="header">
-        <div class="header-content">
-            <a href="#" class="logo">
-                <div class="logo-icon" ></div>
-                <span class="logo-text-subgroup">
-                    <span class="logo-text">Formulaciones</span>
-                    <span class="logo-subtitle">Gestiona tus formulaciones de manera eficiente</span>
-                </span>
-            </a>
-            <ul class="nav-menu">
-                <div class="user-menu-container mobile-user-menu">
-                    <button type="button" class="user-menu-btn" id="mobile-user-btn">
-                        <img src="../img/adaniesbasilio.jpg" alt="Icono usuario" class="user-icon">
-                        <div class="user-info">
-                            <span class="user-role">Administrador</span>
-                            <span class="user-name">Adanies Basilio</span>
-                        </div>
-                    </button>
-                    <div class="dropdown-menu" id="mobile-dropdown-menu">
-                        <a href="#" class="dropdown-item">
-                            <img src="../icons/EditarPerfil.png" alt="Perfil">
-                            Mi perfil
-                        </a>
-                        <a href="#" class="dropdown-item">
-                            <img src="../icons/ayuda.png" alt="Ayuda">
-                            Ayuda
-                        </a>
-                        <a href="../src/index.html" class="dropdown-item">
-                            <img src="../icons/CerrarSesion.png" alt="Cerrar sesión">
-                            Cerrar sesión
-                        </a>
-                    </div>
-                </div>
-            </ul>
-            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">
-                <span class="menu-icon">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </span>
-            </button>
-        </div>
-    </header>
-    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
-    <nav class="mobile-menu" id="mobile-menu">
-        <div class="user-menu-container mobile-user-menu">
-            <button type="button" class="user-menu-btn" id="mobile-user-btn">
-                <img src="../img/adaniesbasilio.jpg" alt="Icono usuario" class="user-icon">
-                <div class="user-info">
-                    <span class="user-role">Administrador</span>
-                    <span class="user-name">Adanies Basilio</span>
-                </div>
-            </button>
-            <div class="dropdown-menu" id="mobile-dropdown-menu">
-                <a href="#" class="dropdown-item">
-                    <img src="../icons/EditarPerfil.png" alt="Perfil">
-                    Mi perfil
-                </a>
-                <a href="#" class="dropdown-item">
-                    <img src="../icons/ayuda.png" alt="Ayuda">
-                    Ayuda
-                </a>
-                <a href="../src/index.html" class="dropdown-item">
-                    <img src="../icons/CerrarSesion.png" alt="Cerrar sesión">
-                    Cerrar sesión
-                </a>
-            </div>
-        </div>
-        <div class="mobile-menu-header">
-            <div class="logo-total">
-                <div class="logo-icon"></div>
-                <div>
-                    <div class="mobile-menu-title">Formulaciones</div>
-                    <div class="mobile-menu-subtitle">Gestión eficiente de formulaciones</div>
-                </div>
-            </div>
-        </div>
-        <div class="mobile-menu-content">
-            <a href="#" class="mobile-menu-item active" onclick="loadContent('inicio')" id="mobile-inicio">Panel Principal</a>
-            <a href="#" class="mobile-menu-item" onclick="loadContent('proposito')" id="mobile-proposito">Reactivos</a>
-            <a href="#" class="mobile-menu-item" onclick="loadContent('acerca')" id="mobile-acerca">Formulaciones</a>
-            <a href="#" class="mobile-menu-item" onclick="loadContent('contacto')" id="mobile-contacto">Protocolos</a>
-            <a href="#" class="mobile-menu-item" onclick="loadContent('categorias')" id="mobile-categorias">Categorías</a>
-            <a href="#" class="mobile-menu-item" onclick="loadContent('parametros')" id="mobile-parametros">Parámetros</a>
-            <a href="#" class="mobile-menu-item" onclick="loadContent('historial')" id="mobile-historial">Historial</a>
-        </div>
-        <div class="mobile-menu-footer">
-            <a href="index.html" class="mobile-access-btn">Salir</a>
-        </div>
-    </nav>
+   
 
     <div class="container">
         <div class="categories">
@@ -312,34 +211,6 @@
     </div>
 
     <div id="banner-notificacion"></div>
-
-
-    <script>
-        // Función que maneja cualquier botón de menú de usuario
-        function setupUserMenu(btnId, menuId) {
-            const btn = document.getElementById(btnId);
-            const menu = document.getElementById(menuId);
-
-            if (!btn || !menu) return;
-
-            // Mostrar / ocultar al hacer clic
-            btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            menu.classList.toggle('show');
-            });
-
-            // Cerrar si haces clic fuera
-            document.addEventListener('click', (e) => {
-            if (!btn.contains(e.target) && !menu.contains(e.target)) {
-                menu.classList.remove('show');
-            }
-            });
-        }
-
-        // Aplica tanto para escritorio como para móvil
-        setupUserMenu('mobile-user-btn', 'mobile-dropdown-menu');
-        setupUserMenu('desktop-user-btn', 'desktop-dropdown-menu');
-    </script>
 
     <script>
         let currentCategory = 'soluciones-madre';
@@ -852,34 +723,83 @@
         }
 
         function viewFormulation(id) {
-            fetch(`db/formulaciones.php?accion=listar&tipo=${currentCategory}`)
+            fetch('db/formulaciones.php?accion=listar')
                 .then(res => res.json())
                 .then(data => {
                     const found = data.find(f => f.id == id);
                     if (found) {
-                        let details = `Formulación: ${found.nombre}\nID: ${found.id}\n\n`;
-                        
-                        if (found.solucion_madre) details += `Solución Madre: ${found.solucion_madre}\n`;
-                        if (found.volumen) details += `Volumen: ${found.volumen} L\n`;
-                        if (found.desinfectante) details += `Desinfectante: ${found.desinfectante}\n`;
-                        if (found.concentracion) details += `Concentración: ${found.concentracion}\n`;
-                        
-                        if (found.grupos && found.grupos.length) {
-                            details += `\nGrupos (${found.grupos.length}):\n`;
-                            found.grupos.forEach((grupo, i) => {
-                                details += `\n${i+1}. ${grupo.nombre_grupo}\n`;
-                                if (grupo.reactivos && grupo.reactivos.length) {
-                                    grupo.reactivos.forEach(reactivo => {
-                                        const reactivoInfo = availableReactivos.find(r => r.id == reactivo.reactivo_id);
-                                        details += `   - ${reactivoInfo ? reactivoInfo.nombre_comun : 'Reactivo desconocido'}: ${reactivo.cantidad}\n`;
-                                    });
-                                }
-                            });
-                        }
-                        
-                        alert(details);
+                        showFormulacionModal(found);
                     }
+                })
+                .catch(error => {
+                    alert('Error al cargar la formulación');
                 });
+        }
+
+        function showFormulacionModal(formulacion) {
+            const modal = document.createElement('div');
+            modal.id = 'viewFormulacionModal';
+            modal.className = 'view-protocol-modal';
+
+            let gruposHTML = '';
+            if (formulacion.grupos && formulacion.grupos.length > 0) {
+                formulacion.grupos.forEach((grupo, idx) => {
+                    let reactivosHTML = '';
+                    if (grupo.reactivos && grupo.reactivos.length > 0) {
+                        reactivosHTML = grupo.reactivos.map(r => `
+                            <tr>
+                                <td>${r.nombre_comun || ''}</td>
+                                <td>${r.cantidad || ''}</td>
+                                <td>${grupo.solucion_madre || formulacion.solucion_madre || ''}</td>
+                            </tr>
+                        `).join('');
+                    }
+                    gruposHTML += `
+                        <tr class="grupo-row">
+                            <td colspan="3" class="grupo-nombre">${grupo.nombre_grupo}</td>
+                        </tr>
+                        ${reactivosHTML}
+                    `;
+                });
+            }
+
+            modal.innerHTML = `
+                <div class="view-modal-overlay" onclick="closeViewFormulacionModal()"></div>
+                <div class="view-modal-content" style="max-width: 700px;">
+                    <div class="view-modal-header">
+                        <h2>${formulacion.nombre}</h2>
+                        <p class="view-protocol-id">#${String(formulacion.id).padStart(3, '0')}</p>
+                        <button class="view-modal-close" onclick="closeViewFormulacionModal()">×</button>
+                    </div>
+                    <div class="view-modal-body">
+                        <table class="tabla-formulacion">
+                            <thead>
+                                <tr>
+                                    <th>REACTIVOS</th>
+                                    <th>CANTIDAD</th>
+                                    <th>S.MADRE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${gruposHTML}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="view-modal-footer">
+                        <button class="btn-secondary" onclick="closeViewFormulacionModal()">Cerrar</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            setTimeout(() => modal.classList.add('active'), 10);
+        }
+
+        function closeViewFormulacionModal() {
+            const modal = document.getElementById('viewFormulacionModal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            }
         }
 
         // Inicializar
@@ -891,63 +811,7 @@
             editingId = null;
         }
 
-        // Menú hamburguesa igual que index.html
-        function loadContent(section) {
-             // Mapea cada sección a su archivo HTML
-            const routes = {
-                inicio: 'index.html',
-                proposito: 'reactivos.html',
-                acerca: 'formulaciones.html',
-                contacto: 'protocolos.html',
-                categorias: 'categoria.html',
-                parametros: 'parametros.html',
-                historial: 'historial.html'
-            };
-
-            // Si existe la ruta, navega
-            if (routes[section]) {
-                window.location.href = routes[section];
-            } else {
-                alert('Ruta no encontrada');
-            }
-        }
-        function toggleMobileMenu() {
-            const menuToggle = document.getElementById('menu-toggle');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const overlay = document.getElementById('mobile-menu-overlay');
-            menuToggle.classList.toggle('open');
-            mobileMenu.classList.toggle('open');
-            overlay.classList.toggle('open');
-            if (mobileMenu.classList.contains('open')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-        }
-        function closeMobileMenu() {
-            const menuToggle = document.getElementById('menu-toggle');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const overlay = document.getElementById('mobile-menu-overlay');
-            menuToggle.classList.remove('open');
-            mobileMenu.classList.remove('open');
-            overlay.classList.remove('open');
-            document.body.style.overflow = '';
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.getElementById('menu-toggle');
-            const overlay = document.getElementById('mobile-menu-overlay');
-            menuToggle.addEventListener('click', toggleMobileMenu);
-            overlay.addEventListener('click', closeMobileMenu);
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') closeMobileMenu();
-            });
-        });
-        document.querySelectorAll('.access-btn, .mobile-access-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.location.href = 'index.html';
-            });
-        });
     </script>
+    <script src="js/header-footer.js"></script>
 </body>
 </html>

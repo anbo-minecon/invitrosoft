@@ -1,0 +1,3 @@
+Hash en BD: $2y$10$g/okrkVTVMJUmCXjcOGBFOnklGFTKoN/jPUZG6pC1m.zlTPvoMkJa
+Password recibido: $2y$10$g/okrkVTVMJUmCXjcOGBFOnklGFTKoN/jPUZG6pC1m.zlTPvoMkJa
+Verifica: FAIL

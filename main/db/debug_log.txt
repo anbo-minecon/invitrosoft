@@ -1,0 +1,11 @@
+Array
+(
+    [id] => 3
+    [nombre] => Hipoclorito de sodio
+    [categoria] => liquido
+    [cantidad] => 199
+    [um] => g
+    [tipo] => vencimiento
+    [valor] => 5
+    [fecha_vencimiento] => 2025-10-10
+)

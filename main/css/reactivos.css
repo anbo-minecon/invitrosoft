@@ -10,60 +10,6 @@
             color: #333;
         }
         
-        .header {
-            background-color: #ffffff00;
-            padding: 15px 30px;
-            border-bottom: 1px solid #007832;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .header-icon {
-            width: 40px;
-            height: 40px;
-            background-color: #4CAF50;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        .header-title {
-            color: #2e7d32;
-            font-size: 24px;
-            font-weight: 600;
-            margin: 0;
-        }
-        
-        .header-subtitle {
-            color: #666;
-            font-size: 14px;
-            margin: 0;
-        }
-        
-        .header-right {
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .header-right img {
-            width: 50%;
-            height: 50%;
-            cursor: pointer;
-            background: var(--green-light);
-            border: 1.5px solid var(--border);
-        }
-        
         .container {
             padding: 30px;
             max-width: 1200px;
@@ -75,6 +21,7 @@
             gap: 15px;
             margin-bottom: 30px;
             align-items: center;
+            align-content: center;
         }
         
         .search-container {
@@ -157,6 +104,14 @@
         .table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 700px;
+            background: #fff;
+        }
+        
+        .table th, .table td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
         }
         
         .table th {
@@ -290,26 +245,43 @@
         
         /* Modal */
         .modal {
-            display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 1000;
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(30, 30, 30, 0.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 11000; /* Ahora sí, por encima del header */
+            transition: background 0.2s;
         }
         
+        /* Cuando el modal está activo */
+        .modal.active {
+            display: flex;
+        }
+        
+        /* El contenido del modal */
         .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            border-radius: 10px;
-            width: 600px;
-            max-width: 90vw;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px #0003;
+            max-width: 700px;
+            width: 95vw;
             padding: 0;
+            position: relative;
+            z-index: 11001;
+            animation: modalIn 0.18s;
+        }
+        
+        @keyframes modalIn {
+            from { transform: translateY(40px) scale(0.98); opacity: 0; }
+            to   { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        
+        /* Opcional: evita scroll en body cuando el modal está abierto */
+        body.modal-open {
             overflow: hidden;
         }
         
@@ -325,7 +297,7 @@
             font-size: 18px;
             font-weight: 600;
             margin: 0;
-            color: #1976d2;
+            color: #fff;
         }
         
         .close-btn {
@@ -422,3 +394,114 @@
             opacity: 0.6;
             pointer-events: none;
         }
+        
+        /* Responsive table */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 16px #0001;
+    margin-bottom: 32px;
+    /* Para que el scroll solo aparezca si es necesario */
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px; /* Hace que el scroll aparezca en pantallas pequeñas */
+    background: #fff;
+}
+
+.table th, .table td {
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+@media (max-width: 900px) {
+    .table {
+        min-width: 600px;
+    }
+}
+
+@media (max-width: 600px) {
+    .table {
+        min-width: 500px;
+    }
+}
+
+/* SVG icon styles */
+.action-btn svg, .add-btn svg, .search-icon svg {
+    vertical-align: middle;
+    margin-right: 4px;
+    color: var(--primary, #008040);
+    width: 20px;
+    height: 20px;
+    stroke-width: 2.2;
+}
+
+.add-btn, .action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    border: none;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 10px 24px;
+    margin: 0 8px 0 0;
+    box-shadow: 0 8px 24px rgba(22, 160, 133, 0.3);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.add-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+
+.add-btn:hover::before {
+    left: 100%;
+}
+
+.add-btn:hover, .action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px rgba(22, 160, 133, 0.4);
+}
+
+.add-btn:active {
+    transform: translateY(-1px);
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    font-size: 1.1em;
+    padding: 12px 8px 12px 0;
+    background: transparent;
+    width: 100%;
+}
+
+.search-icon {
+    margin-right: 8px;
+    color: var(--primary, #008040);
+    display: flex;
+    align-items: center;
+}

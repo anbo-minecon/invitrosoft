@@ -130,20 +130,28 @@
         }
 
         // Form submission
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            if (validateForm()) {
-                // Add loading state
-                this.classList.add('loading');
-                
-                // Simulate login process
-                setTimeout(() => {
-                    alert('¡Inicio de sesión exitoso!');
-                    this.classList.remove('loading');
-                    // Redirect to dashboard or main app
-                    // window.location.href = 'dashboard.html';
-                }, 2000);
+            if (!validateForm()) return;
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            try {
+                const res = await fetch('login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const result = await res.json();
+                if (result.success) {
+                    // Redirige o muestra éxito
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert(result.error || 'Credenciales incorrectas');
+                }
+            } catch (err) {
+                alert('Error de conexión');
             }
         });
 

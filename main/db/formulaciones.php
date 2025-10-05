@@ -51,14 +51,12 @@ switch ($accion) {
         $tipo = $input['tipo'] ?? '';
         $solucion_madre = $input['solucion_madre'] ?? null;
         $volumen = $input['volumen'] ?? null;
-        $desinfectante = $input['desinfectante'] ?? null;
-        $concentracion = $input['concentracion'] ?? null;
+        $desinfectante = $input['desinfectante'] ?? '';
+        $concentracion = $input['concentracion'] ?? '';
         $grupos = $input['grupos'] ?? [];
 
         // Validación según tipo
         if (!$nombre || !$tipo ||
-            ($tipo === 'soluciones-madre' && !$solucion_madre) ||
-            ($tipo === 'medios-cultivo' && (!$solucion_madre || !$volumen)) ||
             ($tipo === 'soluciones-desinfectantes' && (!$desinfectante || !$concentracion))
         ) {
             http_response_code(400);
@@ -106,13 +104,11 @@ switch ($accion) {
         $tipo = $input['tipo'] ?? '';
         $solucion_madre = $input['solucion_madre'] ?? null;
         $volumen = $input['volumen'] ?? null;
-        $desinfectante = $input['desinfectante'] ?? null;
-        $concentracion = $input['concentracion'] ?? null;
+        $desinfectante = $input['desinfectante'] ?? '';
+        $concentracion = $input['concentracion'] ?? '';
         $grupos = $input['grupos'] ?? [];
 
         if (!$id || !$nombre || !$tipo ||
-            ($tipo === 'soluciones-madre' && !$solucion_madre) ||
-            ($tipo === 'medios-cultivo' && (!$solucion_madre || !$volumen)) ||
             ($tipo === 'soluciones-desinfectantes' && (!$desinfectante || !$concentracion))
         ) {
             http_response_code(400);

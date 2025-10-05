@@ -3,236 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Categoría de reactivos</title>
+    <link rel="stylesheet" href="css/formul.css">
+    <link rel="stylesheet" href="css/header-footer.css">
     <style>
+
+        :root {
+            --green: #007832;
+            --green-dark: #005c24;
+            --muted: #f5f7fa;
+            --ink: #222;
+            --border: #e0e0e0;
+            --radius: 18px;
+            --shadow: rgba(0,0,0,0.08);
+            --shadow-hover: rgba(0,0,0,0.16);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
         }
-        
-        .header {
-            background-color: #e8f5e8;
-            padding: 15px 30px;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .header-icon {
-            width: 40px;
-            height: 40px;
-            background-color: #4CAF50;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        .header-title {
-            color: #2e7d32;
-            font-size: 24px;
-            font-weight: 600;
-            margin: 0;
-        }
-        
-        .header-subtitle {
-            color: #666;
-            font-size: 14px;
-            margin: 0;
-        }
-        
-        .header-right {
-            color: #4CAF50;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        
+        /* Container */
         .container {
-            padding: 30px;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 40px 20px;
         }
-        
+
+        /* Controls mejorados */
         .controls {
             display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            align-items: center;
-            justify-content: flex-end;
+            gap: 16px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
         }
-        
-        .search-container {
+
+        .search-box {
+            flex: 1;
+            min-width: 280px;
             position: relative;
-            flex-grow: 1;
-            max-width: 300px;
         }
-        
-        .search-input {
-            width: 100%;
-            padding: 10px 15px 10px 40px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            background-color: white;
-        }
-        
+
         .search-icon {
             position: absolute;
-            left: 12px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: #666;
-            font-size: 16px;
-        }
-        
-        .filter-btn {
-            padding: 10px 20px;
-            border: 1px solid #ddd;
-            background-color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
+            color: #6b7280;
             display: flex;
             align-items: center;
-            gap: 8px;
+            pointer-events: none;
+            z-index: 1;
         }
-        
-        .filter-btn:hover {
-            background-color: #f9f9f9;
+
+        .form-input {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 15px;
+            background: #fff;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
-        
-        .new-category-btn {
-            background-color: #4CAF50;
-            color: white;
+
+        .form-input:focus {
+            outline: none;
+            border-color: #007832;
+            box-shadow: 0 4px 12px rgba(0, 120, 50, 0.15);
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: #fff;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 14px 28px;
+            border-radius: var(--radius-lg);
+            transition: var(--transition);
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 14px;
             display: flex;
-            flex-direction: row;
-            justify-content: flex-end;         
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(22, 160, 133, 0.3);
+        }
+        .add-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .add-btn:hover::before {
+            left: 100%;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 32px rgba(22, 160, 133, 0.4);
+        }
+
+        .add-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Table container mejorado */
+        .table-container {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, #f8faf9 0%, #e8f5e9 100%);
+            padding: 24px 32px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .table-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1f2937;
+            letter-spacing: -0.5px;
+        }
+
+        .table-title span {
+            color: #007832;
+            font-weight: 800;
+        }
+
+        .table-scroll {
+            overflow-x: scroll;
+            width: 100%;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            min-width: 700px;
+            border-radius: 5px;
+        }
+
+        .table th {
+            background: #007832;
+            color: #fff;
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 15px;
+            color: #374151;
+        }
+
+        .table tr {
+            transition: all 0.2s ease;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f9fafb;
+            transform: scale(1.01);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-tag {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
+            display: inline-block;
+            box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3);
+        }
+
+        /* Botones de acción mejorados */
+        td .actions {
+            display: flex;
             gap: 8px;
         }
 
-        .new-category-btn:hover {
-            background-color: #45a049;
-        }
-        
-        .table-container {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .table-header {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .table-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-            margin: 0;
-        }
-        
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .table th {
-            background-color: #f8f9fa;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-            color: #666;
-            font-size: 12px;
-            text-transform: uppercase;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .table td {
-            padding: 15px;
-            border-bottom: 1px solid #f0f0f0;
-            vertical-align: middle;
-        }
-        
-        .table tr:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .category-tag {
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: 500;
-            color: white;
-            display: inline-block;
-        }
-        
-        .solido { background-color: #666; }
-        .liquido { background-color: #2196F3; }
-        .gaseoso { background-color: #4CAF50; }
-        
-        .actions {
-            display: flex;
-            gap: 8px;
-        }
-        
         .action-btn {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border: none;
-            border-radius: 4px;
+            border-radius: 10px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        .action-btn:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+
         .edit-btn {
-            background-color: #FFC107;
-            color: white;
+            background: linear-gradient(135deg, #FFC107 0%, #FFB300 100%);
+            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
         }
-        
+
         .view-btn {
-            background-color: #4CAF50;
-            color: white;
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
         }
-        
+
         .delete-btn {
-            background-color: #f44336;
-            color: white;
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+            box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
         }
-        
+
         .action-btn:hover {
-            opacity: 0.8;
+            transform: translateY(-2px) scale(1.05);
         }
-        
-        /* Modal */
+
+        .action-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Modal mejorado */
         .modal {
             display: none;
             position: fixed;
@@ -240,179 +280,224 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background: rgba(44, 62, 80, 0.7);
+            backdrop-filter: blur(4px);
             z-index: 1000;
+            animation: fadeIn 0.3s ease;
         }
-        
+
         .modal-content {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: white;
-            border-radius: 10px;
-            width: 500px;
+            background: #fff;
+            border-radius: var(--radius-lg);
+            width: 550px;
             max-width: 90vw;
-            padding: 0;
             overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
         .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid #e0e0e0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 32px;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .modal-title {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
             margin: 0;
+            letter-spacing: -0.5px;
         }
-        
+
         .close-btn {
-            background: none;
+            background: rgba(255, 255, 255, 0.2);
             border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
             font-size: 24px;
             cursor: pointer;
-            color: #666;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
         }
-        
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
         .modal-body {
-            padding: 20px;
+            padding: 32px;
         }
-        
+
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
-        
+
         .form-label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #333;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            color: #374151;
             font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        
+
         .form-textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
+            padding: 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
             resize: vertical;
             min-height: 100px;
+            transition: all 0.3s ease;
         }
-        
-        .modal-footer {
-            padding: 20px;
-            border-top: 1px solid #e0e0e0;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #007832;
+            box-shadow: 0 4px 12px rgba(0, 120, 50, 0.15);
         }
-        
-        .btn-secondary {
-            padding: 10px 20px;
-            border: 1px solid #ddd;
-            background-color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-primary {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-primary:hover {
-            background-color: #45a049;
-        }
-        
-        .loading {
-            opacity: 0.6;
-            pointer-events: none;
-        }
-        
+
         .error {
-            color: #f44336;
-            font-size: 12px;
-            margin-top: 5px;
+            color: #ef4444;
+            font-size: 13px;
+            margin-top: 6px;
+            font-weight: 500;
         }
+
+        .modal-buttons {
+            padding: 20px 32px 32px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn-cancel {
+            padding: 12px 24px;
+            border: 2px solid #e5e7eb;
+            background: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            color: #6b7280;
+        }
+
+        .btn-cancel:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+        }
+
+        .btn-save {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #007832 0%, #00a844 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 120, 50, 0.2);
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 120, 50, 0.3);
+        }
+
+        .btn-save:active {
+            transform: translateY(0);
+        }
+
+        .modal{
+            z-index: 11001;
+        }
+
+        svg{
+            z-index: 200 !important;
+        }
+
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <div class="header-left">
-            <div class="header-icon">🧪</div>
-            <div>
-                <h1 class="header-title">Categoría de reactivos</h1>
-                <p class="header-subtitle">Gestiona las categorías de reactivos</p>
-            </div>
-        </div>
-        <div class="header-right">↗</div>
-    </div>
-
+    
     <!-- Main Container -->
     <div class="container">
         <!-- Controls -->
         <div class="controls">
-            <div class="search-container">
-                <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" placeholder="Buscar categoría......" id="searchInput">
+            <div class="search-box">
+                <span class="search-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <input type="text" class="form-input" placeholder="Buscar categoría..." id="searchInput">
             </div>
-            <button class="filter-btn" onclick="toggleFilter()">
-                <span>🔽</span>
-                Filtrar
+            <button class="add-btn" onclick="openModal()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Nueva categoría
             </button>
-            <div style="margin-left:auto;display:flex;">
-                <button class="new-category-btn" onclick="openModal()">
-                    <span>+</span>
-                    Nueva categoría
-                </button>
-            </div>
         </div>
+
 
         <!-- Table -->
         <div class="table-container">
             <div class="table-header">
                 <h2 class="table-title">Categorías registradas (<span id="categoryCount">0</span>)</h2>
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Categorías</th>
-                        <th>Descripción</th>
-                        <th>Cantidad/reactivo</th>
-                        <th>ACCIONES</th>
-                    </tr>
-                </thead>
-                <tbody id="categoriesTable">
-                    <!-- Las categorías se cargarán aquí dinámicamente -->
-                </tbody>
-            </table>
+            <div class="table-scroll">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Categoría</th>
+                            <th>Descripción</th>
+                            <th>Cantidad/reactivo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="categoriesTable">
+                        <!-- Las categorías se cargarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -427,7 +512,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="form-label" for="categoryName">Nombre</label>
-                        <input type="text" class="form-input" id="categoryName" placeholder="Ej: solido" required>
+                        <input type="text" class="form-input" id="categoryName" placeholder="Ej: Sólido" required>
                         <div class="error" id="nameError"></div>
                     </div>
                     <div class="form-group">
@@ -435,12 +520,12 @@
                         <textarea class="form-textarea" id="categoryDescription" placeholder="Descripción de la categoría"></textarea>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" onclick="closeModal()">
+                <div class="modal-buttons">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">
                         <span>✖</span>
                         Cancelar
                     </button>
-                    <button type="submit" class="btn-primary" id="saveBtn">
+                    <button type="submit" class="btn-save" id="saveBtn">
                         <span>💾</span>
                         Guardar
                     </button>
@@ -450,5 +535,6 @@
     </div>
 
     <script src="js/categorias.js"></script>
+    <script src="js/header-footer.js"></script>
 </body>
 </html>

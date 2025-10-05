@@ -5,29 +5,32 @@ header('Content-Type: application/json');
 
 $input = json_decode(file_get_contents('php://input'), true);
 $email = $input['email'] ?? '';
-$password = $input['contraseña'] ?? '';
+$password = $input['password'] ?? '';
+
+//#############
+file_put_contents('debug_login.txt', print_r($input, true));
 
 if (!$email || !$password) {
-    http_response_code(400);
-    echo json_encode(['error' => 'Email y contraseña son obligatorios']);
+    echo json_encode(['success' => false, 'error' => 'Faltan datos']);
     exit;
 }
 
-$stmt = $conn->prepare('SELECT id, nombre, email, password, tipo FROM usuarios WHERE email=?');
+$stmt = $conn->prepare("SELECT * FROM usuarios WHERE email = ?");
 $stmt->bind_param('s', $email);
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
+
+//####################
+if ($user) {
+    file_put_contents('debug_login.txt', "Hash en BD: {$user['password']}\nPassword recibido: $password\nVerifica: " . (password_verify($password, $user['password']) ? 'OK' : 'FAIL'));
+}
+
 if ($user && password_verify($password, $user['password'])) {
-    $_SESSION['usuario'] = [
-        'id' => $user['id'],
-        'nombre' => $user['nombre'],
-        'email' => $user['email'],
-        'tipo' => $user['tipo']
-    ];
+    $_SESSION['user_id'] = $user['id'];
     echo json_encode(['success' => true]);
 } else {
-    http_response_code(401);
-    echo json_encode(['error' => 'Credenciales incorrectas']);
+    echo json_encode(['success' => false, 'error' => 'Credenciales incorrectas']);
 }
+?>
