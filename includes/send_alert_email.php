@@ -21,8 +21,8 @@ function sendStockAlertEmail(array $smtp, array $product, float $threshold) {
         $mail->Port = $smtp['port'];
 
         // Remitente y destinatario
-        $mail->setFrom($smtp['from'], 'voceroadso2025@gmail.com');
-        $mail->addAddress($smtp['to'], 'adaniesbasilio@gmail.com');
+        $mail->setFrom($smtp['from'], 'voceroadso2025@gmail.com', 'InvitroSoft');
+        $mail->addAddress($smtp['to'], 'adaniesbasilio@gmail.com', 'Destinario');
 
         // Logo embebido
         $logoPath = __DIR__ . '/invitrosoft/img/logo.svg';
@@ -31,7 +31,7 @@ function sendStockAlertEmail(array $smtp, array $product, float $threshold) {
         }
 
         // Asunto
-        $subject = "⚠️ Alerta de stock bajo - {$product['nombre']}";
+        $subject = "Alerta de stock bajo - {$product['nombre']}";
 
         // Cuerpo HTML
         $htmlBody = "
@@ -98,8 +98,8 @@ function sendVencimientoAlertEmail(array $smtp, array $product, int $dias_restan
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = $smtp['port'];
 
-        $mail->setFrom($smtp['from'], 'voceroadso2025@gmail.com');
-        $mail->addAddress($smtp['to'], 'adaniesbasilio@gmail.com');
+        $mail->setFrom($smtp['from'], 'voceroadso2025@gmail.com', 'InvitroSoft');
+        $mail->addAddress($smtp['to'], 'adaniesbasilio@gmail.com', 'Destinario');
 
         // Logo embebido
         $logoPath = __DIR__ . '/../img/logo.png';
@@ -107,7 +107,7 @@ function sendVencimientoAlertEmail(array $smtp, array $product, int $dias_restan
             $mail->addEmbeddedImage($logoPath, 'logo_invitrosoft', 'logo.png');
         }
 
-        $subject = "⏰ Reactivo próximo a vencer - {$product['nombre']}";
+        $subject = "Reactivo proximo a vencer - {$product['nombre']}";
 
         $htmlBody = "
         <html>

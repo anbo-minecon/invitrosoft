@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Parámetros</title>
+    <link rel="stylesheet" href="css/formul.css">
+    <link rel="stylesheet" href="css/header-footer.css">
+    <style>
+        :root {
+            /* Si necesitas colores extra, agrégalos aquí */
+            --danger: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --info: #3498db;
+        }
+
+        /* Estilos específicos para parámetros */
+        .parameter-card {
+            background: #fff;
+            border: 1px solid #e0e6ed;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .parameter-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+        
+        .parameter-type-config {
+            background: var(--primary);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+        
+        .parameter-type-ambiente {
+            background: #3498db;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+        
+        .parameter-type-cultivo {
+            background: #f39c12;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        /* Estilos para las tabs de categorías y efecto hover en imágenes */
+.category-tabs {
+    display: flex;
+    gap: 22px;
+    margin: 0 0 18px 0;
+    padding: 18px 0;
+    justify-content:space-around;
+    flex-wrap: wrap;
+}
+
+.category-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    max-width: 140px;
+    height: 110px;
+    background: transparent;
+    border-radius: 18px;
+    box-shadow: 0 2px 8px rgba(0,120,50,0.06);
+    cursor: pointer;
+    font-size: 1.08em;
+    font-weight: 600;
+    color: var(--ink);
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    border: 2px solid transparent;
+    margin-bottom: 8px;
+    position: relative;
+    user-select: none;
+}
+
+.category-tab img {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 8px;
+    filter: none;
+    transition: filter 0.18s;
+}
+
+.category-tab.active {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 8px 25px rgba(0,120,50,0.12);
+    border: 2px solid var(--primary);
+}
+
+.category-tab.active img {
+    filter: brightness(0) invert(1);
+}
+
+.category-tab:hover {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 8px 25px rgba(0,120,50,0.18);
+}
+
+.category-tab:hover img {
+    filter: brightness(0) invert(1);
+}
+
+.modal{
+    /* ... */
+    z-index: 11000; /* Ahora sí, por encima del header */
+}
+
+/* Responsive: tabs más pequeñas en móvil */
+@media (max-width: 850px) {
+    .category-tabs {
+        gap: 10px;
+        padding: 10px 0;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .category-tab {
+        min-width: 90px;
+        max-width: 110px;
+        height: 80px;
+        font-size: 0.98em;
+        box-sizing: border-box;
+        flex-direction: row;
+    }
+    .category-tab img {
+        width: 28px;
+        height: 28px;
+        margin-bottom: 6px;
+        margin-top: 0;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="categories">
+            <h3>Tipos de Parámetros</h3>
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="genero">
+                    <img src="parametros/icons/genero.png" alt=""> Género
+                </div>
+                <div class="category-tab" data-category="estado">
+                    <img src="parametros/icons/estado.png" alt=""> Estado
+                </div>
+                <div class="category-tab" data-category="origen">
+                    <img src="parametros/icons/origen.png" alt=""> Origen
+                </div>
+                <div class="category-tab" data-category="umedida">
+                    <img src="parametros/icons/umedida.png" alt=""> U-medida
+                </div>
+                <div class="category-tab" data-category="estadoRaices">
+                    <img src="parametros/icons/estadoRaices.png" alt=""> Estados de raíces
+                </div>
+            </div>
+        </div>
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Buscar parámetro...">
+            </div>
+            <button class="add-btn" onclick="openModal()">Nuevo Parámetro</button>
+        </div>
+        <div class="cards-grid" id="parametersGrid"></div>
+    </div>
+    <div class="modal" id="parameterModal"></div>
+    <div id="banner-notificacion"></div>
+
+
+    <script src="js/parametros.js"></script>
+    <script src="js/header-footer.js"></script>
+</body>
+</html>

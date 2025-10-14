@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Reactivos</title>
+    <link rel="stylesheet" href="css/formul.css">
+    <link rel="stylesheet" href="css/header-footer.css">
+    <link rel="stylesheet" href="css/reactivos.css">
+    <style>
+        .edit-btn, .delete-btn {
+            width: 36px !important;
+            height: 36px !important;
+        }
+        
+        .edit-btn svg, .delete-btn svg {
+            width: 18px !important;
+            height: 18px !important;
+            stroke: white !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="banner-notificacion" class="notification"></div>
+
+    <div class="container">
+        <div class="controls">
+            <div class="search-box">
+                <span class="search-icon">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/>
+                    </svg>
+                </span>
+                <input type="text" class="search-input" placeholder="Buscar reactivo..." id="searchInput" autocomplete="off">
+            </div>
+            <button class="add-btn" onclick="toggleFilter()">
+                <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+                    <path d="M3 6h18M6 12h12M10 18h4" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Filtrar
+            </button>
+            <button class="add-btn" onclick="openModal()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff">
+                    <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
+                </svg>
+                Nuevo Reactivo
+            </button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>IMAGEN</th>
+                        <th>REACTIVO</th>
+                        <th>CATEGORÍA</th>
+                        <th>CANTIDAD</th>
+                        <th>VENCIMIENTO</th>
+                        <th>ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody id="reactivesTable">
+                    <!-- Contenido dinámico -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal" id="reactiveModal">
+        <div class="modal-content">
+            <div class="modal-header" style="background:linear-gradient(135deg, var(--primary), var(--primary-light));color:#fff;">
+                <h3 class="modal-title" id="modalTitle" style="font-size:1.5em;font-weight:700;">Nuevo Reactivo</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="reactiveForm">
+                <div class="modal-body">
+                    <div class="form-row" style="display:flex;gap:24px;">
+                        <div class="form-group" style="flex:1;">
+                            <label class="form-label" for="commonName">Nombre común</label>
+                            <input type="text" class="form-input" id="commonName" placeholder="Ej: Ácido Sulfúrico" required>
+                            <div class="error" id="nameError"></div>
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label class="form-label" for="chemicalFormula">Fórmula química</label>
+                            <input type="text" class="form-input" id="chemicalFormula" placeholder="Ej: H₂SO₄">
+                        </div>
+                    </div>
+                    <div class="form-row" style="display:flex;gap:24px;">
+                        <div class="form-group" style="flex:1;">
+                            <label class="form-label" for="category">Categoría</label>
+                            <select class="form-select" id="category" required>
+                                <option value="">Seleccionar categoría</option>
+                            </select>
+                            <div class="error" id="categoryError"></div>
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label class="form-label" for="unitMeasure">Unidad de medida</label>
+                            <input type="text" class="form-input" id="unitMeasure" placeholder="Ej: ml, g, kg">
+                        </div>
+                    </div>
+                    <div class="form-row" style="display:flex;gap:24px;">
+                        <div class="form-group" style="flex:1;">
+                            <label class="form-label" for="totalQuantity">Cantidad total</label>
+                            <input type="number" class="form-input" id="totalQuantity" placeholder="0.00" step="0.01" min="0">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label class="form-label" for="expiryDate">Fecha de vencimiento</label>
+                            <input type="date" class="form-input" id="expiryDate">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label class="form-label" for="reactiveImage">Imagen</label>
+                            <input type="file" class="form-input" id="reactiveImage" accept="image/*">
+                            <div style="margin-top:8px;">
+                                <img id="imagePreview" src="" alt="Vista previa" style="max-width:120px; max-height:120px; display:none; border-radius:8px; border:1px solid #eee;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                            <path d="M18 6L6 18M6 6L18 18"/>
+                        </svg>
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn-save" id="saveBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16L21 8V19C21 20.1046 20.1046 21 19 21Z"/>
+                            <path d="M7 3V8H15"/>
+                            <path d="M17 21V13H7V21"/>
+                        </svg>
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let reactives = [];
+        let categories = [];
+        let editingId = null;
+
+        const REACTIVE_API = 'db/reactivos.php';
+        const CATEGORY_API = 'db/categorias.php';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCategories();
+            loadReactives();
+            setupEventListeners();
+        });
+
+        function showNotification(msg, type = 'success') {
+            const banner = document.getElementById('banner-notificacion');
+            banner.textContent = msg;
+            banner.style.display = 'block';
+            banner.className = 'notification ' + (type === 'error' ? 'error' : 'success');
+            setTimeout(() => { banner.style.display = 'none'; }, 3500);
+        }
+
+        function setupEventListeners() {
+            document.getElementById('searchInput').addEventListener('input', function() {
+                filterReactives(this.value);
+            });
+            document.getElementById('reactiveForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveReactive();
+            });
+            document.getElementById('reactiveModal').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+            document.getElementById('reactiveImage').addEventListener('change', function() {
+                const file = this.files[0];
+                const preview = document.getElementById('imagePreview');
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = e => {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = '';
+                    preview.style.display = 'none';
+                }
+            });
+        }
+
+        async function loadCategories() {
+            try {
+                const response = await fetch(CATEGORY_API);
+                if (!response.ok) throw new Error('Error al cargar categorías');
+                categories = await response.json();
+                populateCategorySelect();
+            } catch (error) {
+                showNotification('No se pudieron cargar las categorías', 'error');
+            }
+        }
+
+        function populateCategorySelect() {
+            const select = document.getElementById('category');
+            select.innerHTML = '<option value="">Seleccionar categoría</option>';
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.nombre;
+                select.appendChild(option);
+            });
+        }
+
+        async function loadReactives() {
+            try {
+                const response = await fetch(REACTIVE_API);
+                if (!response.ok) throw new Error('Error al cargar reactivos');
+                reactives = await response.json();
+                renderReactives(reactives);
+            } catch (error) {
+                showNotification('No se pudieron cargar los reactivos', 'error');
+            }
+        }
+
+        function renderReactives(data) {
+            const tbody = document.getElementById('reactivesTable');
+            tbody.innerHTML = '';
+            if (!data.length) {
+                tbody.innerHTML = `<tr><td colspan="7" style="padding:60px;text-align:center;color:#999;"><div><h3>No hay reactivos registrados</h3><p>Agrega tu primer reactivo usando el botón Nuevo Reactivo.</p></div></td></tr>`;
+                return;
+            }
+            data.forEach(reactive => {
+                const row = document.createElement('tr');
+                const quantity = parseFloat(reactive.cantidad_total) || 0;
+                const maxQuantity = 2000;
+
+                const minimo = 200;
+                const diasParaVencer = calcularDiasParaVencer(reactive.fecha_vencimiento);
+
+                const percentage = Math.min((quantity / maxQuantity) * 100, 100);
+                const expiryDays = calculateDaysToExpiry(reactive.fecha_vencimiento);
+                const expiryDisplay = formatExpiryDate(reactive.fecha_vencimiento);
+
+                // ALERTAS AUTOMÁTICAS:
+                if (quantity <= minimo && !reactive.alerta_enviada_minimo) {
+                    enviarAlertaCorreo(reactive, minimo, 'cantidad');
+                    reactive.alerta_enviada_minimo = true;
+                }
+
+                if (diasParaVencer <= 15 && diasParaVencer >= 0 && !reactive.alerta_enviada_vencimiento) {
+                    enviarAlertaCorreo(reactive, diasParaVencer, 'vencimiento');
+                    reactive.alerta_enviada_vencimiento = true;
+                }
+
+                row.innerHTML = `
+                    <td>${String(reactive.id).padStart(3, '0')}</td>
+                    <td>
+                        ${reactive.imagen ? `<img src="img/reactivos/${reactive.imagen}" alt="Imagen" style="max-width:40px;max-height:40px;border-radius:6px;">` : ''}
+                    </td>
+                    <td>
+                        <div class="reactive-name">${reactive.nombre_comun}</div>
+                        <div class="chemical-formula">${formatChemicalFormula(reactive.formula_quimica)}</div>
+                    </td>
+                    <td>
+                        ${reactive.categoria_nombre ? `<span class="category-tag ${reactive.categoria_nombre.toLowerCase()}">${reactive.categoria_nombre}</span>` : ''}
+                    </td>
+                    <td>
+                        <div class="quantity-container">
+                            <div class="quantity-text">${quantity} / ${maxQuantity} ${reactive.unidad_medida || 'g'}</div>
+                            <div class="quantity-bar-container">
+                                <div class="quantity-bar" style="width: ${percentage}%"></div>
+                            </div>
+                            <div class="quantity-status">${quantity < 200 ? 'Bajo' : quantity < 800 ? 'Normal' : 'Alto'}</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="expiry-container">
+                            <div class="expiry-days" style="color:${expiryDays <= 7 ? '#e74c3c' : '#4CAF50'};">${expiryDays} días</div>
+                            <div class="expiry-date">${expiryDisplay}</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <button class="action-btn edit-btn" onclick="editReactive(${reactive.id})" title="Editar">
+                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="#ff5e00ff" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M18.5 2.50023C18.8978 2.1024 19.4374 1.87891 20 1.87891C20.5626 1.87891 21.1022 2.1024 21.5 2.50023C21.8978 2.89805 22.1213 3.43762 22.1213 4.00023C22.1213 4.56284 21.8978 5.1024 21.5 5.50023L12 15.0002L8 16.0002L9 12.0002L18.5 2.50023Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <button class="action-btn delete-btn" onclick="deleteReactive(${reactive.id})" title="Eliminar">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#ff0000ff" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 6H5H21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10 11V17M14 11V17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // === ENVÍO DE ALERTAS POR CORREO ===
+        async function enviarAlertaCorreo(reactivo, valor, tipo) {
+            const payload = {
+                id: reactivo.id,
+                nombre: reactivo.nombre_comun,
+                categoria: reactivo.categoria_nombre,
+                cantidad: reactivo.cantidad_total,
+                um: reactivo.unidad_medida,
+                tipo: tipo,
+                valor: valor,
+                fecha_vencimiento: reactivo.fecha_vencimiento
+            };
+
+            console.log(`📦 Enviando alerta de tipo: ${tipo}`, payload);
+
+            try {
+                const res = await fetch('/invitrosoft/main/db/send_alert.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const text = await res.text();
+                console.log("📩 Respuesta del servidor:", text);
+
+                let data;
+                try { data = JSON.parse(text); } catch (e) {
+                    console.error('⚠️ Error al parsear JSON:', e);
+                    return;
+                }
+
+                if (data.success) {
+                    console.log(`✅ Correo enviado (${tipo}): ${reactivo.nombre_comun}`);
+                } else {
+                    console.warn(`⚠️ Fallo al enviar correo (${tipo}): ${data.error || data.msg}`);
+                }
+
+            } catch (err) {
+                console.error("🚨 Error de red al enviar alerta:", err);
+            }
+        }
+
+        // === FUNCIONES AUXILIARES ===
+        function calcularDiasParaVencer(fechaVencimiento) {
+            if (!fechaVencimiento) return 9999;
+            const hoy = new Date();
+            const fecha = new Date(fechaVencimiento);
+            const diff = fecha - hoy;
+            return Math.ceil(diff / (1000 * 60 * 60 * 24));
+        }
+
+        function formatChemicalFormula(formula) {
+            if (!formula) return '';
+            return formula.replace(/(\d+)/g, '<sub>$1</sub>');
+        }
+
+        function calculateDaysToExpiry(expiryDate) {
+            if (!expiryDate) return 0;
+            const today = new Date();
+            const expiry = new Date(expiryDate);
+            const diffTime = expiry - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return Math.max(0, diffDays);
+        }
+
+        function formatExpiryDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit', 
+                year: 'numeric'
+            });
+        }
+
+        function filterReactives(searchTerm) {
+            const filtered = reactives.filter(reactive => 
+                reactive.nombre_comun.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                (reactive.formula_quimica && reactive.formula_quimica.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                (reactive.categoria_nombre && reactive.categoria_nombre.toLowerCase().includes(searchTerm.toLowerCase()))
+            );
+            renderReactives(filtered);
+        }
+
+        function openModal(isEdit = false, reactiveData = null) {
+            const modal = document.getElementById('reactiveModal');
+            const modalTitle = document.getElementById('modalTitle');
+
+            if (isEdit && reactiveData) {
+                modalTitle.textContent = 'Editar Reactivo';
+                document.getElementById('commonName').value = reactiveData.nombre_comun;
+                document.getElementById('chemicalFormula').value = reactiveData.formula_quimica || '';
+                document.getElementById('category').value = reactiveData.categoria_id || '';
+                document.getElementById('unitMeasure').value = reactiveData.unidad_medida || '';
+                document.getElementById('totalQuantity').value = reactiveData.cantidad_total || '';
+                document.getElementById('expiryDate').value = reactiveData.fecha_vencimiento || '';
+                if (reactiveData.imagen) {
+                    document.getElementById('imagePreview').src = 'img/reactivos/' + reactiveData.imagen;
+                    document.getElementById('imagePreview').style.display = 'block';
+                }
+                editingId = reactiveData.id;
+            } else {
+                modalTitle.textContent = 'Nuevo Reactivo';
+                document.getElementById('reactiveForm').reset();
+                document.getElementById('imagePreview').style.display = 'none';
+                editingId = null;
+            }
+
+            clearErrors();
+            document.body.classList.add('modal-open');
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.body.classList.remove('modal-open');
+            document.getElementById('reactiveModal').classList.remove('active');
+            editingId = null;
+            clearErrors();
+        }
+
+        function clearErrors() {
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('categoryError').textContent = '';
+        }
+
+        async function saveReactive() {
+            const saveBtn = document.getElementById('saveBtn');
+            clearErrors();
+
+            const commonName = document.getElementById('commonName').value.trim();
+            if (!commonName) {
+                document.getElementById('nameError').textContent = 'El nombre común es obligatorio';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('nombre_comun', commonName);
+            formData.append('formula_quimica', document.getElementById('chemicalFormula').value.trim());
+            formData.append('categoria_id', document.getElementById('category').value || '');
+            formData.append('unidad_medida', document.getElementById('unitMeasure').value.trim());
+            formData.append('cantidad_total', document.getElementById('totalQuantity').value || 0);
+            formData.append('fecha_vencimiento', document.getElementById('expiryDate').value || '');
+            const imageFile = document.getElementById('reactiveImage').files[0];
+            if (imageFile) formData.append('imagen', imageFile);
+
+            try {
+                saveBtn.disabled = true;
+                saveBtn.textContent = 'Guardando...';
+
+                let response;
+                if (editingId) {
+                    formData.append('id', editingId);
+                    response = await fetch(`${REACTIVE_API}?id=${editingId}`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                } else {
+                    response = await fetch(REACTIVE_API, {
+                        method: 'POST',
+                        body: formData
+                    });
+                }
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Error al guardar el reactivo');
+                }
+
+                await loadReactives();
+                closeModal();
+                showNotification('Reactivo guardado correctamente', 'success');
+            } catch (error) {
+                showNotification(error.message, 'error');
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16L21 8V19C21 20.1046 20.1046 21 19 21Z"/><path d="M7 3V8H15"/><path d="M17 21V13H7V21"/></svg> Guardar';
+            }
+        }
+
+        function editReactive(id) {
+            const reactive = reactives.find(r => r.id == id);
+            if (reactive) openModal(true, reactive);
+        }
+
+        async function deleteReactive(id) {
+            const reactive = reactives.find(r => r.id == id);
+            if (!reactive) return;
+
+            if (!confirm(`¿Estás seguro de eliminar "${reactive.nombre_comun}"?`)) return;
+
+            try {
+                const response = await fetch(`${REACTIVE_API}?id=${id}`, { method: 'DELETE' });
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Error al eliminar');
+                }
+                await loadReactives();
+                showNotification('Reactivo eliminado correctamente', 'success');
+            } catch (error) {
+                showNotification('Error al eliminar: ' + error.message, 'error');
+            }
+        }
+
+        function toggleFilter() {
+            showNotification('Función de filtro en desarrollo', 'error');
+        }
+    </script>
+    <script src="js/header-footer.js"></script>
+</body>
+</html>

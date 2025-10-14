@@ -1,0 +1,19 @@
+body.dark-mode {
+    --green: #00a844;
+    --green-dark: #007832;
+    --green-light: #1a3d2e;
+    --muted: #1e2530;
+    --ink: #e8e8e8;
+    --border: #2d3748;
+    --shadow: rgba(0,0,0,0.3);
+    --shadow-hover: rgba(0,0,0,0.5);
+    --bg-primary: #1a1f2e;
+    --bg-secondary: linear-gradient(135deg, #1a1f2e 0%, #0f1419 100%);
+    --text-primary: #e8e8e8;
+    --text-secondary: #a0aec0;
+    --card-bg: #252d3d;
+    --danger: #ff6b6b;
+    --success: #51cf66;
+    --warning: #ffd43b;
+    --info: #74c0fc;
+}

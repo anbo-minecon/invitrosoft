@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Usuario - Invitrosoft</title>
+    <style>
+        :root {
+            --green: #007832;
+            --green-dark: #055d29;
+            --green-light: #e9f6ee;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --radius: 12px;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--green-light) 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: var(--radius);
+            padding: 24px 32px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--gray-200);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--green);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        .brand-info h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 2px;
+        }
+
+        .brand-info p {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .btn-back {
+            padding: 10px 20px;
+            background: white;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-back:hover {
+            background: var(--gray-50);
+            transform: translateY(-1px);
+        }
+
+        .btn-back svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* User Type Panel */
+        .user-type-panel {
+            background: white;
+            border-radius: var(--radius);
+            padding: 48px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--gray-200);
+            text-align: center;
+        }
+
+        .user-type-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 16px;
+        }
+
+        .user-type-subtitle {
+            font-size: 16px;
+            color: var(--gray-600);
+            margin-bottom: 48px;
+        }
+
+        .user-type-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .user-type-btn {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-type-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--green);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .user-type-btn:hover {
+            border-color: var(--green);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .user-type-btn:hover::before {
+            transform: scaleX(1);
+        }
+
+        .user-type-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: var(--green-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .user-type-btn:hover .user-type-icon {
+            background: var(--green);
+            transform: scale(1.1);
+        }
+
+        .user-type-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--green);
+            transition: fill 0.3s;
+        }
+
+        .user-type-btn:hover .user-type-icon svg {
+            fill: white;
+        }
+
+        .user-type-btn h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .user-type-btn p {
+            font-size: 14px;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+
+        /* Form Panel */
+        .user-form-panel {
+            background: white;
+            border-radius: var(--radius);
+            padding: 48px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--gray-200);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .user-form h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .form-group label svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--green);
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s;
+            background: white;
+            color: var(--gray-900);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px var(--green-light);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 32px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--gray-700);
+            border: 2px solid var(--gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-400);
+        }
+
+        /* Notificación */
+        .notification {
+            margin-top: 24px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .notification.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+            display: flex;
+        }
+
+        .notification.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .user-type-panel,
+            .user-form-panel {
+                padding: 24px;
+            }
+
+            .user-type-title {
+                font-size: 24px;
+            }
+
+            .user-type-options {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Hidden */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="brand">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+                <div class="brand-info">
+                    <h1>Creación de Usuarios</h1>
+                    <p>Gestiona usuarios para el sistema Invitrosoft</p>
+                </div>
+            </div>
+            <a href="index.php" class="btn-back" id="btnVolverHeader">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+                Volver al Panel
+            </a>
+        </div>
+
+        <!-- User Type Selection Panel -->
+        <section class="user-type-panel" id="user-type-panel">
+            <h2 class="user-type-title">Selecciona el Tipo de Usuario</h2>
+            <p class="user-type-subtitle">Elige el rol que deseas asignar al nuevo usuario</p>
+            
+            <div class="user-type-options">
+                <button class="user-type-btn" data-type="admin">
+                    <div class="user-type-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                        </svg>
+                    </div>
+                    <h3>Administrador</h3>
+                    <p>Acceso total a la plataforma con permisos de gestión completos</p>
+                </button>
+
+                <button class="user-type-btn" data-type="aprendiz">
+                    <div class="user-type-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+                        </svg>
+                    </div>
+                    <h3>Aprendiz</h3>
+                    <p>Acceso a gestión de fases de micropropagación y funciones básicas</p>
+                </button>
+
+                <button class="user-type-btn" data-type="pasante">
+                    <div class="user-type-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/>
+                        </svg>
+                    </div>
+                    <h3>Pasante</h3>
+                    <p>Acceso temporal a gestión de fases de micropropagación</p>
+                </button>
+            </div>
+        </section>
+
+        <!-- User Form Panel -->
+        <section id="user-form-panel" class="hidden"></section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userTypePanel = document.getElementById('user-type-panel');
+            const userFormPanel = document.getElementById('user-form-panel');
+            const btnVolverHeader = document.getElementById('btnVolverHeader');
+            let generos = [];
+
+            async function cargarGeneros() {
+                try {
+                    const res = await fetch('db/parametros.php?accion=listar&tipo=genero');
+                    generos = await res.json();
+                } catch (err) {
+                    console.error('Error cargando géneros:', err);
+                    generos = [];
+                }
+            }
+
+            document.querySelectorAll('.user-type-btn').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const tipo = btn.dataset.type;
+                    await cargarGeneros();
+                    mostrarFormulario(tipo);
+                });
+            });
+
+            function mostrarFormulario(tipo) {
+                userTypePanel.classList.add('hidden');
+                userFormPanel.classList.remove('hidden');
+                userFormPanel.className = 'user-form-panel';
+
+                let extraCampos = '';
+                if (tipo === 'aprendiz') {
+                    extraCampos = `
+                        <div class="form-group">
+                            <label>
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                                </svg>
+                                Tiempo de Uso
+                            </label>
+                            <input type="text" id="tiempo_uso" name="tiempo_uso" placeholder="Ej: 6 meses" required>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                                </svg>
+                                Ficha de Formación
+                            </label>
+                            <input type="text" id="ficha_formacion" name="ficha_formacion" placeholder="Número de ficha" required>
+                        </div>
+                    `;
+                } else if (tipo === 'pasante') {
+                    extraCampos = `
+                        <div class="form-group full-width">
+                            <label>
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                                </svg>
+                                Tiempo de Uso
+                            </label>
+                            <input type="text" id="tiempo_uso" name="tiempo_uso" placeholder="Ej: 3 meses" required>
+                        </div>
+                    `;
+                }
+
+                const tipoNombre = tipo.charAt(0).toUpperCase() + tipo.slice(1);
+
+                userFormPanel.innerHTML = `
+                    <form class="user-form" id="userForm">
+                        <h2>Registro de ${tipoNombre}</h2>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                    </svg>
+                                    Género
+                                </label>
+                                <select id="genero" name="genero" required>
+                                    <option value="">Seleccione un género</option>
+                                    ${generos.map(g => `<option value="${g.id_parametro}">${g.nombre}</option>`).join('')}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 1.99 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
+                                    </svg>
+                                    Número de Identidad
+                                </label>
+                                <input type="text" id="identidad" name="identidad" placeholder="123456789" required>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label>
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                                    </svg>
+                                    Nombre Completo
+                                </label>
+                                <input type="text" id="nombre" name="nombre" placeholder="Juan Pérez García" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                                    </svg>
+                                    Teléfono
+                                </label>
+                                <input type="text" id="telefono" name="telefono" placeholder="+57 300 123 4567" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 1.99 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                                </svg>
+                                    Email
+                                </label>
+                                <input type="email" id="email" name="email" placeholder="usuario@ejemplo.com" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                                    </svg>
+                                    Contraseña
+                                </label>
+                                <input type="password" id="password" name="password" placeholder="••••••••" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                                    </svg>
+                                    Repetir Contraseña
+                                </label>
+                                <input type="password" id="password2" name="password2" placeholder="••••••••" required>
+                            </div>
+
+                            ${extraCampos}
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" onclick="location.reload()" class="btn btn-secondary">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                                </svg>
+                                Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                                Registrar Usuario
+                            </button>
+                        </div>
+
+                        <div id="notificacion" class="notification"></div>
+                    </form>
+                `;
+
+                document.getElementById('userForm').addEventListener('submit', enviarFormulario);
+            }
+
+            async function enviarFormulario(e) {
+                e.preventDefault();
+                const form = e.target;
+                const data = Object.fromEntries(new FormData(form));
+                const notificacion = document.getElementById('notificacion');
+
+                if (data.password !== data.password2) {
+                    notificacion.className = 'notification error';
+                    notificacion.innerHTML = `
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                        </svg>
+                        Las contraseñas no coinciden
+                    `;
+                    return;
+                }
+
+                let tipo = 'admin';
+                if (data.ficha_formacion) tipo = 'aprendiz';
+                else if (data.tiempo_uso) tipo = 'pasante';
+                data.tipo = tipo;
+
+                try {
+                    const res = await fetch('db/crear_usuario.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    let resultText = await res.text();
+                    let result;
+                    try {
+                      result = JSON.parse(resultText);
+                    } catch (err) {
+                      notificacion.className = 'notification error';
+                      notificacion.innerText = 'Respuesta inválida del servidor. Revisa la consola.';
+                      console.error(resultText);
+                      return;
+                    }
+                    
+                    if (res.ok && result.success) {
+                        notificacion.className = 'notification success';
+                        notificacion.innerHTML = `
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
+                            Usuario registrado correctamente. Redirigiendo...
+                        `;
+                        setTimeout(() => location.reload(), 2000);
+                    } else {
+                        notificacion.className = 'notification error';
+                        notificacion.innerHTML = `
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                            </svg>
+                            ${result.error || 'Error al registrar el usuario'}
+                        `;
+                    }
+                } catch (err) {
+                    notificacion.className = 'notification error';
+                    notificacion.innerHTML = `
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                        </svg>
+                        Error de conexión con el servidor
+                    `;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

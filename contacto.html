@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - Invitrosoft</title>
+    <link rel="stylesheet" href="header-footer.css">
     <style>
 
         :root{
@@ -47,6 +48,11 @@
             color: white;
         }
 
+        .header-content-section{
+            padding: 100px;
+
+        }
+
         .contact-hero::before {
             content: '';
             position: absolute;
@@ -58,14 +64,6 @@
                         radial-gradient(circle at 70% 30%, rgba(233, 246, 238, 0.1) 0%, transparent 50%);
             animation: pulse 4s ease-in-out infinite alternate;
         }
-
-        .header-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
         .contact-title {
             font-size: 3rem;
             font-weight: 700;
@@ -579,6 +577,8 @@
 
         .footer-contact {
             list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
         .footer-contact li {
@@ -686,7 +686,7 @@
 </head>
 <body>
     <section class="contact-hero">
-        <div class="header-content">
+        <div class="header-content-section">
             <h1 class="contact-title">Contáctanos</h1>
             <p class="contact-subtitle">
                 ¿Tienes preguntas sobre Invitrosoft? Nuestro equipo de expertos está aquí para ayudarte. Contáctanos y descubre cómo podemos transformar tu laboratorio.
@@ -706,7 +706,8 @@
                 <ul class="contact-info-list">
                     <li>
                         <span class="contact-icon">
-                            <img src="img/email-icon.svg" alt="Email" style="width: 22px; height: 22px;">
+                            <!-- Email SVG -->
+                            <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"/></svg>
                         </span>
                         <div class="contact-details">
                             <strong>Email</strong>
@@ -716,7 +717,8 @@
                     </li>
                     <li>
                         <span class="contact-icon">
-                            <img src="img/phone-icon.svg" alt="Teléfono" style="width: 22px; height: 22px;">
+                            <!-- Teléfono SVG -->
+                            <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M20,15.5C18.83,15.5 17.67,15.33 16.58,15C16.21,14.89 15.81,15 15.54,15.27L13.21,17.6C10.07,15.93 8.07,13.93 6.4,10.79L8.73,8.46C9,8.19 9.11,7.79 9,7.42C8.67,6.33 8.5,5.17 8.5,4C8.5,3.45 8.05,3 7.5,3H4C3.45,3 3,3.45 3,4C3,16.39 7.61,21 20,21C20.55,21 21,20.55 21,20V16.5C21,15.95 20.55,15.5 20,15.5Z"/></svg>
                         </span>
                         <div class="contact-details">
                             <strong>Teléfono</strong>
@@ -726,7 +728,8 @@
                     </li>
                     <li>
                         <span class="contact-icon">
-                            <img src="img/location-icon.svg" alt="Ubicación" style="width: 22px; height: 22px;">
+                            <!-- Ubicación SVG -->
+                            <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12,6A6,6 0 0,1 18,12C18,16.5 12,22 12,22C12,22 6,16.5 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12C8,14.67 10.67,18.19 12,19.88C13.33,18.19 16,14.67 16,12A4,4 0 0,0 12,8Z"/></svg>
                         </span>
                         <div class="contact-details">
                             <strong>Oficina</strong>
@@ -736,7 +739,8 @@
                     </li>
                     <li>
                         <span class="contact-icon">
-                            <img src="img/support-icon.svg" alt="Soporte" style="width: 22px; height: 22px;">
+                            <!-- Soporte SVG -->
+                            <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4M11,6V13H13V6H11M11,15V17H13V15H11Z"/></svg>
                         </span>
                         <div class="contact-details">
                             <strong>Soporte</strong>
@@ -747,11 +751,13 @@
                 </ul>
                 <div class="contact-social">
                     <span>Síguenos</span>
-                    <a href="#" class="social-link">
-                        <img src="img/linkedin-icon.svg" alt="LinkedIn" style="width: 20px; height: 20px;">
+                    <a href="#" class="social-link" title="LinkedIn">
+                        <!-- LinkedIn SVG -->
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M8.5 17V10.5H6V17H8.5M7.25 9.5A1.25 1.25 0 1 0 7.25 7A1.25 1.25 0 0 0 7.25 9.5M18 17V13.5C18 11.57 16.43 10 14.5 10C13.67 10 13 10.67 13 11.5V17H15.5V13.5C15.5 13.22 15.72 13 16 13C16.28 13 16.5 13.22 16.5 13.5V17H18Z"/></svg>
                     </a>
-                    <a href="#" class="social-link">
-                        <img src="img/twitter-icon.svg" alt="Twitter" style="width: 20px; height: 20px;">
+                    <a href="#" class="social-link" title="Twitter">
+                        <!-- Twitter SVG -->
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6C21.69 6.35 20.86 6.59 20 6.69C20.88 6.16 21.56 5.31 21.88 4.31C21.04 4.8 20.13 5.15 19.16 5.34C18.38 4.5 17.21 4 16 4C13.66 4 11.79 5.79 11.79 8.09C11.79 8.41 11.82 8.72 11.89 9C8.28 8.81 5.11 7.13 2.98 4.7C2.62 5.32 2.41 6.04 2.41 6.81C2.41 8.21 3.18 9.43 4.31 10.13C3.6 10.11 2.93 9.91 2.34 9.57V9.62C2.34 11.61 3.77 13.23 5.68 13.57C5.32 13.66 4.93 13.7 4.53 13.7C4.25 13.7 3.98 13.67 3.71 13.62C4.26 15.2 5.78 16.31 7.57 16.34C6.13 17.36 4.34 17.97 2.4 17.97C2.09 17.97 1.78 17.95 1.47 17.91C3.28 19 5.41 19.62 7.69 19.62C16 19.62 20.74 13.77 20.74 8.54C20.74 8.36 20.74 8.18 20.73 8C21.55 7.41 22.3 6.65 22.46 6Z"/></svg>
                     </a>
                 </div>
             </div>
@@ -801,7 +807,8 @@
                     </label>
                 </div>
                 <button type="submit" class="contact-btn">
-                    <img src="img/send-icon.svg" alt="Enviar" style="width: 20px; height: 20px;">
+                    <!-- Enviar SVG -->
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/></svg>
                     Enviar mensaje
                 </button>
                 <div id="success-message" class="success-message">
@@ -811,54 +818,7 @@
         </div>
     </section>
 
-   <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="footer-logo">I</div>
-                    <div class="footer-info">
-                        <h3>Invitrosoft</h3>
-                        <p class="footer-description">
-                            Plataforma moderna para la gestión integral de laboratorios de 
-                            micropropagación. Optimiza tus procesos con tecnología de vanguardia.
-                        </p>
-                        <ul class="footer-contact">
-                            <li>📧 contacto@invitrosoft.com</li>
-                            <li>📞 +1 (555) 123-4567</li>
-                            <li>📍 Ciudad de México, México</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Enlaces Rápidos</h4>
-                    <ul class="footer-links">
-                        <li><a href="#" onclick="loadContent('inicio')" id="footer-inicio" class="active">Inicio</a></li>
-                        <li><a href="#" onclick="loadContent('proposito')" id="footer-proposito">Propósito</a></li>
-                        <li><a href="#" onclick="loadContent('panel')" id="footer-panel">Panel de Control</a></li>
-                        <li><a href="#" onclick="loadContent('parametros')" id="footer-parametros">Parámetros</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Soporte</h4>
-                    <ul class="footer-links">
-                        <li><a href="#" onclick="loadContent('contacto')" id="footer-contacto">Contacto</a></li>
-                        <li><a href="#" onclick="loadContent('acerca')" id="footer-acerca">Acerca de</a></li>
-                        <li><a href="#">Documentación</a></li>
-                        <li><a href="#">Soporte Técnico</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                © 2025 Invitrosoft. Todos los derechos reservados. | 
-                <a href="#">Términos y condiciones</a> | 
-                <a href="#">Política de Privacidad</a>
-            </div>
-        </div>
-    </footer>
+   <script src="header_footer_index.js"></script>
 
     <script>
         // Smooth scroll to contact section
@@ -879,13 +839,13 @@
             
             // Add loading state
             button.classList.add('loading');
-            button.innerHTML = '<img src="img/loading-icon.svg" alt="Cargando" style="width: 20px; height: 20px;"> Enviando mensaje...';
+            button.innerHTML = '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" class="spin"><circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="none"/><path d="M12 2a10 10 0 0 1 10 10" stroke="white" stroke-width="2" fill="none"/></svg> Enviando mensaje...';
             
             // Simulate form submission
             setTimeout(() => {
                 // Remove loading state
                 button.classList.remove('loading');
-                button.innerHTML = '<img src="img/check-icon.svg" alt="Enviado" style="width: 20px; height: 20px;"> Mensaje enviado';
+                button.innerHTML = '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg> Mensaje enviado';
                 
                 // Show success message
                 successMessage.classList.add('show');
