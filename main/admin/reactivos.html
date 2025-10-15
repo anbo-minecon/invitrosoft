@@ -317,7 +317,7 @@
             console.log(`📦 Enviando alerta de tipo: ${tipo}`, payload);
 
             try {
-                const res = await fetch('/invitrosoft/main/db/send_alert.php', {
+                const res = await fetch('/main/admin/db/send_alert.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)

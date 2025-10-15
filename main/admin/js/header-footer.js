@@ -64,9 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function getBasePath() {
         const path = window.location.pathname;
         // Si estamos en /invitrosoft/main/ o subdirectorios
-        if (path.includes('/invitrosoft/')) {
+        if (path.includes('/invitrosoft/admin')) {
             // Contar cuántos niveles de profundidad hay después de /invitrosoft/
-            const afterMain = path.split('/invitrosoft/')[1];
+            const afterMain = path.split('/invitrosoft/admin')[1];
             const depth = afterMain.split('/').length - 1;
             return depth > 0 ? '../'.repeat(depth) : './';
         }
@@ -162,7 +162,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${extraNavLinks}
                 <div class="user-menu-container">
                     <button type="button" class="user-menu-btn" id="desktop-user-btn">
-                        <img src="/invitrosoft/img/adaniesbasilio.jpg" alt="Usuario" class="user-icon">
+                        <svg class="user-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="8" r="4" fill="#007832"/>
+                            <path d="M12 14c-6 0-8 3-8 6v2h16v-2c0-3-2-6-8-6z" fill="#007832"/>
+                        </svg>
                         <div class="user-info">
                             <span class="user-role">Administrador</span>
                             <span class="user-name">Adanies Basilio</span>
@@ -170,15 +173,21 @@ document.addEventListener("DOMContentLoaded", () => {
                     </button>
                     <div class="dropdown-menu" id="desktop-dropdown-menu">
                         <a href="/invitrosoft/main/admin/auth/index.html" class="dropdown-item">
-                            <img src="${basePath}icons/EditarPerfil.png" alt="Perfil">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#007832" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                            </svg>
                             Mi perfil
                         </a>
                         <a href="#" class="dropdown-item">
-                            <img src="${basePath}icons/ayuda.png" alt="Ayuda">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#007832" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+                            </svg>
                             Ayuda
                         </a>
-                        <a href="${basePath}" class="dropdown-item dropdown-item-close">
-                            <img src="${basePath}icons/CerrarSesion.png" alt="Cerrar sesión">
+                        <a href="/src/logout.php" class="dropdown-item dropdown-item-close">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#007832" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                            </svg>
                             Cerrar sesión
                         </a>
                     </div>
@@ -197,23 +206,32 @@ document.addEventListener("DOMContentLoaded", () => {
     <nav class="mobile-menu" id="mobile-menu">
         <div class="user-menu-container mobile-user-menu">
             <button type="button" class="user-menu-btn" id="mobile-user-btn">
-                <img src="${basePath}img/adaniesbasilio.jpg" alt="Usuario" class="user-icon">
+                <svg class="user-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="8" r="4" fill="#007832"/>
+                    <path d="M12 14c-6 0-8 3-8 6v2h16v-2c0-3-2-6-8-6z" fill="#007832"/>
+                </svg>
                 <div class="user-info">
                     <span class="user-role">Administrador</span>
                     <span class="user-name">Adanies Basilio</span>
                 </div>
             </button>
             <div class="dropdown-menu" id="mobile-dropdown-menu">
-                <a href="/invitrosoft/main/admin/auth/index.html" class="dropdown-item">
-                    <img src="${basePath}icons/EditarPerfil.png" alt="Perfil">
+                <a href="/main/admin/auth/index.html" class="dropdown-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#007832" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                    </svg>
                     Mi perfil
                 </a>
                 <a href="#" class="dropdown-item">
-                    <img src="${basePath}icons/ayuda.png" alt="Ayuda">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#007832" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+                    </svg>
                     Ayuda
                 </a>
-                <a href="${basePath}index.html" class="dropdown-item dropdown-item-close">
-                    <img src="${basePath}icons/CerrarSesion.png" alt="Cerrar sesión">
+                <a href="/src/logout.php" class="dropdown-item dropdown-item-close">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#007832" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                    </svg>
                     Cerrar sesión
                 </a>
             </div>
@@ -342,7 +360,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('.dropdown-item-close[href$="index.html"]').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
-            window.location.href = '/invitrosoft/src/logout.php';
+            window.location.href = '/src/logout.php';
             setTimeout(() => {
                 window.location.reload(true); // Fuerza recarga completa
             }, 500);
@@ -405,3 +423,5 @@ window.closeMobileMenu = function() {
 if (localStorage.getItem('darkMode') === 'enabled') {
     document.body.classList.add('dark-mode');
 }
+
+invitrosoft

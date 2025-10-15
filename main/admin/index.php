@@ -22,27 +22,27 @@ if (!isset($_SESSION['user_id'])) {
     <section class="stats reveal" id="stats">
       <div class="stats-track" id="statsTrack">
         <article class="stat-card">
-          <img class="stat-icon" src="/invitrosoft/icons/usuario-notification.png" alt="Usuario">
+          <img class="stat-icon" src="/icons/usuario-notification.png" alt="Usuario">
           <div class="stat-title">Usuario</div>
           <div class="stat-value"></div>
         </article>
         <article class="stat-card">
-          <img class="stat-icon" src="/invitrosoft/icons/notificaciones-notification.png" alt="Notificaciones">
+          <img class="stat-icon" src="/icons/notificaciones-notification.png" alt="Notificaciones">
           <div class="stat-title">Notificaciones</div>
           <div class="stat-value"></div>
         </article>
         <article class="stat-card">
-          <img class="stat-icon" src="/invitrosoft/icons/reactivos-notification.png" alt="Reactivos">
+          <img class="stat-icon" src="/icons/reactivos-notification.png" alt="Reactivos">
           <div class="stat-title">Reactivos</div>
           <div class="stat-value"></div>
         </article>
         <article class="stat-card">
-          <img class="stat-icon" src="/invitrosoft/icons/planta-notification.png" alt="Plantas">
+          <img class="stat-icon" src="/icons/planta-notification.png" alt="Plantas">
           <div class="stat-title">Plantas</div>
           <div class="stat-value"></div>
         </article>
         <article class="stat-card">
-          <img class="stat-icon" src="/invitrosoft/icons/contaminacion-notification.png" alt="Contaminaciones">
+          <img class="stat-icon" src="/icons/contaminacion-notification.png" alt="Contaminaciones">
           <div class="stat-title">Contaminaciones</div>
           <div class="stat-value"></div>
         </article>
@@ -52,14 +52,14 @@ if (!isset($_SESSION['user_id'])) {
     <div class="section-title reveal">
       <h2>Es hora de interactuar con Invitrosoft</h2>
       <div class="leaf-gif-container">
-        <img src="/invitrosoft/img/hojita.gif" alt="Hojita animada">
+        <img src="/img/hojita.gif" alt="Hojita animada">
     </div>
     </div>
     <section class="grid reveal">
       <a href="reactivos.html" class="card-link">
         <article class="card">
           <div class="card-head">
-            <img src="/invitrosoft/icons/reactivo.png" alt="">
+            <img src="/icons/reactivo.png" alt="">
             <h3>Reactivos</h3>
           </div>
           <p>Gestiona los reactivos y lleva su control.</p>
@@ -68,7 +68,7 @@ if (!isset($_SESSION['user_id'])) {
       <a href="formulaciones.html" class="card-link">
         <article class="card">
           <div class="card-head">
-            <img src="/invitrosoft/icons/formulaciones.png" alt="">
+            <img src="/icons/formulaciones.png" alt="">
             <h3>Formulaciones</h3>
           </div>
           <p>Administra formulaciones y composiciones.</p>
@@ -77,7 +77,7 @@ if (!isset($_SESSION['user_id'])) {
       <a href="protocolo.html" class="card-link">
         <article class="card">
           <div class="card-head">
-            <img src="/invitrosoft/icons/protocolo.png" alt="">
+            <img src="/icons/protocolo.png" alt="">
             <h3>Protocolos</h3>
           </div>
           <p>Gestiona el control y desinfecciones de explantes.</p>
@@ -86,7 +86,7 @@ if (!isset($_SESSION['user_id'])) {
       <a href="categoria.html" class="card-link">
         <article class="card">
           <div class="card-head">
-            <img src="/invitrosoft/icons/categorias.png" alt="">
+            <img src="/icons/categorias.png" alt="">
             <h3>Categorías</h3>
           </div>
           <p>Controla categorías o separación de elementos.</p>
@@ -95,7 +95,7 @@ if (!isset($_SESSION['user_id'])) {
       <a href="parametros.html" class="card-link">
         <article class="card">
           <div class="card-head">
-            <img src="/invitrosoft/icons/parametros.png" alt="">
+            <img src="/icons/parametros.png" alt="">
             <h3>Parámetros</h3>
           </div>
           <p>Gestiona parámetros de usuarios para su control.</p>
@@ -104,7 +104,7 @@ if (!isset($_SESSION['user_id'])) {
       <a href="historial.html" class="card-link">
         <article class="card">
           <div class="card-head">
-            <img src="/invitrosoft/icons/historial.png" alt="">
+            <img src="/icons/historial.png" alt="">
             <h3>Historial</h3>
           </div>
           <p>Administra las acciones de tus usuarios.</p>
