@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - Invitrosoft</title>
+    <link rel="icon" type="image/svg+xml" href="../img/logo.svg">
+    <link rel="stylesheet" href="header-footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #007832;
+            --green-dark: #055d29;
+            --green-neon: #00e676;
+            --muted: #e9f6ee;
+            --ink: #1f2d1f;
+            --radius: 8px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: auto; overflow: visible; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--ink);
+            background: #050f0a;
+            overflow-x: hidden;
+        }
+
+        /* ===== CANVAS PARTICLES ===== */
+        #particle-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #050f0a 0%, #071a0e 40%, #0a2814 70%, #0d3318 100%);
+        }
+
+        /* Glowing orb background */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(0,120,50,0.25) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: orbPulse 6s ease-in-out infinite;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0,230,118,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: orbPulse 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes orbPulse {
+            0%,100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.7; }
+        }
+
+        .hero-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 3rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== LEFT CONTENT ===== */
+        .hero-content { animation: slideFromLeft 1s cubic-bezier(0.23,1,0.32,1) both; }
+
+        @keyframes slideFromLeft {
+            from { opacity: 0; transform: translateX(-60px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,230,118,0.1);
+            border: 1px solid rgba(0,230,118,0.3);
+            color: var(--green-neon);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+        }
+        .hero-tag::before {
+            content: '';
+            width: 6px; height: 6px;
+            background: var(--green-neon);
+            border-radius: 50%;
+            animation: blinkDot 2s infinite;
+        }
+        @keyframes blinkDot {
+            0%,100% { opacity: 1; box-shadow: 0 0 6px var(--green-neon); }
+            50% { opacity: 0.4; box-shadow: none; }
+        }
+
+        .hero-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 5vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.0;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+        .hero-title span {
+            background: linear-gradient(135deg, var(--green-neon), #69f0ae);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-sub {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .hero-desc {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            max-width: 520px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-glow {
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            color: white;
+            padding: 1rem 2.2rem;
+            border-radius: 12px;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 0 30px rgba(0,120,50,0.4);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, var(--green-neon), var(--green));
+            border-radius: 14px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .btn-glow:hover { transform: translateY(-3px); box-shadow: 0 0 50px rgba(0,230,118,0.4); }
+        .btn-glow:hover::before { opacity: 1; }
+
+        .btn-ghost {
+            background: transparent;
+            color: rgba(255,255,255,0.8);
+            padding: 1rem 2.2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-ghost:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-3px);
+        }
+
+        /* ===== STATS ROW ===== */
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .stat-item { }
+        .stat-val {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--green-neon);
+            line-height: 1;
+        }
+        .stat-lbl {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            margin-top: 0.3rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* ===== MASCOT ===== */
+        .hero-mascot {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: slideFromRight 1s cubic-bezier(0.23,1,0.32,1) 0.2s both;
+            position: relative;
+        }
+
+        @keyframes slideFromRight {
+            from { opacity: 0; transform: translateX(60px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .mascot-wrap {
+            position: relative;
+            width: 480px;
+            height: 480px;
+        }
+
+        /* Spinning DNA ring */
+        .dna-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px dashed rgba(0,230,118,0.25);
+            animation: spinRing 20s linear infinite;
+        }
+        .dna-ring-2 {
+            position: absolute;
+            inset: 30px;
+            border-radius: 50%;
+            border: 2px dashed rgba(0,120,50,0.2);
+            animation: spinRing 14s linear infinite reverse;
+        }
+        @keyframes spinRing {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Glow circle */
+        .mascot-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
+            width: 340px; height: 340px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,120,50,0.35) 0%, transparent 70%);
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+            0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 0.8; }
+            50% { transform: translate(-50%,-50%) scale(1.1); opacity: 1; }
+        }
+
+        .mascot-img {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 420px;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 40px rgba(0,230,118,0.2));
+            animation: mascotFloat 4s ease-in-out infinite;
+        }
+        @keyframes mascotFloat {
+            0%,100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-14px); }
+        }
+
+        /* Floating badges */
+        .badge-float {
+            position: absolute;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 0.8rem 1.2rem;
+            color: white;
+            animation: badgeFloat 5s ease-in-out infinite;
+            z-index: 5;
+        }
+        .badge-float:nth-child(1) { top: 10%; right: -5%; animation-delay: 0s; }
+        .badge-float:nth-child(2) { bottom: 25%; left: -8%; animation-delay: 2s; }
+        .badge-float:nth-child(3) { top: 50%; right: -10%; animation-delay: 1s; font-size: 0.85rem; }
+
+        @keyframes badgeFloat {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .badge-val {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--green-neon);
+            line-height: 1;
+        }
+        .badge-lbl { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+        /* ===== FEATURES SECTION ===== */
+        .features-section {
+            background: #0a1a0f;
+            padding: 6rem 2rem;
+            position: relative;
+        }
+        .features-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,230,118,0.3), transparent);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .section-eyebrow {
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--green-neon);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 3vw, 3rem);
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .features-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .feat-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .feat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at center, rgba(0,120,50,0.08) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .feat-card:hover { border-color: rgba(0,230,118,0.3); transform: translateY(-6px); }
+        .feat-card:hover::before { opacity: 1; }
+
+        .feat-icon {
+            width: 56px; height: 56px;
+            background: linear-gradient(135deg, rgba(0,120,50,0.3), rgba(0,120,50,0.1));
+            border: 1px solid rgba(0,230,118,0.2);
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        .feat-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.7rem;
+        }
+        .feat-desc { color: rgba(255,255,255,0.45); font-size: 0.95rem; line-height: 1.6; }
+
+        /* ===== WHY SECTION ===== */
+        .why-section {
+            background: linear-gradient(135deg, #050f0a, #071a0e);
+            padding: 6rem 2rem;
+            position: relative;
+        }
+        .why-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .check-list { list-style: none; margin: 2rem 0; }
+        .check-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+        }
+        .check-list li::before { display:none; }
+
+        .dashboard-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--green), var(--green-neon));
+        }
+        .dash-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        .dash-title { color: rgba(255,255,255,0.5); font-size: 0.9rem; }
+        .live-dot {
+            width: 8px; height: 8px;
+            background: var(--green-neon);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--green-neon);
+            animation: blinkDot 1.5s infinite;
+        }
+        .dash-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .metric-val {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--green-neon);
+            line-height: 1;
+        }
+        .metric-lbl { font-size: 0.8rem; color: rgba(255,255,255,0.35); margin-top: 4px; }
+
+        .bar-wrap { }
+        .bar-lbl { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+        .bar-track {
+            background: rgba(255,255,255,0.06);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), var(--green-neon));
+            border-radius: 4px;
+            width: 0;
+            transition: width 2s ease-out;
+        }
+        .bar-fill.animate { width: 94%; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1100px) {
+            .hero-inner { grid-template-columns: 1fr; text-align: center; }
+            .hero-content { display: flex; flex-direction: column; align-items: center; }
+            .mascot-wrap { width: 360px; height: 360px; }
+            .mascot-img { width: 320px; }
+            .features-grid { grid-template-columns: 1fr 1fr; }
+            .why-inner { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 700px) {
+            .hero-inner { padding: 5rem 1.5rem 3rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .hero-stats { flex-wrap: wrap; gap: 1rem; }
+            .badge-float { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-content">
+            <div class="hero-tag"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.9.2 7.71A7 7 0 0 1 11 20z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg> Innovación en Micropropagación</div>
+            <h1 class="hero-title">
+                Invitro<span>soft</span>
+            </h1>
+            <p class="hero-sub">Gestión Moderna de Laboratorios</p>
+            <p class="hero-desc">
+                Plataforma integral para el control de procesos de micropropagación de plantas mediante explantes. Desarrollada para el laboratorio de biotecnología del CBC — SENA Regional Cesar.
+            </p>
+            <div class="hero-ctas">
+                <button class="btn-glow" onclick="window.location.href='../src/index.html'">Acceder al Sistema</button>
+                <a href="proposito.html" class="btn-ghost">Conocer más →</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-val">94%</div>
+                    <div class="stat-lbl">Eficiencia</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-val">500+</div>
+                    <div class="stat-lbl">Cultivos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-val">CBC</div>
+                    <div class="stat-lbl">SENA Cesar</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-mascot">
+            <div class="mascot-wrap">
+                <div class="dna-ring"></div>
+                <div class="dna-ring-2"></div>
+                <div class="mascot-glow"></div>
+
+                <div class="badge-float">
+                    <div class="badge-val">94%</div>
+                    <div class="badge-lbl">Eficiencia</div>
+                </div>
+                <div class="badge-float">
+                    <div class="badge-val">500+</div>
+                    <div class="badge-lbl">Cultivos activos</div>
+                </div>
+                <div class="badge-float">
+                    <div style="display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/><path d="M8.5 2h7"/><path d="M7 16h10"/></svg> Sistema activo</div>
+                </div>
+
+                <img src="../img/avatar/avatar_drinvitro.png" alt="Dr. Invitro" class="mascot-img">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section">
+    <div class="section-header">
+        <p class="section-eyebrow">Características</p>
+        <h2 class="section-title">Todo lo que tu laboratorio necesita</h2>
+    </div>
+    <div class="features-grid">
+        <div class="feat-card">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18h8"/><path d="M3 21h18"/><path d="M14 21v-4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v4"/><path d="M14 7v4"/><path d="M10 11V7"/><circle cx="14" cy="5" r="2"/><path d="m5 17 3-3"/></svg>
+            <h3 class="feat-title">Monitoreo en Tiempo Real</h3>
+            <p class="feat-desc">Supervisa todos tus cultivos y procesos con alertas automáticas y reportes detallados al instante.</p>
+        </div>
+        <div class="feat-card">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="10" width="4" height="10"/><rect x="10" y="6" width="4" height="14"/><rect x="17" y="2" width="4" height="18"/></svg>
+            <h3 class="feat-title">Análisis Avanzado</h3>
+            <p class="feat-desc">Insights valiosos con herramientas de visualización de datos para optimizar tu producción científica.</p>
+        </div>
+        <div class="feat-card">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <h3 class="feat-title">Automatización Inteligente</h3>
+            <p class="feat-desc">Automatiza tareas repetitivas y reduce errores humanos en los procesos de micropropagación.</p>
+        </div>
+        <div class="feat-card">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15c6.667-6 13.333 0 20-6"/><path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/><path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"/><path d="m17 6-2.5 2.5"/><path d="m14 8.5-1.5 1.5"/><path d="m7 18 2.5-2.5"/><path d="m3.5 14.5 2.5-2.5"/></svg>
+            <h3 class="feat-title">Gestión de Reactivos</h3>
+            <p class="feat-desc">Control integral de inventarios, fechas de vencimiento y trazabilidad en todos los procesos.</p>
+        </div>
+        <div class="feat-card">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+            <h3 class="feat-title">Protocolos Digitales</h3>
+            <p class="feat-desc">Digitalización de protocolos con parámetros configurables y validación automática integrada.</p>
+        </div>
+        <div class="feat-card">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <h3 class="feat-title">Usuarios y Roles</h3>
+            <p class="feat-desc">Control granular de acceso con administración, auditoría y gestión de permisos por perfil.</p>
+        </div>
+    </div>
+</section>
+
+<!-- WHY -->
+<section class="why-section">
+    <div class="why-inner">
+        <div>
+            <p class="section-eyebrow">¿Por qué Invitrosoft?</p>
+            <h2 class="section-title" style="font-family:'Syne',sans-serif;font-size:2.5rem;color:#fff;font-weight:800;margin-bottom:0.5rem;">Tu socio estratégico para la excelencia</h2>
+            <p style="color:rgba(255,255,255,0.4);margin-bottom:1rem;line-height:1.7;">Más que un software — es la solución nacida en el laboratorio real del Centro Biotecnológico del Caribe.</p>
+            <ul class="check-list">
+                <li>Reducción del 40% en tiempo de gestión</li>
+                <li>Trazabilidad completa de procesos</li>
+                <li>Cumplimiento normativo automatizado</li>
+                <li>Integración con equipos de laboratorio</li>
+                <li>Backup automático en la nube</li>
+                <li>Desarrollado con datos reales del CBC — SENA</li>
+            </ul>
+            <button class="btn-glow" onclick="window.location.href='../src/index.html'">
+                Ingresar al sistema →
+            </button>
+        </div>
+        <div class="dashboard-card">
+            <div class="dash-header">
+                <span class="dash-title">Dashboard Overview</span>
+                <div class="live-dot"></div>
+            </div>
+            <div class="dash-metrics">
+                <div>
+                    <div class="metric-val" id="cnt1">0</div>
+                    <div class="metric-lbl">Reactivos activos</div>
+                </div>
+                <div>
+                    <div class="metric-val" id="cnt2">0</div>
+                    <div class="metric-lbl">Protocolos</div>
+                </div>
+            </div>
+            <div class="bar-wrap">
+                <div class="bar-lbl">Eficiencia del laboratorio</div>
+                <div class="bar-track">
+                    <div class="bar-fill" id="eff-bar"></div>
+                </div>
+                <div style="text-align:right;font-size:0.8rem;color:var(--green-neon);margin-top:4px;">94%</div>
+            </div>
+            <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:1rem;">
+                <img src="../img/avatar/avatar_drinvitro.png" style="width:55px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,230,118,0.2));">
+                <div>
+                    <div style="font-weight:700;color:var(--green-neon);font-size:0.85rem;">Dr. Invitro recomienda</div>
+                    <div style="font-size:0.8rem;color:rgba(255,255,255,0.4);">¡Optimiza tus protocolos hoy!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="header_footer_index.js"></script>
+<script>
+// ===== PARTICLE SYSTEM =====
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+const particles = [];
+const NUM = 70;
+
+class Particle {
+    constructor() { this.reset(); }
+    reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.r = Math.random() * 2 + 0.5;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.alpha = Math.random() * 0.4 + 0.1;
+    }
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+    }
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0,230,118,${this.alpha})`;
+        ctx.fill();
+    }
+}
+
+for (let i = 0; i < NUM; i++) particles.push(new Particle());
+
+function drawConnections() {
+    for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.strokeStyle = `rgba(0,120,50,${0.12 * (1 - dist / 120)})`;
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+            }
+        }
+    }
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    drawConnections();
+    requestAnimationFrame(animate);
+}
+animate();
+
+// ===== SCROLL ANIMATIONS =====
+const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            if (entry.target.id === 'eff-bar') entry.target.classList.add('animate');
+            if (entry.target.id === 'cnt1') animateCount(entry.target, 156);
+            if (entry.target.id === 'cnt2') animateCount(entry.target, 23);
+        }
+    });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('#eff-bar, #cnt1, #cnt2').forEach(el => io.observe(el));
+
+function animateCount(el, target) {
+    let count = 0;
+    const step = target / 60;
+    const interval = setInterval(() => {
+        count = Math.min(count + step, target);
+        el.textContent = Math.floor(count);
+        if (count >= target) clearInterval(interval);
+    }, 16);
+}
+</script>
+</body>
+</html>

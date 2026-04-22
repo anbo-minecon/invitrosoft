@@ -1,0 +1,499 @@
+/* ========================================
+   VARIABLES CENTRALIZADAS - APLICACIÓN COMPLETA
+   ======================================== */
+
+/* ========================================
+   MODO CLARO
+   ======================================== */
+
+:root {
+    /* Colores primarios */
+    --primary: #007832;
+    --primary-dark: #005c24;
+    --primary-light: #00a844;
+    --success: #10b981;
+    --success-dark: #059669;
+    --success-light: #34d399;
+    --warning: #f59e0b;
+    --warning-dark: #d97706;
+    --warning-light: #fbbf24;
+    --danger: #ef4444;
+    --danger-dark: #dc2626;
+    --danger-light: #f87171;
+    --info: #3b82f6;
+    --info-dark: #2563eb;
+    --info-light: #60a5fa;
+    
+    /* Backgrounds */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-tertiary: #f3f4f6;
+    --bg-card: #ffffff;
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+    
+    /* Textos */
+    --text-primary: #1f2937;
+    --text-secondary: #4a5568;
+    --text-tertiary: #6b7280;
+    --text-muted: #9ca3af;
+    --text-inverse: #ffffff;
+    
+    /* Bordes */
+    --border-color: #e5e7eb;
+    --border-light: #f3f4f6;
+    --border-dark: #d1d5db;
+    
+    /* Sombras */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+    
+    /* Gradientes */
+    --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    --gradient-success: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
+    --gradient-warning: linear-gradient(135deg, var(--warning) 0%, var(--warning-dark) 100%);
+    --gradient-danger: linear-gradient(135deg, var(--danger) 0%, var(--danger-dark) 100%);
+    --gradient-info: linear-gradient(135deg, var(--info) 0%, var(--info-dark) 100%);
+    
+    /* Transiciones */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 350ms ease;
+    
+    /* Bordes redondeados */
+    --radius-xs: 0.25rem;
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+    --radius-full: 9999px;
+    
+    /* Badges */
+    --badge-success-bg: #d1fae5;
+    --badge-success-text: #065f46;
+    --badge-warning-bg: #fef3c7;
+    --badge-warning-text: #92400e;
+    --badge-error-bg: #fee2e2;
+    --badge-error-text: #991b1b;
+    --badge-info-bg: #dbeafe;
+    --badge-info-text: #1e40af;
+    --badge-default-bg: #f3f4f6;
+    --badge-default-text: #374151;
+    
+    /* Botones */
+    --btn-primary-bg: var(--primary);
+    --btn-primary-hover: var(--primary-dark);
+    --btn-primary-text: var(--text-inverse);
+    --btn-secondary-bg: var(--bg-tertiary);
+    --btn-secondary-hover: var(--border-color);
+    --btn-secondary-text: var(--text-primary);
+    --btn-success-bg: var(--success);
+    --btn-success-hover: var(--success-dark);
+    --btn-success-text: var(--text-inverse);
+    --btn-danger-bg: var(--danger);
+    --btn-danger-hover: var(--danger-dark);
+    --btn-danger-text: var(--text-inverse);
+    
+    /* Inputs */
+    --input-bg: var(--bg-primary);
+    --input-border: var(--border-color);
+    --input-focus: var(--primary);
+    --input-text: var(--text-primary);
+    --input-placeholder: var(--text-muted);
+    
+    /* Cards */
+    --card-bg: var(--bg-primary);
+    --card-border: var(--border-color);
+    --card-shadow: var(--shadow);
+    --card-hover-shadow: var(--shadow-lg);
+    
+    /* Header */
+    --header-bg: var(--bg-primary);
+    --header-border: var(--border-color);
+    --header-text: var(--text-primary);
+    --header-shadow: var(--shadow);
+    
+    /* Footer */
+    --footer-bg: var(--bg-secondary);
+    --footer-border: var(--border-color);
+    --footer-text: var(--text-secondary);
+    
+    /* Sidebar */
+    --sidebar-bg: var(--bg-primary);
+    --sidebar-border: var(--border-color);
+    --sidebar-text: var(--text-primary);
+    --sidebar-active-bg: var(--primary);
+    --sidebar-active-text: var(--text-inverse);
+    
+    /* Tables */
+    --table-bg: var(--bg-primary);
+    --table-header-bg: var(--bg-secondary);
+    --table-border: var(--border-color);
+    --table-hover-bg: var(--bg-secondary);
+    --table-text: var(--text-primary);
+    --table-header-text: var(--text-secondary);
+    
+    /* Modals */
+    --modal-bg: var(--bg-primary);
+    --modal-overlay: var(--bg-overlay);
+    --modal-border: var(--border-color);
+    --modal-shadow: var(--shadow-xl);
+    
+    /* Dropdowns */
+    --dropdown-bg: var(--bg-primary);
+    --dropdown-border: var(--border-color);
+    --dropdown-shadow: var(--shadow-lg);
+    --dropdown-hover-bg: var(--bg-secondary);
+    
+    /* Tooltips */
+    --tooltip-bg: var(--text-primary);
+    --tooltip-text: var(--text-inverse);
+    --tooltip-shadow: var(--shadow);
+    
+    /* Activity */
+    --activity-dot-bg: var(--primary);
+    --activity-content-bg: var(--card-bg);
+    --activity-content-shadow: var(--shadow);
+    --activity-border: var(--border-color);
+    
+    /* Protocolo específicos */
+    --protocolo-step-bg: var(--bg-primary);
+    --protocolo-step-border: var(--border-color);
+    --protocolo-step-shadow: var(--shadow);
+    --protocolo-number-bg: var(--primary);
+    --protocolo-number-text: var(--text-inverse);
+    
+    /* Reactivos específicos */
+    --reactivo-card-bg: var(--bg-primary);
+    --reactivo-card-border: var(--border-color);
+    --reactivo-card-shadow: var(--shadow);
+    --reactivo-status-available: var(--success);
+    --reactivo-status-low: var(--warning);
+    --reactivo-status-out: var(--danger);
+    
+    /* Formularios específicos */
+    --form-bg: var(--bg-primary);
+    --form-border: var(--border-color);
+    --form-label: var(--text-secondary);
+    --form-error: var(--danger);
+    --form-success: var(--success);
+    
+    /* Historial específicos */
+    --historial-item-bg: var(--bg-primary);
+    --historial-item-border: var(--border-color);
+    --historial-item-shadow: var(--shadow);
+    --historial-timeline: var(--border-color);
+    
+    /* Crear usuario específicos */
+    --create-user-bg: var(--bg-primary);
+    --create-user-border: var(--border-color);
+    --create-user-shadow: var(--shadow);
+    --create-user-field-bg: var(--bg-primary);
+    --create-user-field-border: var(--border-color);
+}
+
+/* ========================================
+   VARIABLES ESPECÍFICAS PARA REACTIVOS
+   ======================================== */
+
+:root {
+    /* Estados específicos para reactivos */
+    --reactivo-success: #38a169;
+    --reactivo-warning: #dd6b20;
+    --reactivo-danger: #e53e3e;
+    --reactivo-info: #3182ce;
+    
+    /* Categorías de reactivos */
+    --category-solido: #666666;
+    --category-liquido: #2196F3;
+    --category-gaseoso: #4CAF50;
+    
+    /* Botones específicos para reactivos */
+    --btn-primary-bg: linear-gradient(135deg, #00a844 0%, #00d45a 100%);
+    --btn-edit-bg: #FF5E00;
+    --btn-delete-bg: #FF0000;
+    --btn-hover-opacity: 0.85;
+    
+    /* Inputs específicos para reactivos */
+    --input-bg: #ffffff;
+    --input-border: #e2e8f0;
+    --input-focus: #00a844;
+    
+    /* Modal específico para reactivos */
+    --modal-overlay: rgba(30, 30, 30, 0.45);
+    --modal-bg: #ffffff;
+    --modal-header-bg: linear-gradient(135deg, #00a844, #00d45a);
+    
+    /* Barras de cantidad */
+    --quantity-bar-bg: #e0e0e0;
+    --quantity-bar-fill: #4CAF50;
+}
+
+/* ========================================
+   MODO OSCURO
+   ======================================== */
+
+:root.dark-mode,
+body.dark-mode,
+html.dark-mode {
+    /* Colores primarios oscuros */
+    --primary: #00d45a;
+    --primary-dark: #00a844;
+    --primary-light: #00f069;
+    --success: #10b981;
+    --success-dark: #059669;
+    --success-light: #34d399;
+    --warning: #fbbf24;
+    --warning-dark: #f59e0b;
+    --warning-light: #fcd34d;
+    --danger: #f87171;
+    --danger-dark: #ef4444;
+    --danger-light: #fca5a5;
+    --info: #60a5fa;
+    --info-dark: #3b82f6;
+    --info-light: #93c5fd;
+    
+    /* Backgrounds oscuros */
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --bg-card: #1e293b;
+    --bg-overlay: rgba(0, 0, 0, 0.7);
+    
+    /* Textos claros */
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-tertiary: #94a3b8;
+    --text-muted: #64748b;
+    --text-inverse: #0f172a;
+    
+    /* Bordes oscuros */
+    --border-color: #334155;
+    --border-light: #475569;
+    --border-dark: #1e293b;
+    
+    /* Sombras oscuras */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.4), 0 10px 10px rgba(0, 0, 0, 0.3);
+    
+    /* Badges modo oscuro */
+    --badge-success-bg: rgba(16, 185, 129, 0.2);
+    --badge-success-text: #6ee7b7;
+    --badge-warning-bg: rgba(245, 158, 11, 0.2);
+    --badge-warning-text: #fbbf24;
+    --badge-error-bg: rgba(239, 68, 68, 0.2);
+    --badge-error-text: #fca5a5;
+    --badge-info-bg: rgba(59, 130, 246, 0.2);
+    --badge-info-text: #93c5fd;
+    --badge-default-bg: rgba(148, 163, 184, 0.2);
+    --badge-default-text: #cbd5e1;
+    
+    /* Botones oscuros */
+    --btn-primary-bg: var(--primary);
+    --btn-primary-hover: var(--primary-dark);
+    --btn-primary-text: var(--text-inverse);
+    --btn-secondary-bg: var(--bg-tertiary);
+    --btn-secondary-hover: var(--border-color);
+    --btn-secondary-text: var(--text-primary);
+    --btn-success-bg: var(--success);
+    --btn-success-hover: var(--success-dark);
+    --btn-success-text: var(--text-inverse);
+    --btn-danger-bg: var(--danger);
+    --btn-danger-hover: var(--danger-dark);
+    --btn-danger-text: var(--text-inverse);
+    
+    /* Inputs oscuros */
+    --input-bg: var(--bg-tertiary);
+    --input-border: var(--border-color);
+    --input-focus: var(--primary);
+    --input-text: var(--text-primary);
+    --input-placeholder: var(--text-muted);
+    
+    /* Cards oscuros */
+    --card-bg: var(--bg-card);
+    --card-border: var(--border-color);
+    --card-shadow: var(--shadow);
+    --card-hover-shadow: var(--shadow-lg);
+    
+    /* Header oscuro */
+    --header-bg: var(--bg-card);
+    --header-border: var(--border-color);
+    --header-text: var(--text-primary);
+    --header-shadow: var(--shadow);
+    
+    /* Footer oscuro */
+    --footer-bg: var(--bg-secondary);
+    --footer-border: var(--border-color);
+    --footer-text: var(--text-secondary);
+    
+    /* Sidebar oscuro */
+    --sidebar-bg: var(--bg-card);
+    --sidebar-border: var(--border-color);
+    --sidebar-text: var(--text-primary);
+    --sidebar-active-bg: var(--primary);
+    --sidebar-active-text: var(--text-inverse);
+    
+    /* Tables oscuros */
+    --table-bg: var(--bg-card);
+    --table-header-bg: var(--bg-tertiary);
+    --table-border: var(--border-color);
+    --table-hover-bg: var(--bg-tertiary);
+    --table-text: var(--text-primary);
+    --table-header-text: var(--text-secondary);
+    
+    /* Modals oscuros */
+    --modal-bg: var(--bg-card);
+    --modal-overlay: var(--bg-overlay);
+    --modal-border: var(--border-color);
+    --modal-shadow: var(--shadow-xl);
+    
+    /* Dropdowns oscuros */
+    --dropdown-bg: var(--bg-card);
+    --dropdown-border: var(--border-color);
+    --dropdown-shadow: var(--shadow-lg);
+    --dropdown-hover-bg: var(--bg-tertiary);
+    
+    /* Tooltips oscuros */
+    --tooltip-bg: var(--text-primary);
+    --tooltip-text: var(--text-inverse);
+    --tooltip-shadow: var(--shadow);
+    
+    /* Activity oscuro */
+    --activity-dot-bg: var(--primary-light);
+    --activity-content-bg: var(--bg-tertiary);
+    --activity-content-shadow: var(--shadow);
+    --activity-border: var(--border-color);
+    
+    /* Protocolo específicos oscuros */
+    --protocolo-step-bg: var(--bg-card);
+    --protocolo-step-border: var(--border-color);
+    --protocolo-step-shadow: var(--shadow);
+    --protocolo-number-bg: var(--primary);
+    --protocolo-number-text: var(--text-inverse);
+    
+    /* Reactivos específicos oscuros */
+    --reactivo-card-bg: var(--bg-card);
+    --reactivo-card-border: var(--border-color);
+    --reactivo-card-shadow: var(--shadow);
+    --reactivo-status-available: var(--success);
+    --reactivo-status-low: var(--warning);
+    --reactivo-status-out: var(--danger);
+    
+    /* Formularios específicos oscuros */
+    --form-bg: var(--bg-card);
+    --form-border: var(--border-color);
+    --form-label: var(--text-secondary);
+    --form-error: var(--danger);
+    --form-success: var(--success);
+    
+    /* Historial específicos oscuros */
+    --historial-item-bg: var(--bg-card);
+    --historial-item-border: var(--border-color);
+    --historial-item-shadow: var(--shadow);
+    --historial-timeline: var(--border-color);
+    
+    /* Crear usuario específicos oscuros */
+    --create-user-bg: var(--bg-card);
+    --create-user-border: var(--border-color);
+    --create-user-shadow: var(--shadow);
+    --create-user-field-bg: var(--bg-tertiary);
+    --create-user-field-border: var(--border-color);
+}
+
+/* ========================================
+   UTILIDADES GLOBALES
+   ======================================== */
+
+/* Aplicar fondo a body en modo oscuro */
+body.dark-mode,
+html.dark-mode body {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Transiciones globales */
+* {
+    transition: background-color var(--transition-normal), color var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+/* Focus visible para accesibilidad */
+.focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Scrollbar modo oscuro */
+.dark-mode ::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+}
+
+.dark-mode ::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+}
+
+.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* ========================================
+   CLASES UTILITARIAS
+   ======================================== */
+
+/* Background utilities */
+.bg-primary { background-color: var(--bg-primary); }
+.bg-secondary { background-color: var(--bg-secondary); }
+.bg-tertiary { background-color: var(--bg-tertiary); }
+.bg-card { background-color: var(--card-bg); }
+
+/* Text utilities */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+.text-muted { color: var(--text-muted); }
+.text-inverse { color: var(--text-inverse); }
+
+/* Border utilities */
+.border-primary { border-color: var(--border-color); }
+.border-light { border-color: var(--border-light); }
+.border-dark { border-color: var(--border-dark); }
+
+/* Shadow utilities */
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow { box-shadow: var(--shadow); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+
+/* Radius utilities */
+.radius-xs { border-radius: var(--radius-xs); }
+.radius-sm { border-radius: var(--radius-sm); }
+.radius-md { border-radius: var(--radius-md); }
+.radius-lg { border-radius: var(--radius-lg); }
+.radius-xl { border-radius: var(--radius-xl); }
+.radius-2xl { border-radius: var(--radius-2xl); }
+.radius-full { border-radius: var(--radius-full); }

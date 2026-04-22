@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propósito - Invitrosoft</title>
+    <link rel="icon" type="image/svg+xml" href="../img/logo.svg">
+    <link rel="stylesheet" href="header-footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #007832;
+            --green-dark: #055d29;
+            --g1: #00c853;
+            --g2: #69f0ae;
+            --muted: #e9f6ee;
+            --ink: #1f2d1f;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: auto; overflow: visible; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0faf4;
+            color: var(--ink);
+            overflow-x: hidden;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(160deg, #007832 0%, #034d1f 45%, #022c12 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        /* SVG hex grid background */
+        .hex-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 0.07;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 0l28 17v33L28 66zM28 100L0 83V50l28-17 28 17v33L28 100z' fill='none' stroke='%2300e676' stroke-width='1'/%3E%3C/svg%3E");
+        }
+
+        /* Glowing lines */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 30%; left: -10%;
+            width: 600px; height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0,230,118,0.4), transparent);
+            animation: scanLine 6s ease-in-out infinite;
+        }
+        @keyframes scanLine {
+            0%,100% { transform: translateY(0) scaleX(1); opacity: 0.4; }
+            50% { transform: translateY(80px) scaleX(0.8); opacity: 1; }
+        }
+
+        .hero-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 7rem 3rem 5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* LEFT */
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,230,118,0.12);
+            border: 1px solid rgba(0,230,118,0.25);
+            color: #69f0ae;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.8rem, 5vw, 5rem);
+            font-weight: 800;
+            color: white;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+        }
+        .hero-title .accent {
+            position: relative;
+            display: inline-block;
+        }
+        .hero-title .accent::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--g1), var(--g2));
+            border-radius: 2px;
+            animation: lineGrow 1.5s ease-out 0.8s both;
+        }
+        @keyframes lineGrow {
+            from { transform: scaleX(0); transform-origin: left; }
+            to { transform: scaleX(1); transform-origin: left; }
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            max-width: 500px;
+        }
+
+        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--g1), var(--green));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(0,200,83,0.3);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,200,83,0.4); }
+
+        .btn-outline {
+            background: transparent;
+            color: rgba(255,255,255,0.8);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-outline:hover { background: rgba(255,255,255,0.08); transform: translateY(-3px); }
+
+        /* RIGHT - mascot */
+        .mascot-zone {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            animation: fadeRight 1s ease-out 0.3s both;
+        }
+        @keyframes fadeRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Energy burst rings */
+        .energy-ring {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+            border: 2px solid rgba(0,230,118,0.3);
+            animation: ringExpand 3s ease-out infinite;
+        }
+        .energy-ring:nth-child(1) { width: 300px; height: 300px; animation-delay: 0s; }
+        .energy-ring:nth-child(2) { width: 400px; height: 400px; animation-delay: 1s; }
+        .energy-ring:nth-child(3) { width: 500px; height: 500px; animation-delay: 2s; }
+        @keyframes ringExpand {
+            0% { transform: translateX(-50%) scale(0.8); opacity: 0.6; }
+            100% { transform: translateX(-50%) scale(1.2); opacity: 0; }
+        }
+
+        /* Floating question/gear particles */
+        .float-particle {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: particleDrift 6s ease-in-out infinite;
+            opacity: 0.5;
+        }
+        .float-particle:nth-child(4) { top: 15%; left: 10%; animation-delay: 0s; }
+        .float-particle:nth-child(5) { top: 30%; right: 5%; animation-delay: 1.5s; }
+        .float-particle:nth-child(6) { bottom: 30%; left: 5%; animation-delay: 3s; }
+        @keyframes particleDrift {
+            0%,100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+            50% { transform: translateY(-20px) rotate(15deg); opacity: 0.7; }
+        }
+
+        .mascot-img {
+            width: 440px;
+            max-width: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 50px rgba(0,200,83,0.25));
+            animation: mascotBob 4s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes mascotBob {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* ===== FEATURES ===== */
+        .feat-section {
+            background: white;
+            padding: 6rem 2rem;
+        }
+        .feat-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .sec-head {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .sec-eye {
+            font-size: 0.78rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--green);
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+        .sec-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
+            color: var(--ink);
+            font-weight: 800;
+        }
+        .sec-sub {
+            color: rgba(31,45,31,0.55);
+            margin-top: 0.8rem;
+            font-size: 1rem;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .feat-card {
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            background: var(--muted);
+            border: 1px solid rgba(0,120,50,0.08);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .feat-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--green), var(--g1));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+        .feat-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,120,50,0.12); }
+        .feat-card:hover::after { transform: scaleX(1); }
+
+        .feat-ico {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+            box-shadow: 0 8px 20px rgba(0,120,50,0.2);
+        }
+        .feat-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 0.7rem;
+        }
+        .feat-text { color: rgba(31,45,31,0.65); font-size: 0.95rem; line-height: 1.65; }
+
+        /* ===== INNOVATION / MISSION SECTION ===== */
+        .innov-section {
+            background: var(--muted);
+            padding: 6rem 2rem;
+        }
+        .innov-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .innov-img-side {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+        .innov-mascot {
+            width: 320px;
+            object-fit: contain;
+            filter: drop-shadow(0 12px 30px rgba(0,120,50,0.2));
+            animation: mascotBob 5s ease-in-out infinite;
+        }
+        .innov-badge {
+            position: absolute;
+            background: white;
+            border-radius: 14px;
+            padding: 1rem 1.3rem;
+            box-shadow: 0 8px 24px rgba(0,120,50,0.12);
+        }
+        .innov-badge:nth-child(2) { top: 5%; right: 0; }
+        .innov-badge:nth-child(3) { bottom: 10%; left: 0; }
+        .ib-val {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--green);
+            line-height: 1;
+        }
+        .ib-lbl { font-size: 0.75rem; color: rgba(31,45,31,0.5); margin-top: 2px; }
+
+        .innov-text-side { }
+        .mv-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin: 2rem 0 0.5rem;
+        }
+        .mv-text { color: rgba(31,45,31,0.65); line-height: 1.7; font-size: 0.98rem; }
+
+        .impact-row {
+            display: flex;
+            gap: 2rem;
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 16px rgba(0,120,50,0.08);
+        }
+        .impact-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--green);
+        }
+        .impact-lbl { font-size: 0.8rem; color: rgba(31,45,31,0.5); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1100px) {
+            .hero-inner { grid-template-columns: 1fr; text-align: center; padding: 6rem 2rem 4rem; }
+            .hero-desc { margin-left: auto; margin-right: auto; }
+            .hero-btns { justify-content: center; }
+            .mascot-img { width: 320px; }
+            .feat-grid { grid-template-columns: 1fr 1fr; }
+            .innov-inner { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 700px) {
+            .feat-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hex-bg"></div>
+    <div class="hero-inner">
+        <div style="animation: fadeLeft 1s ease-out both;">
+            <div class="hero-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#69f0ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21h6"/><path d="M12 3a6 6 0 0 1 6 6c0 2.5-1 4.77-2.67 6.4-.83.82-1.33 1.96-1.33 3.14V19H10v-.46c0-1.18-.5-2.32-1.33-3.14C7.02 13.77 6 11.5 6 9a6 6 0 0 1 6-6z"/></svg> Propósito del Sistema</div>
+            <h1 class="hero-title">Nuestro <span class="accent">Propósito</span></h1>
+            <p class="hero-desc">
+                Revolucionar la gestión de laboratorios de micropropagación mediante tecnología innovadora que optimiza procesos, garantiza la calidad y facilita la investigación científica en el Centro Biotecnológico del Caribe.
+            </p>
+            <div class="hero-btns">
+                <button class="btn-primary" onclick="document.querySelector('.feat-section').scrollIntoView({behavior:'smooth'})">
+                    Explorar características
+                </button>
+                <a href="acerca.html" class="btn-outline">Acerca del proyecto →</a>
+            </div>
+        </div>
+
+        <div class="mascot-zone">
+            <div class="energy-ring"></div>
+            <div class="energy-ring"></div>
+            <div class="energy-ring"></div>
+            <span class="float-particle"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(0,230,118,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span>
+            <span class="float-particle"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(0,230,118,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21h6"/><path d="M12 3a6 6 0 0 1 6 6c0 2.5-1 4.77-2.67 6.4-.83.82-1.33 1.96-1.33 3.14V19H10v-.46c0-1.18-.5-2.32-1.33-3.14C7.02 13.77 6 11.5 6 9a6 6 0 0 1 6-6z"/></svg></span>
+            <span class="float-particle"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(0,230,118,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+            <img src="../img/avatar/proposito.png" alt="Dr. Invitro - Propósito" class="mascot-img">
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="feat-section">
+    <div class="feat-inner">
+        <div class="sec-head">
+            <p class="sec-eye">Funcionalidades</p>
+            <h2 class="sec-title">Diseñado para cada proceso</h2>
+            <p class="sec-sub">Cada característica resuelve un desafío real del laboratorio de micropropagación moderno.</p>
+        </div>
+        <div class="feat-grid">
+            <div class="feat-card">
+                <div class="feat-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M9 3v7L5 19a1 1 0 0 0 .9 1.45h12.2A1 1 0 0 0 19 19L15 10V3"/><line x1="6.5" y1="14" x2="17.5" y2="14"/></svg></div>
+                <h3 class="feat-name">Gestión de Reactivos</h3>
+                <p class="feat-text">Control integral de inventarios, fechas de vencimiento, alertas automáticas y trazabilidad en todos los procesos.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                <h3 class="feat-name">Usuarios y Roles</h3>
+                <p class="feat-text">Control granular con administración, auditoría de acceso y gestión de permisos por perfil de usuario.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></div>
+                <h3 class="feat-name">Protocolos y Parámetros</h3>
+                <p class="feat-text">Digitalización de protocolos con parámetros configurables, validación automática y documentación integrada.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+                <h3 class="feat-name">Análisis Avanzado</h3>
+                <p class="feat-text">Seguimiento inteligente y reportes para gestionar procesos de micropropagación con precisión.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg></div>
+                <h3 class="feat-name">Cultivo de Explantes</h3>
+                <p class="feat-text">Seguimiento específico del ciclo de vida de explantes desde su inicio hasta la etapa de aclimatación.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg></div>
+                <h3 class="feat-name">Datos en la Nube</h3>
+                <p class="feat-text">Backup automático y acceso seguro desde cualquier dispositivo dentro del entorno institucional.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- INNOVATION / MISSION -->
+<section class="innov-section">
+    <div class="innov-inner">
+        <div class="innov-img-side">
+            <img src="../img/avatar/avatar2.png" alt="Dr. Invitro" class="innov-mascot">
+            <div class="innov-badge">
+                <div class="ib-val">40%</div>
+                <div class="ib-lbl">Menos tiempo de gestión</div>
+            </div>
+            <div class="innov-badge">
+                <div class="ib-val">99.9%</div>
+                <div class="ib-lbl">Precisión en inventarios</div>
+            </div>
+        </div>
+        <div class="innov-text-side">
+            <p class="sec-eye">Misión & Visión</p>
+            <h2 class="sec-title" style="text-align:left;font-family:'Space Grotesk',sans-serif;">Tecnología que impulsa la ciencia</h2>
+
+            <h3 class="mv-title">Nuestra Misión</h3>
+            <p class="mv-text">Democratizar el acceso a tecnología de gestión avanzada para laboratorios de micropropagación, permitiendo que investigadores y técnicos del CBC — SENA se enfoquen en generar conocimiento científico de calidad.</p>
+
+            <h3 class="mv-title">Nuestra Visión</h3>
+            <p class="mv-text">Ser la plataforma de referencia en gestión de laboratorios de micropropagación, impulsando la investigación a través de la innovación tecnológica y contribuyendo al avance de la biotecnología vegetal.</p>
+
+            <div class="impact-row">
+                <div>
+                    <div class="impact-num">40%</div>
+                    <div class="impact-lbl">Reducción gestión</div>
+                </div>
+                <div>
+                    <div class="impact-num">99.9%</div>
+                    <div class="impact-lbl">Precisión</div>
+                </div>
+                <div>
+                    <div class="impact-num">CBC</div>
+                    <div class="impact-lbl">SENA Cesar</div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="margin-top:2rem;" onclick="window.location.href='../src/index.html'">
+                Solicitar acceso →
+            </button>
+        </div>
+    </div>
+</section>
+
+<script src="header_footer_index.js"></script>
+<style>
+@keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+</style>
+</body>
+</html>

@@ -1,0 +1,1422 @@
+/* ========================================
+   VARIABLES CSS - MODO CLARO Y OSCURO
+   ======================================== */
+/* Las variables de color están definidas en color_variable.css */
+/* Este archivo hereda todas las variables de :root y :root.dark-mode */
+
+/* Variables específicas para formularios - SOLO LO QUE NO EXISTE EN color_variable.css */
+
+@import "color_variable.css";
+:root {
+    /* Transiciones específicas para formularios */
+    --transition: all 0.2s ease;
+    --transition-fast: all 0.15s ease;
+    --transition-slow: all 0.3s ease;
+}
+
+/* ========================================
+   MODO OSCURO
+   ======================================== */
+
+:root.dark-mode,
+body.dark-mode,
+html.dark-mode {
+    /* Colores principales - Verde en modo oscuro */
+    --primary: #00d45a;
+    --primary-dark: #00a844;
+    --primary-light: #00f069;
+    --primary-bg: #1a3d2e;
+    
+    /* Backgrounds oscuros */
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --card-bg: #1e293b;
+    --modal-bg: #1e293b;
+    
+    /* Textos claros */
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    
+    /* Grises ajustados */
+    --light-gray: #334155;
+    --medium-gray: #475569;
+    --dark-gray: #f1f5f9;
+    
+    /* Bordes y sombras */
+    --border: #334155;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --shadow-hover: rgba(0, 0, 0, 0.4);
+    --shadow-lg: rgba(0, 0, 0, 0.35);
+    --card-shadow: rgba(0, 0, 0, 0.25);
+    --modal-shadow: rgba(0, 0, 0, 0.5);
+    
+    /* Estados ajustados para modo oscuro */
+    --success: #10b981;
+    --warning: #fbbf24;
+    --danger: #ef4444;
+    --info: #06b6d4;
+}
+
+/* ========================================
+   ESTILOS GENERALES
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Helvetica Neue', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    transition: background-color var(--transition), color var(--transition);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   CONTAINER
+   ======================================== */
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 20px 80px;
+}
+
+/* ========================================
+   CATEGORÍAS - Diseño Compacto
+   ======================================== */
+
+.categories {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px var(--shadow);
+    transition: all var(--transition);
+}
+
+.categories h3 {
+    margin-bottom: 16px;
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color var(--transition);
+}
+
+.categories h3::before {
+    content: '';
+    width: 3px;
+    height: 20px;
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+.category-tabs {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.category-tab {
+    padding: 10px 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.category-tab:hover {
+    border-color: var(--primary);
+    background: var(--primary-bg);
+    color: var(--primary);
+}
+
+.category-tab.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0, 120, 50, 0.25);
+}
+
+body.dark-mode .category-tab.active {
+    box-shadow: 0 2px 8px rgba(0, 212, 90, 0.35);
+}
+
+.category-tab svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+/* ========================================
+   CONTROLES Y BÚSQUEDA - Compactos
+   ======================================== */
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 16px 10px 40px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 400;
+    transition: var(--transition);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 120, 50, 0.1);
+}
+
+body.dark-mode .search-box input:focus {
+    box-shadow: 0 0 0 3px rgba(0, 212, 90, 0.2);
+}
+
+.search-box input::placeholder {
+    color: var(--text-muted);
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+}
+
+.search-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--text-muted);
+}
+
+/* ========================================
+   BOTONES - Profesionales
+   ======================================== */
+
+.add-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    font-weight: 500;
+    border-radius: var(--radius);
+    transition: var(--transition);
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px var(--shadow);
+}
+
+.add-btn:hover {
+    background: var(--primary-dark);
+    box-shadow: 0 4px 8px var(--shadow-hover);
+}
+
+.add-btn:active {
+    transform: translateY(1px);
+}
+
+.add-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: white;
+}
+
+/* ========================================
+   GRID DE CARDS - Compacto
+   ======================================== */
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+    align-items: start;
+}
+
+.formulation-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: 0 2px 4px var(--shadow);
+    transition: var(--transition);
+    position: relative;
+}
+
+.formulation-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-hover);
+    border-color: var(--primary);
+}
+
+/* ========================================
+   CARD HEADER - Compacto
+   ======================================== */
+
+.card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.card-icon {
+    background: var(--primary-bg);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.card-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--primary);
+}
+
+.card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.formulation-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    line-height: 1.3;
+    transition: color var(--transition);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.formulation-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+
+.card-id {
+    background: var(--light-gray);
+    color: var(--text-secondary);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-block;
+    border: 1px solid var(--border);
+}
+
+/* ========================================
+   CARD DETAILS - Compacto
+   ======================================== */
+
+.card-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.detail-item {
+    background: var(--light-gray);
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value {
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 600;
+    transition: color var(--transition);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ========================================
+   CARD STATS - Compacto
+   ======================================== */
+
+.card-stats {
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    text-align: center;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+    transition: color var(--transition);
+}
+
+.stat-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* ========================================
+   CARD ACTIONS - Compacto
+   ======================================== */
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    background: var(--bg-secondary);
+}
+
+.action-btn.view-btn {
+    color: var(--info);
+}
+
+.action-btn.edit-btn {
+    color: var(--warning);
+}
+
+.action-btn.delete-btn {
+    color: var(--danger);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px var(--shadow-hover);
+}
+
+.action-btn.view-btn:hover {
+    background: var(--info);
+    color: white;
+    border-color: var(--info);
+}
+
+.action-btn.edit-btn:hover {
+    background: var(--warning);
+    color: white;
+    border-color: var(--warning);
+}
+
+.action-btn.delete-btn:hover {
+    background: var(--danger);
+    color: white;
+    border-color: var(--danger);
+}
+
+.action-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+/* ========================================
+   EMPTY STATE
+   ======================================== */
+
+.empty-state {
+    text-align: center;
+    padding: 60px 32px;
+    color: var(--text-muted);
+    grid-column: 1 / -1;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 2px dashed var(--border);
+}
+
+.empty-state svg {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 16px;
+    opacity: 0.4;
+    color: var(--text-muted);
+}
+
+.empty-state h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* ========================================
+   MODAL - Compacto
+   ======================================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.active {
+    display: flex;
+    animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: var(--modal-bg);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 650px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 8px 32px var(--modal-shadow);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    background: var(--primary);
+    color: white;
+    padding: 20px 24px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+}
+
+.close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ========================================
+   MODAL BODY Y FORMULARIO
+   ======================================== */
+
+.modal-body {
+    padding: 24px;
+    background: var(--modal-bg);
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--text-primary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    transition: var(--transition);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 120, 50, 0.1);
+}
+
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group select:focus,
+body.dark-mode .form-group textarea:focus {
+    box-shadow: 0 0 0 3px rgba(0, 212, 90, 0.2);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-muted);
+}
+
+/* ========================================
+   MODAL BUTTONS
+   ======================================== */
+
+.modal-buttons {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    background: var(--modal-bg);
+}
+
+.btn-cancel {
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+.btn-cancel:hover {
+    background: var(--light-gray);
+}
+
+.btn-save {
+    padding: 10px 20px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px var(--shadow);
+}
+
+.btn-save:hover {
+    background: var(--primary-dark);
+    box-shadow: 0 4px 8px var(--shadow-hover);
+}
+
+/* ========================================
+   GRUPOS Y REACTIVOS - Compacto
+   ======================================== */
+
+.grupo-item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    padding: 14px;
+    background: var(--light-gray);
+}
+
+.nombre-grupo {
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+.grupo-volumen {
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+}
+
+.reactivos-grupo {
+    margin-top: 12px;
+}
+
+.reactivo-item {
+    display: flex;
+    gap: 8px;
+    margin: 8px 0;
+    align-items: center;
+}
+
+.reactivo-select,
+.reactivo-solucion-madre,
+.reactivo-cantidad {
+    padding: 8px 10px !important;
+    font-size: 13px !important;
+}
+
+.add-group-btn,
+.add-reactivo-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 8px;
+    transition: var(--transition);
+}
+
+.add-group-btn:hover,
+.add-reactivo-btn:hover {
+    background: var(--primary-dark);
+}
+
+.remove-group-btn,
+.remove-reactivo-btn {
+    background: var(--danger);
+    color: white;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.remove-group-btn:hover,
+.remove-reactivo-btn:hover {
+    background: #c82333;
+}
+
+/* ========================================
+   NOTIFICACIÓN
+   ======================================== */
+
+#banner-notificacion {
+    display: none;
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 99999;
+    min-width: 300px;
+    max-width: 450px;
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* ========================================
+   TABLA DE FORMULACIONES - Compacta
+   ======================================== */
+
+.tabla-formulacion {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0 auto 16px auto;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    overflow: hidden;
+    font-size: 14px;
+    box-shadow: 0 1px 3px var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.tabla-formulacion th, 
+.tabla-formulacion td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.tabla-formulacion th {
+    background: var(--primary);
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.grupo-row .grupo-nombre {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 12px;
+    background: var(--primary-bg);
+}
+
+.grupo-row td {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.tabla-formulacion tr:last-child td {
+    border-bottom: none;
+}
+
+/* ========================================
+   MODAL DE VISUALIZACIÓN
+   ======================================== */
+
+.view-protocol-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 11001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.view-protocol-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.view-modal-content {
+    position: relative;
+    background: var(--modal-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 32px var(--modal-shadow);
+    max-width: 650px;
+    width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: modalSlideIn 0.3s ease-out;
+    color: var(--text-primary);
+}
+
+.view-modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    background: var(--primary);
+    color: white;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.view-modal-header h2 {
+    color: white;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.view-protocol-id {
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 4px;
+    opacity: 0.9;
+}
+
+.view-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 20px;
+}
+
+.view-modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.view-modal-body {
+    padding: 20px 24px;
+    background: var(--modal-bg);
+}
+
+.view-modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    background: var(--modal-bg);
+    display: flex;
+    justify-content: flex-end;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.btn-secondary {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-secondary:hover {
+    background: var(--primary-dark);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 16px 12px 60px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-box {
+        max-width: none;
+    }
+    
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .card-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .category-tabs {
+        flex-direction: column;
+    }
+    
+    .modal-content {
+        margin: 12px;
+        max-width: none;
+    }
+    
+    .modal-header,
+    .modal-body,
+    .modal-buttons {
+        padding: 16px;
+    }
+    
+    #banner-notificacion {
+        top: 16px;
+        right: 16px;
+        left: 16px;
+        min-width: auto;
+    }
+    
+    .categories {
+        padding: 16px 18px;
+    }
+    
+    .categories h3 {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+    }
+    
+    .action-btn {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .action-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .modal-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .btn-cancel,
+    .btn-save {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .formulation-title {
+        font-size: 14px;
+    }
+    .card-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* ========================================
+   MEJORAS DE ACCESIBILIDAD
+   ======================================== */
+
+/* Focus visible para navegación por teclado */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Mejorar contraste de textos */
+.text-muted {
+    color: var(--text-muted);
+}
+
+.text-secondary {
+    color: var(--text-secondary);
+}
+
+/* ========================================
+   UTILIDADES
+   ======================================== */
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-2 {
+    gap: 8px;
+}
+
+.gap-3 {
+    gap: 12px;
+}
+
+.gap-4 {
+    gap: 16px;
+}
+
+/* ========================================
+   SCROLLBAR PERSONALIZADO
+   ======================================== */
+
+/* Para Webkit (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--medium-gray);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Para Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--medium-gray) var(--bg-secondary);
+}
+
+/* ========================================
+   ANIMACIONES SUTILES
+   ======================================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.slide-up {
+    animation: slideUp 0.3s ease-out;
+}
+
+/* ========================================
+   ESTADOS DE CARGA
+   ======================================== */
+
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* ========================================
+   BADGES Y ETIQUETAS
+   ======================================== */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.badge-primary {
+    background: var(--primary-bg);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+}
+
+.badge-success {
+    background: rgba(40, 167, 69, 0.1);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+.badge-warning {
+    background: rgba(255, 193, 7, 0.1);
+    color: var(--warning);
+    border: 1px solid var(--warning);
+}
+
+.badge-danger {
+    background: rgba(220, 53, 69, 0.1);
+    color: var(--danger);
+    border: 1px solid var(--danger);
+}
+
+.badge-info {
+    background: rgba(23, 162, 184, 0.1);
+    color: var(--info);
+    border: 1px solid var(--info);
+}
+
+/* ========================================
+   TOOLTIPS SIMPLES
+   ======================================== */
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    padding: 6px 10px;
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    border-radius: var(--radius-sm);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 1000;
+}
+
+[data-tooltip]:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-4px);
+}
+
+/* ========================================
+   DIVIDERS
+   ======================================== */
+
+.divider {
+    height: 1px;
+    background: var(--border);
+    margin: 16px 0;
+}
+
+.divider-vertical {
+    width: 1px;
+    background: var(--border);
+    margin: 0 16px;
+}
+
+/* ========================================
+   MODO OSCURO - AJUSTES FINALES
+   ======================================== */
+
+body.dark-mode,
+html.dark-mode body {
+    background-color: var(--bg-primary) !important;
+}
+
+body.dark-mode .formulation-card {
+    box-shadow: 0 2px 8px var(--card-shadow);
+}
+
+body.dark-mode .formulation-card:hover {
+    box-shadow: 0 4px 16px var(--shadow-hover);
+}
+
+body.dark-mode .add-btn {
+    box-shadow: 0 2px 8px rgba(0, 212, 90, 0.35);
+}
+
+body.dark-mode .add-btn:hover {
+    box-shadow: 0 4px 12px rgba(0, 212, 90, 0.45);
+}
+
+body.dark-mode .btn-save {
+    box-shadow: 0 2px 8px rgba(0, 212, 90, 0.35);
+}
+
+body.dark-mode .btn-save:hover {
+    box-shadow: 0 4px 12px rgba(0, 212, 90, 0.45);
+}
+
+/* ========================================
+   TRANSICIONES SUAVES AL CAMBIAR MODO
+   ======================================== */
+
+body,
+.container,
+.categories,
+.formulation-card,
+.modal-content,
+.view-modal-content,
+input,
+select,
+textarea,
+button {
+    transition: background-color var(--transition), 
+                color var(--transition),
+                border-color var(--transition);
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+    .controls,
+    .card-actions,
+    .add-btn,
+    .modal,
+    #banner-notificacion {
+        display: none !important;
+    }
+    
+    .formulation-card {
+        page-break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+}

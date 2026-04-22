@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de - Invitrosoft</title>
+    <link rel="icon" type="image/svg+xml" href="../img/logo.svg">
+    <link rel="stylesheet" href="header-footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #007832;
+            --green-dark: #055d29;
+            --accent: #00c853;
+            --cream: #f4fbf6;
+            --ink: #1f2d1f;
+            --muted: #e9f6ee;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: auto; overflow: visible; }
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--cream);
+            color: var(--ink);
+            overflow-x: hidden;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(155deg, #1a3a22 0%, #07200e 50%, #030f06 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Book-page texture overlay */
+        .page-texture {
+            position: absolute;
+            inset: 0;
+            background-image:
+                repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(255,255,255,0.015) 28px, rgba(255,255,255,0.015) 30px);
+            pointer-events: none;
+        }
+
+        /* Animated light beam */
+        .light-beam {
+            position: absolute;
+            top: -100px;
+            left: 40%;
+            width: 300px;
+            height: 200%;
+            background: linear-gradient(180deg, transparent, rgba(0,200,83,0.04) 30%, rgba(0,200,83,0.08) 50%, rgba(0,200,83,0.04) 70%, transparent);
+            transform: rotate(-15deg);
+            animation: beamSway 8s ease-in-out infinite;
+        }
+        @keyframes beamSway {
+            0%,100% { transform: rotate(-15deg) translateX(0); }
+            50% { transform: rotate(-10deg) translateX(40px); }
+        }
+
+        .hero-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 7rem 3rem 5rem;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== HERO LEFT ===== */
+        .chapter-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,200,83,0.1);
+            border: 1px solid rgba(0,200,83,0.3);
+            color: var(--accent);
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+            font-weight: 800;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        .hero-title em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-desc {
+            font-size: 1.08rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.85;
+            margin-bottom: 3rem;
+            max-width: 540px;
+        }
+
+        .hero-credits {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 12px 12px 0;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .credits-title {
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 0.7rem;
+        }
+        .credits-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem 1.5rem;
+        }
+        .credits-list li {
+            font-size: 0.92rem;
+            color: rgba(255,255,255,0.7);
+        }
+        .credits-list li strong { color: rgba(255,255,255,0.9); }
+
+        .hero-btn {
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            color: white;
+            padding: 1rem 2.2rem;
+            border-radius: 8px;
+            border: none;
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(0,120,50,0.3);
+        }
+        .hero-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(0,120,50,0.4); }
+
+        /* ===== HERO RIGHT - mascot ===== */
+        .mascot-zone {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            animation: fadeRight 1s ease-out 0.3s both;
+        }
+        @keyframes fadeRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Bookshelf glow */
+        .shelf-glow {
+            position: absolute;
+            bottom: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 350px; height: 350px;
+            background: radial-gradient(ellipse, rgba(0,120,50,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        /* Floating book particles */
+        .book-p {
+            position: absolute;
+            font-size: 1.3rem;
+            animation: bookDrift 7s ease-in-out infinite;
+            opacity: 0.6;
+        }
+        .book-p:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .book-p:nth-child(2) { top: 20%; right: 0%; animation-delay: 2s; }
+        .book-p:nth-child(3) { bottom: 35%; left: 0%; animation-delay: 4s; }
+        @keyframes bookDrift {
+            0%,100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .mascot-img {
+            width: 480px;
+            max-width: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 16px 40px rgba(0,120,50,0.2));
+            animation: seatSettle 5s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes seatSettle {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        /* ===== HISTORY SECTION ===== */
+        .historia-section {
+            padding: 7rem 2rem;
+            background: white;
+        }
+        .historia-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .sec-eye {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--green);
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+        .historia-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 3vw, 3rem);
+            font-weight: 800;
+            color: var(--ink);
+            margin-bottom: 3.5rem;
+        }
+
+        /* ===== TIMELINE ===== */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--green), var(--accent), var(--green-dark));
+            border-radius: 2px;
+        }
+
+        .tl-item {
+            position: relative;
+            padding: 0 0 3rem 2.5rem;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease;
+        }
+        .tl-item.visible { opacity: 1; transform: translateX(0); }
+
+        .tl-dot {
+            position: absolute;
+            left: -11px;
+            top: 6px;
+            width: 22px; height: 22px;
+            background: white;
+            border: 3px solid var(--green);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem;
+        }
+        .tl-item:nth-child(2) .tl-dot { border-color: var(--accent); }
+        .tl-item:nth-child(3) .tl-dot { border-color: var(--green-dark); }
+
+        .tl-year {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 0.5rem;
+        }
+        .tl-item:nth-child(2) .tl-year { color: var(--accent); }
+
+        .tl-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 0.7rem;
+        }
+        .tl-text { color: rgba(31,45,31,0.65); line-height: 1.75; font-size: 0.98rem; max-width: 680px; }
+
+        /* ===== TEAM SECTION ===== */
+        .team-section {
+            background: var(--cream);
+            padding: 6rem 2rem;
+        }
+        .team-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .team-header { margin-bottom: 3.5rem; }
+
+        /* --- Featured dev card --- */
+        .dev-featured {
+            background: linear-gradient(135deg, #0a2e14 0%, #07200e 60%, #011105 100%);
+            border-radius: 24px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            min-height: 340px;
+            margin-bottom: 2.5rem;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,120,50,0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .dev-featured.visible { opacity: 1; transform: translateY(0); }
+        .dev-featured::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 70% 50%, rgba(0,200,83,0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .dev-photo-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+        .dev-photo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            filter: grayscale(15%) contrast(1.05);
+            transition: transform 0.6s ease;
+        }
+        .dev-featured:hover .dev-photo-wrap img { transform: scale(1.04); }
+        .dev-photo-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 55%, #07200e 100%);
+        }
+        .dev-info {
+            padding: 2.5rem 2.8rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+        .dev-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,200,83,0.12);
+            border: 1px solid rgba(0,200,83,0.3);
+            color: var(--accent);
+            padding: 0.3rem 0.9rem;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+        .dev-badge .dot {
+            width: 6px; height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%,100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+        .dev-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 2.5vw, 2.8rem);
+            font-weight: 800;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 0.4rem;
+        }
+        .dev-title {
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.4rem;
+        }
+        .dev-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-bottom: 1.4rem;
+        }
+        .dev-tag {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.72);
+            padding: 0.22rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.77rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .dev-featured:hover .dev-tag { border-color: rgba(0,200,83,0.35); color: rgba(255,255,255,0.9); }
+        .dev-desc {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.45);
+            line-height: 1.7;
+            max-width: 420px;
+        }
+
+        /* --- Small cards grid --- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.4rem;
+        }
+        .member-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(0,120,50,0.08);
+            transition: all 0.4s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .member-card.visible { opacity: 1; transform: translateY(0); }
+        .member-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,120,50,0.12); }
+
+        .member-color { height: 5px; }
+        .member-card:nth-child(1) .member-color { background: linear-gradient(90deg, #7b1fa2, #ba68c8); }
+        .member-card:nth-child(2) .member-color { background: linear-gradient(90deg, #1976d2, #42a5f5); }
+        .member-card:nth-child(3) .member-color { background: linear-gradient(90deg, var(--green), #00c853); }
+
+        .member-avatar {
+            width: 66px; height: 66px;
+            border-radius: 50%;
+            margin: 1.5rem auto 0;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+        }
+        .member-card:nth-child(1) .member-avatar { background: linear-gradient(135deg, #7b1fa2, #4a148c); }
+        .member-card:nth-child(2) .member-avatar { background: linear-gradient(135deg, #1976d2, #0d47a1); }
+        .member-card:nth-child(3) .member-avatar { background: linear-gradient(135deg, var(--green), var(--green-dark)); }
+
+        .member-body { padding: 1rem 1.2rem 1.5rem; text-align: center; }
+        .member-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 0.3rem;
+        }
+        .member-role {
+            font-size: 0.74rem;
+            color: rgba(31,45,31,0.5);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .member-desc {
+            font-size: 0.84rem;
+            color: rgba(31,45,31,0.6);
+            line-height: 1.55;
+            margin-top: 0.7rem;
+        }
+
+        /* ===== VALUES ===== */
+        .values-section {
+            background: linear-gradient(160deg, var(--green-dark) 0%, #022c12 100%);
+            padding: 6rem 2rem;
+        }
+        .values-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .values-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+        .val-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.4s;
+        }
+        .val-card:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(0,230,118,0.3);
+            transform: translateY(-5px);
+        }
+        .val-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .val-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.7rem;
+        }
+        .val-desc { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+        /* RESPONSIVE */
+        @media (max-width: 1100px) {
+            .hero-inner { grid-template-columns: 1fr; text-align: center; padding: 6rem 2rem 4rem; }
+            .hero-desc, .hero-credits { margin-left: auto; margin-right: auto; }
+            .mascot-img { width: 380px; }
+            .dev-featured { grid-template-columns: 240px 1fr; }
+            .team-grid { grid-template-columns: 1fr 1fr; }
+            .values-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 700px) {
+            .dev-featured { grid-template-columns: 1fr; }
+            .dev-photo-wrap { height: 260px; }
+            .dev-photo-wrap::after { background: linear-gradient(180deg, transparent 55%, #07200e 100%); }
+            .team-grid { grid-template-columns: 1fr; }
+            .values-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="page-texture"></div>
+    <div class="light-beam"></div>
+    <div class="hero-inner">
+        <div style="animation: fadeLeft 1s ease-out both;">
+            <div class="chapter-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Capítulo I — Origen</div>
+            <h1 class="hero-title">
+                La <em>historia</em><br>de Invitrosoft
+            </h1>
+            <p class="hero-desc">
+                Un sistema nacido del reto de un desarrollador que quiso ir más allá, articulado con el conocimiento biotecnológico del laboratorio del Centro Biotecnológico del Caribe del SENA Regional Cesar.
+            </p>
+            <div class="hero-credits">
+                <div class="credits-title">Equipo & Colaboradores</div>
+                <ul class="credits-list">
+                    <li><strong>Dev. Full Stack:</strong> Adanies Basilio</li>
+                    <li><strong>Análisis:</strong> Catalina Moscote</li>
+                    <li><strong>Instructor:</strong> José Montesino</li>
+                    <li><strong>Cliente / Lab:</strong> Alexander Benjumea</li>
+                </ul>
+            </div>
+            <button class="hero-btn" onclick="document.querySelector('.historia-section').scrollIntoView({behavior:'smooth'})">
+                Leer nuestra historia ↓
+            </button>
+        </div>
+
+        <div class="mascot-zone">
+            <div class="shelf-glow"></div>
+            <span class="book-p"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(0,200,83,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
+            <span class="book-p"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(0,200,83,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18h8"/><path d="M3 21h18"/><path d="M14 21v-4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v4"/><path d="M14 7v4"/><path d="M10 11V7"/><circle cx="14" cy="5" r="2"/><path d="m5 17 3-3"/></svg></span>
+            <span class="book-p"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(0,200,83,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="2" y1="20" x2="22" y2="20"/></svg></span>
+            <img src="../img/avatar/acercaDE.png" alt="Dr. Invitro - Historia" class="mascot-img">
+        </div>
+    </div>
+</section>
+
+<!-- HISTORIA - TIMELINE -->
+<section class="historia-section">
+    <div class="historia-inner">
+        <p class="sec-eye">Historia del Sistema</p>
+        <h2 class="historia-title">De un reto personal a una solución real</h2>
+
+        <div class="timeline">
+            <div class="tl-item">
+                <div class="tl-dot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/></svg></div>
+                <div class="tl-year">El Origen</div>
+                <h3 class="tl-title">Un desarrollador busca el reto</h3>
+                <p class="tl-text">
+                    Invitrosoft surgió de la iniciativa de un desarrollador que buscaba asumir un reto de mayor complejidad, orientado a resolver una necesidad real dentro del ámbito biotecnológico. Con el acompañamiento de instructores del SENA, se abrió el camino hacia algo más grande.
+                </p>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-1"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg></div>
+                <div class="tl-year">La Articulación</div>
+                <h3 class="tl-title">Alianza con el CBC — SENA</h3>
+                <p class="tl-text">
+                    La colaboración con el laboratorio del Centro Biotecnológico del Caribe, específicamente con el instructor Alexander Benjumea, permitió definir los requerimientos funcionales necesarios para la gestión de procesos de micropropagación de plantas mediante explantes. Los datos reales del laboratorio se convirtieron en el corazón del sistema.
+                </p>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+                <div class="tl-year">El Desarrollo</div>
+                <h3 class="tl-title">Construido por un único desarrollador</h3>
+                <p class="tl-text">
+                    El sistema Invitrosoft fue construido de manera integral por un único desarrollador, consolidando tanto la lógica de negocio como la estructura técnica a partir de la recopilación y análisis de datos reales. Este proceso refleja aprendizaje continuo, adaptación a requerimientos específicos y la transformación de necesidades operativas en una solución tecnológica funcional.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section">
+    <div class="team-inner">
+        <div class="team-header">
+            <p class="sec-eye">Personas detrás del proyecto</p>
+            <h2 class="historia-title" style="margin-bottom:0;">Equipo y Colaboradores</h2>
+        </div>
+
+        <!-- Featured: Adanies Basilio -->
+        <div class="dev-featured" id="devFeatured">
+            <div class="dev-photo-wrap">
+                <img src="../img/foto-ada.png" alt="Adanies Basilio — Desarrollador Full Stack">
+            </div>
+            <div class="dev-info">
+                <div class="dev-badge"><span class="dot"></span> Desarrollador Principal</div>
+                <h3 class="dev-name">Adanies Basilio</h3>
+                <div class="dev-title">Full Stack Developer</div>
+                <div class="dev-tags">
+                    <span class="dev-tag">Backend</span>
+                    <span class="dev-tag">Frontend</span>
+                    <span class="dev-tag">Base de Datos</span>
+                    <span class="dev-tag">Lógica de negocio</span>
+                    <span class="dev-tag">Documentación</span>
+                    <span class="dev-tag">Despliegue</span>
+                </div>
+                <p class="dev-desc">Responsable integral del sistema Invitrosoft — desde la arquitectura y lógica hasta la interfaz, documentación técnica y despliegue en producción.</p>
+            </div>
+        </div>
+
+        <!-- 3 support cards -->
+        <div class="team-grid">
+            <div class="member-card" data-delay="0">
+                <div class="member-color"></div>
+                <div class="member-avatar">CM</div>
+                <div class="member-body">
+                    <h3 class="member-name">Catalina Moscote</h3>
+                    <div class="member-role">Fase de Análisis</div>
+                    <p class="member-desc">Levantamiento de requerimientos, modelado de procesos y análisis funcional del sistema de gestión.</p>
+                </div>
+            </div>
+            <div class="member-card" data-delay="100">
+                <div class="member-color"></div>
+                <div class="member-avatar">JM</div>
+                <div class="member-body">
+                    <h3 class="member-name">José Montesino</h3>
+                    <div class="member-role">Instructor a Cargo</div>
+                    <p class="member-desc">Instructor orientador del proyecto, responsable del seguimiento académico y acompañamiento en el proceso de formación.</p>
+                </div>
+            </div>
+            <div class="member-card" data-delay="200">
+                <div class="member-color"></div>
+                <div class="member-avatar">AB</div>
+                <div class="member-body">
+                    <h3 class="member-name">Alexander Benjumea</h3>
+                    <div class="member-role">Cliente · Instructor de Lab.</div>
+                    <p class="member-desc">Instructor del laboratorio de biotecnología del CBC — SENA. Cliente directo y fuente de los requerimientos del dominio.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+    <div class="values-inner">
+        <h2 class="values-title">Nuestros Valores</h2>
+        <div class="values-grid">
+            <div class="val-card">
+                <div class="val-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21h6"/><path d="M12 3a6 6 0 0 1 6 6c0 2.5-1 4.77-2.67 6.4-.83.82-1.33 1.96-1.33 3.14V19H10v-.46c0-1.18-.5-2.32-1.33-3.14C7.02 13.77 6 11.5 6 9a6 6 0 0 1 6-6z"/></svg></div>
+                <h3 class="val-name">Innovación</h3>
+                <p class="val-desc">Soluciones tecnológicas vanguardistas que transforman la manera de trabajar en los laboratorios.</p>
+            </div>
+            <div class="val-card">
+                <div class="val-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                <h3 class="val-name">Precisión</h3>
+                <p class="val-desc">Cada funcionalidad está diseñada con la máxima precisión para garantizar resultados confiables.</p>
+            </div>
+            <div class="val-card">
+                <div class="val-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+                <h3 class="val-name">Compromiso</h3>
+                <p class="val-desc">Comprometidos con el éxito del laboratorio y el avance de la ciencia biotecnológica.</p>
+            </div>
+            <div class="val-card">
+                <div class="val-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg></div>
+                <h3 class="val-name">Sostenibilidad</h3>
+                <p class="val-desc">Promovemos prácticas sostenibles que contribuyen al cuidado del medio ambiente.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="header_footer_index.js"></script>
+<script>
+// Timeline animation on scroll
+const tlItems = document.querySelectorAll('.tl-item');
+const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 150);
+        }
+    });
+}, { threshold: 0.15 });
+tlItems.forEach(item => io.observe(item));
+
+// Featured dev card animation
+const devFeatured = document.getElementById('devFeatured');
+const devObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+}, { threshold: 0.1 });
+if (devFeatured) devObs.observe(devFeatured);
+
+// Member cards staggered animation
+const memberCards = document.querySelectorAll('.member-card');
+const cardObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const delay = parseInt(entry.target.dataset.delay) || 0;
+            setTimeout(() => entry.target.classList.add('visible'), delay);
+        }
+    });
+}, { threshold: 0.1 });
+memberCards.forEach(card => cardObs.observe(card));
+</script>
+<style>
+@keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+</style>
+</body>
+</html>

@@ -1,0 +1,26 @@
+:root.dark-mode {
+    /* Sobrescribir variables para modo oscuro */
+    --green: #00c853;
+    --green-dark: #00a844;
+    --green-light: #1a3d2e;
+    --muted: #1e2530;
+    --ink: #e8e8e8;
+    --border: #2d3748;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --shadow-hover: rgba(0, 0, 0, 0.5);
+    --bg-primary: #1a1f2e;
+    --bg-secondary: #0f1419;
+    --text-primary: #e8e8e8;
+    --text-secondary: #a0aec0;
+    --card-bg: #252d3d;
+    --danger: #ff6b6b;
+    --success: #51cf66;
+    --warning: #ffd43b;
+    --info: #74c0fc;
+    --primary: #00c853;
+    --primary-light: #1a3d2e;
+    
+    /* Asegurar que el fondo ocupe toda la pantalla */
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}

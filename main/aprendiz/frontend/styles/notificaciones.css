@@ -1,0 +1,514 @@
+/* Estilos mejorados para la página de Notificaciones */
+
+:root {
+    --primary: #007832;
+    --primary-light: #00a844;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --info: #3b82f6;
+    --bg-primary: #f5f7fa;
+    --card-bg: #ffffff;
+    --text-primary: #1a1f2e;
+    --text-secondary: #6b7280;
+    --text-tertiary: #9ca3af;
+    --border: #e5e7eb;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.notificaciones-container {
+    max-width: 1200px;
+    margin-left: 220px;
+    padding: 96px 24px 100px 24px;
+    min-height: calc(100vh - 200px);
+}
+
+/* Header de notificaciones */
+.notificaciones-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--border);
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.notificaciones-header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.notificaciones-header h1::before {
+    content: '';
+    width: 5px;
+    height: 36px;
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+/* Controles de notificaciones */
+.notificaciones-controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filtro-btn,
+.btn-action {
+    padding: 10px 20px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.filtro-btn::before,
+.btn-action::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.filtro-btn:hover::before,
+.btn-action:hover::before {
+    left: 100%;
+}
+
+.filtro-btn:hover {
+    background: var(--bg-primary);
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.filtro-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 120, 50, 0.3);
+}
+
+.btn-action {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.btn-action:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 120, 50, 0.4);
+}
+
+/* Lista de notificaciones */
+.notificaciones-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.notificacion-item {
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--card-bg);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.notificacion-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--primary);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.notificacion-item:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    border-color: var(--primary);
+}
+
+.notificacion-item:hover::before {
+    transform: scaleY(1);
+}
+
+.notificacion-item.no-leida {
+    background: linear-gradient(to right, rgba(0, 120, 50, 0.05), rgba(0, 120, 50, 0.02));
+    border-color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0, 120, 50, 0.15);
+}
+
+.notificacion-item.no-leida::before {
+    transform: scaleY(1);
+}
+
+.notificacion-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notificacion-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.notificacion-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 0 4px rgba(0, 120, 50, 0.2);
+    animation: pulse-badge 2s infinite;
+    flex-shrink: 0;
+}
+
+@keyframes pulse-badge {
+    0%, 100% {
+        box-shadow: 0 0 0 4px rgba(0, 120, 50, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(0, 120, 50, 0.1);
+    }
+}
+
+.notificacion-item.leida .notificacion-badge {
+    display: none;
+}
+
+.notificacion-titulo {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.notificacion-tipo {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.notificacion-tipo.success {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+}
+
+.notificacion-tipo.warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
+}
+
+.notificacion-tipo.error {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--error);
+}
+
+.notificacion-tipo.info {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--info);
+}
+
+.notificacion-mensaje {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+.notificacion-footer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.notificacion-fecha {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.notificacion-fecha svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
+}
+
+.notificacion-admin {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    background: var(--bg-primary);
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+
+.notificacion-admin svg {
+    width: 14px;
+    height: 14px;
+}
+
+.notificacion-acciones {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.btn-notif {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-notif:hover {
+    background: var(--bg-primary);
+    color: var(--primary);
+    transform: scale(1.1);
+}
+
+.btn-notif.delete:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--error);
+}
+
+/* Estado vacío mejorado */
+.notificaciones-empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-secondary);
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 2px dashed var(--border);
+}
+
+.notificaciones-empty svg {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 24px;
+    opacity: 0.4;
+    stroke: var(--text-tertiary);
+}
+
+.notificaciones-empty h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    color: var(--text-primary);
+}
+
+.notificaciones-empty p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--text-secondary);
+}
+
+/* Loading spinner mejorado */
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    gap: 20px;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-spinner p {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* Paginación mejorada */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+    padding: 24px 0;
+}
+
+.btn-pagination {
+    padding: 12px 24px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-pagination:hover:not(:disabled) {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-pagination:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#pageInfo {
+    font-size: 14px;
+    color: var(--text-secondary);
+    min-width: 120px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .notificaciones-container {
+        padding: 20px 12px;
+    }
+
+    .notificaciones-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .notificaciones-header h1 {
+        font-size: 24px;
+    }
+
+    .notificaciones-controls {
+        width: 100%;
+    }
+
+    .filtro-btn,
+    .btn-action {
+        flex: 1;
+        min-width: 0;
+        justify-content: center;
+    }
+
+    .notificacion-item {
+        flex-direction: column;
+        padding: 16px;
+    }
+
+    .notificacion-acciones {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .notificaciones-header h1 {
+        font-size: 24px;
+    }
+}
+
+/* Dark mode adjustments */
+body.dark-mode {
+    --bg-primary: #1a1f2e;
+    --card-bg: #252d3d;
+    --text-primary: #e8e8e8;
+    --text-secondary: #a0aec0;
+    --text-tertiary: #6b7280;
+    --border: #2d3748;
+}
+
+body.dark-mode .notificacion-item {
+    background: var(--card-bg);
+    border-color: var(--border);
+}
+
+body.dark-mode .notificacion-item.no-leida {
+    background: linear-gradient(to right, rgba(0, 168, 68, 0.15), rgba(0, 168, 68, 0.05));
+    border-color: var(--primary);
+}
+
+body.dark-mode .filtro-btn,
+body.dark-mode .btn-pagination {
+    background: var(--card-bg);
+}
+
+body.dark-mode .notificaciones-empty {
+    background: var(--card-bg);
+    border-color: var(--border);
+}
+
+body.dark-mode .notificacion-admin {
+    background: rgba(255, 255, 255, 0.05);
+}

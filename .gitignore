@@ -1,0 +1,69 @@
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+
+# Configuración de servidor
+.htaccess
+
+# Archivos de configuración
+config.php
+**/config.php
+**/*config.php
+**/*Config.php
+configuration.php
+**/configuration.php
+
+# Correos con credenciales
+includes/send_alert_email.php
+includes/send_alert.php
+main/admin/db/send_alert.php
+
+# Dependencias
+vendor/
+node_modules/
+composer.lock
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDEs y editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.netbeans/
+*.phpstorm.meta.php
+_ide_helper.php
+
+# Logs
+*.log
+error_log
+
+# Cachés
+.cache/
+*.cache
+
+# Archivos temporales
+tmp/
+temp/
+*.tmp
+
+# Bases de datos locales
+*.sqlite
+*.db
+*.sql (comentado - incluir scripts SQL del proyecto)
+
+# Compilados
+*.class
+*.jar
+*.out
+
+# Archivos de backup
+*.bak
+*.backup
+*~

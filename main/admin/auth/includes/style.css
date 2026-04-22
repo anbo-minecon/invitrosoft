@@ -1,0 +1,41 @@
+/* Estilos para notificaciones */
+#listaNotificaciones {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.notificacion-no-leida {
+    background-color: rgba(13, 110, 253, 0.1) !important;
+}
+
+/* Estilos para el contador de notificaciones */
+#contadorNotificaciones {
+    font-size: 0.6rem;
+    padding: 0.25rem 0.4rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+}
+
+/* Mejoras para la tabla de notificaciones */
+#tablaNotificaciones tr {
+    transition: background-color 0.2s;
+}
+
+#tablaNotificaciones tr:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Estilos para el modal de detalles */
+#detalleNotificacionContenido {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 768px) {
+    #tablaNotificaciones .d-none-mobile {
+        display: none;
+    }
+}
